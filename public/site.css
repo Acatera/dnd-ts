@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #111;
+}
+
+#main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "char-info map" "logs controls";
+    height: 100vh;
+}
+
+#char-info {
+    grid-area: char-info;
+    border: 1px solid #555;
+}
+
+#logs {
+    grid-area: logs;
+    border: 1px solid #555;
+    overflow-y: scroll;
+    color: #ddd;
+    padding: 5px;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+#map {
+    grid-area: map;
+    border: 1px solid #555;
+}
+
+#controls {
+    grid-area: controls;
+    border: 1px solid #555;
+}
+
+.log-line {
+    margin: 0;
+    padding: 0;
+}

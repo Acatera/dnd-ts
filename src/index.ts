@@ -5,14 +5,44 @@
 
 import Game from './game';
 
-function addLog(message: string) {
+// Define enum for source of log messages
+export enum LogSource {
+  Game,
+  Player,
+  Enemy,
+  Item,
+  Environment,
+}
+
+function addLog(message: string, source: LogSource = LogSource.Game) {
   const logElement = document.getElementById('logs');
   if (logElement) {
-    logElement.innerHTML += message + '<br>';
+    const line = document.createElement('p');
+    if (source === LogSource.Game) {
+      line.style.color = 'darkgrey';
+    }
+
+    if (source === LogSource.Player) {
+      line.style.color = 'lightgreen';
+    }
+
+    if (source === LogSource.Enemy) {
+      line.style.color = 'lightcoral';
+    }
+
+    if (source === LogSource.Item) {
+      line.style.color = 'lightblue';
+    }
+
+    line.classList.add('log-line');
+    line.textContent = message;
+    logElement.appendChild(line);
   }
 }
 
 addLog("Welcome to RoguePunk!");
 addLog("You are a rogue in a cyberpunk world.");
-addLog("You are in a dark alley.");
+addLog("You strike Cyberdemon for 3 damage.", LogSource.Player);
+addLog("Cyberdemon strikes you for 1 damage.", LogSource.Enemy);
+addLog("The sword glows with a faint light.", LogSource.Item);
 const game = new Game();
