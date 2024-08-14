@@ -15,10 +15,13 @@ class Player {
     attack() {
         this.#game.addLog("You attack the enemy!", LogSource.Player);
 
-        this.addExperience(10);
+        // 5% chance to gain 10 experience
+        if (Math.random() < 0.05) {
+            this.gainExperience(10);
+        }
     }
 
-    addExperience(amount: number) {
+    gainExperience(amount: number) {
         this.#experience += amount;
     }
 }

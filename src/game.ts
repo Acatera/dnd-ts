@@ -15,6 +15,8 @@ export class Game {
 
     attack() {
         this.#player.attack();
+
+        this.updatePlayerInfoPanel();
     }
 
     addLog(message: string, source: LogSource = LogSource.Game) {
@@ -40,6 +42,20 @@ export class Game {
             line.classList.add('log-line');
             line.textContent = message;
             logElement.appendChild(line);
+
+            // Scroll to the bottom of the log
+            logElement.scrollTop = logElement.scrollHeight;
+
+            if (logElement.children.length > 100) {
+                logElement.removeChild(logElement.children[0]);
+            }
+        }
+    }
+
+    updatePlayerInfoPanel() {
+        const charInfo = document.getElementById('char-info');
+        if (charInfo) {
+            charInfo.innerHTML = `Experience: ${this.#player.experience}`;
         }
     }
 }

@@ -15,6 +15,7 @@ body {
 #char-info {
     grid-area: char-info;
     border: 1px solid #555;
+    color: #ddd;
 }
 
 #logs {
@@ -25,6 +26,8 @@ body {
     padding: 5px;
     font-family: monospace;
     font-size: 14px;
+    /* autoscroll */
+    scroll-behavior: smooth;
 }
 
 #map {
