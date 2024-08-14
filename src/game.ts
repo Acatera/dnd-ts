@@ -1,3 +1,5 @@
+import { Combat } from "./combat";
+import { ICombatant } from "./interfaces/combatant";
 import { Player } from "./player";
 
 export class Game {
@@ -57,6 +59,10 @@ export class Game {
         if (charInfo) {
             charInfo.innerHTML = `Experience: ${this.#player.experience}`;
         }
+    }
+
+    createCombat(enemy: ICombatant) {
+        return new Combat(this.#player, enemy);
     }
 }
 
