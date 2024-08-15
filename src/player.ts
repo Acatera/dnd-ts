@@ -6,6 +6,7 @@ class Player implements ICombatant {
     #experience: bigint = 0n;
     #level: number = 1;
     #game: Game;
+    #health: number = 10;
 
     get experience(): bigint {
         return this.#experience; 
@@ -15,16 +16,25 @@ class Player implements ICombatant {
         return this.#level;
     }
 
+    get isAlive(): boolean {
+        return this.#health > 0;
+    }
+
     constructor(game: Game) {
         this.#game = game;
     }
 
-    attack() {
-        this.#game.addLog("You attack the enemy!", LogSource.Player);
+    attack(opponent: ICombatant) {
+        if (opponent.isAlive) {
+            opponent.receiveDamage(1);
+        }
+    }
 
-        // 5% chance to gain 10 experience
-        if (Math.random() < 0.1) {
-            this.gainExperience(10);
+    receiveDamage(amount: number) {
+        this.#health -= amount;
+
+        if (this.#health <= 0) {
+            this.#health = 0;
         }
     }
 

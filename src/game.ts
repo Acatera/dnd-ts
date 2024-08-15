@@ -5,7 +5,6 @@ import { Player } from "./player";
 
 export class Game {
     #player: Player;
-    #combat: Combat | null = null;
 
     constructor() {
         this.#player = new Player(this);
@@ -17,11 +16,14 @@ export class Game {
     }
 
     attack() {
-        if (!this.#combat) {
-            this.#combat = this.createCombat();
-        }
+        const combat = this.createCombat();
+        const result = combat.simulate();
 
-        this.#combat.playerAttack();
+        if (result.enemy.isAlive) {
+            this.addLog("You've been defeated!", LogSource.Game);
+        } else {
+            this.addLog("You've defeated the enemy!", LogSource.Game);
+        }
 
         this.updatePlayerInfoPanel();
     }
@@ -69,11 +71,20 @@ export class Game {
 
     createCombat() {
         const enemy = this.#createEnemy();
-        return new Combat(this.#player, enemy);
+        const combat = new Combat(this.#player, enemy);
+        combat.onTurn = (player: Player, enemy: ICombatant) => {
+            this.addLog("You attack the enemy!", LogSource.Player);
+
+            if (enemy.isAlive) {
+                this.addLog("The enemy attacks you!", LogSource.Enemy);
+            }
+        };
+
+        return combat;
     }
 
     #createEnemy(): ICombatant {
-        return Monster.createRandomMonster(this);
+        return Monster.createRandomMonster();
     }
 }
 
