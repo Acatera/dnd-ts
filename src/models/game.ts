@@ -65,28 +65,18 @@ export class Game {
         const charInfo = document.getElementById('char-info');
         if (charInfo) {
             // Update the player's health as a bar
-            let healthElement = document.getElementById('char-health') as HTMLDivElement | null;
+            let healthElement = document.getElementById('char-health-current') as HTMLDivElement | null;
 
-            if (!healthElement) {
-                healthElement = document.createElement('div');
-                healthElement.id = 'char-health';
-                healthElement.classList.add('char-info-bar');
-                charInfo.appendChild(healthElement);
+            if (healthElement) {
+                healthElement.style.width = `${(this.#player.health / this.#player.maxHealth) * 100}%`;
             }
-
-            healthElement.style.width = `${(this.#player.health / this.#player.maxHealth) * 100}%`;
 
             // Update the player's experience as a bar
-            let experienceElement = document.getElementById('char-experience') as HTMLDivElement | null;
+            let experienceElement = document.getElementById('char-experience-current') as HTMLDivElement | null;
 
-            if (!experienceElement) {
-                experienceElement = document.createElement('div');
-                experienceElement.id = 'char-experience';
-                experienceElement.classList.add('char-info-bar');
-                charInfo.appendChild(experienceElement);
+            if (experienceElement) {
+                experienceElement.style.width = `${(Number(this.#player.experience) / Number(this.#player.experienceLevels[this.#player.level - 1])) * 100}%`;
             }
-
-            experienceElement.style.width = `${(Number(this.#player.experience) / Number(this.#player.experienceLevels[this.#player.level - 1])) * 100}%`;
 
             // Update the player's level
             let levelElement = document.getElementById('char-level') as HTMLParagraphElement | null;
@@ -108,8 +98,8 @@ export class Game {
         combat.onTurn = (result) => {
             if (result.attackerDamage > 0) {
                 this.addLog(`You attack ${result.defender.name} for ${result.attackerDamage} damage with your ${this.#player.weaponSlot.item?.name}.`, LogSource.Player);
-            } 
-            
+            }
+
             if (result.defenderDamage > 0) {
                 this.addLog(`${result.defender.name} attacks you for ${result.defenderDamage} damage.`, LogSource.Enemy);
             }
