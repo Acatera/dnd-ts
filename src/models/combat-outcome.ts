@@ -1,4 +1,4 @@
-import { ICombatant } from "./interfaces/combatant";
+import { ICombatant } from "../interfaces/combatant";
 
 export class CombatOutcome {
     player: ICombatant;

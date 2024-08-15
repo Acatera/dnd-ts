@@ -1,5 +1,5 @@
 import Game, { LogSource } from "./game";
-import { ICombatant } from "./interfaces/combatant";
+import { ICombatant } from "../interfaces/combatant";
 
 export class Monster implements ICombatant {
     #experience: number = 0;

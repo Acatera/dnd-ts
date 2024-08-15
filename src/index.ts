@@ -3,7 +3,7 @@
  * When you're ready to start on your site, clear the file. Happy hacking!
  **/
 
-import Game from './game';
+import Game from './models/game';
 
 const game = new Game();
 

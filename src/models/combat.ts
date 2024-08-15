@@ -1,5 +1,5 @@
 import { CombatOutcome } from "./combat-outcome";
-import { ICombatant } from "./interfaces/combatant";
+import { ICombatant } from "../interfaces/combatant";
 import { Player } from "./player";
 
 export class Combat {

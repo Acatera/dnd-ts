@@ -1,5 +1,5 @@
 import { Combat } from "./combat";
-import { ICombatant } from "./interfaces/combatant";
+import { ICombatant } from "../interfaces/combatant";
 import { Monster } from "./monster";
 import { Player } from "./player";
 

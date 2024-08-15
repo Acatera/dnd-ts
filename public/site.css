@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #111;
+    background-color: #222;
 }
 
 #main {
@@ -48,6 +48,8 @@ body {
 .char-info-line {
     margin: 0;
     padding: 0;
+    font-family: monospace;
+    font-size: 14px;
 }
 
 .char-info-bar {
