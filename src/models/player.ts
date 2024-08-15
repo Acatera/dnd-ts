@@ -13,7 +13,7 @@ class Player implements ICombatant {
     health: number = 10;
     maxHealth: number = 10;
 
-    weaponSlot: EquipmentSlot = new EquipmentSlot(EquipmentSlotType.Weapon);
+    weaponSlot: EquipmentSlot<IWeapon> = new EquipmentSlot<IWeapon>(EquipmentSlotType.Weapon);
 
     get experience(): bigint {
         return this.#experience;
