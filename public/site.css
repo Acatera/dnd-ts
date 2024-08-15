@@ -44,3 +44,20 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.char-info-line {
+    margin: 0;
+    padding: 0;
+}
+
+.char-info-bar {
+    height: 10px;
+}
+
+#char-health {
+    background-color: #f00;
+}
+
+#char-experience {
+    background-color: #0f0;
+}

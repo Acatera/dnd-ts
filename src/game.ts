@@ -64,8 +64,41 @@ export class Game {
     updatePlayerInfoPanel() {
         const charInfo = document.getElementById('char-info');
         if (charInfo) {
-            charInfo.innerHTML = `Experience: ${this.#player.experience}`;
-            charInfo.innerHTML += `<br>Level: ${this.#player.level}`;
+            // Update the player's health as a bar
+            let healthElement = document.getElementById('char-health') as HTMLDivElement | null;
+
+            if (!healthElement) {
+                healthElement = document.createElement('div');
+                healthElement.id = 'char-health';
+                healthElement.classList.add('char-info-bar');
+                charInfo.appendChild(healthElement);
+            }
+
+            healthElement.style.width = `${(this.#player.health / this.#player.maxHealth) * 100}%`;
+
+            // Update the player's experience as a bar
+            let experienceElement = document.getElementById('char-experience') as HTMLDivElement | null;
+
+            if (!experienceElement) {
+                experienceElement = document.createElement('div');
+                experienceElement.id = 'char-experience';
+                experienceElement.classList.add('char-info-bar');
+                charInfo.appendChild(experienceElement);
+            }
+
+            experienceElement.style.width = `${(Number(this.#player.experience) / Number(this.#player.experienceLevels[this.#player.level - 1])) * 100}%`;
+
+            // Update the player's level
+            let levelElement = document.getElementById('char-level') as HTMLParagraphElement | null;
+
+            if (!levelElement) {
+                levelElement = document.createElement('p');
+                levelElement.id = 'char-level';
+                levelElement.classList.add('char-info-line');
+                charInfo.appendChild(levelElement);
+            }
+
+            levelElement.innerHTML = `Level: ${this.#player.level}`;
         }
     }
 
