@@ -63,6 +63,7 @@ export class Game {
         const charInfo = document.getElementById('char-info');
         if (charInfo) {
             charInfo.innerHTML = `Experience: ${this.#player.experience}`;
+            charInfo.innerHTML += `<br>Level: ${this.#player.level}`;
         }
     }
 
