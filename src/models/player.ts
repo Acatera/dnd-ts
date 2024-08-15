@@ -66,26 +66,22 @@ class Player implements ICombatant {
 
     gainExperience(amount: number) {
         this.#experience = this.#experience + BigInt(amount);
-        this.#game.addLog(`You've gained ${amount} experience!`, LogSource.Player);
+        this.#game.addLog(`You've gained ${amount} experience!`, LogSource.Game);
 
         // Check if we've leveled up
         while (this.#experience >= this.experienceLevels[this.#level - 1]) {
             this.#experience -= this.experienceLevels[this.#level - 1];
             this.#level++;
 
-            this.#game.addLog(`You've reached level ${this.#level}!`, LogSource.Player);
-
-            // Heal the player to full health
-            this.#game.addLog("You've been healed to full health!", LogSource.Player);
-
-            // Increase the player's attack power
-            this.#game.addLog("You feel stronger!", LogSource.Player);
-
-            // Increase the player's defense
-            this.#game.addLog("You feel tougher!", LogSource.Player);
+            this.#game.addLog(`You've reached level ${this.#level}!`, LogSource.Game);
 
             // Increase the player's health
-            this.#game.addLog("You feel healthier!", LogSource.Player);
+            this.maxHealth += 2;
+
+            // Heal the player to full health
+            this.#game.addLog(`You've been healed to full health!`, LogSource.Game);
+            this.health = this.maxHealth;
+
 
         }
     }
