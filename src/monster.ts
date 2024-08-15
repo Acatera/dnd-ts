@@ -3,14 +3,15 @@ import { ICombatant } from "./interfaces/combatant";
 
 export class Monster implements ICombatant {
     #experience: number = 0;
-    #health: number = 10;
+    health: number = 10;
+    maxHealth: number = 10;
 
     get experience(): number {
         return this.#experience;
     }
 
     get isAlive(): boolean {
-        return this.#health > 0;
+        return this.health > 0;
     }
 
     attack(opponent: ICombatant): void {
@@ -22,10 +23,10 @@ export class Monster implements ICombatant {
     gainExperience(amount: number): void { }
 
     receiveDamage(amount: number): void {
-        this.#health -= amount;
+        this.health -= amount;
 
-        if (this.#health <= 0) {
-            this.#health = 0;
+        if (this.health <= 0) {
+            this.health = 0;
         }
     }
 

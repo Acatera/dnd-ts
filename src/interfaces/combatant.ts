@@ -3,4 +3,6 @@ export interface ICombatant {
     gainExperience(amount: number): void;
     receiveDamage(amount: number): void;
     isAlive: boolean;
+    health: number;
+    maxHealth: number;
 }
