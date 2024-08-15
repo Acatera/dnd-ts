@@ -22,7 +22,7 @@ export class Game {
         if (result.enemy.isAlive) {
             this.addLog("You've been defeated!", LogSource.Game);
         } else {
-            this.addLog("You've defeated the enemy!", LogSource.Game);
+            this.addLog(`You've defeated the ${result.enemy.name}!`, LogSource.Game);
         }
 
         this.updatePlayerInfoPanel();
@@ -107,11 +107,11 @@ export class Game {
         const combat = new Combat(this.#player, enemy);
         combat.onTurn = (result) => {
             if (result.attackerDamage > 0) {
-                this.addLog(`You attack the enemy for ${result.attackerDamage} damage with your ${this.#player.weaponSlot.item?.name}!`, LogSource.Player);
+                this.addLog(`You attack ${result.defender.name} for ${result.attackerDamage} damage with your ${this.#player.weaponSlot.item?.name}.`, LogSource.Player);
             } 
             
             if (result.defenderDamage > 0) {
-                this.addLog(`The enemy attacks you for ${result.defenderDamage} damage!`, LogSource.Enemy);
+                this.addLog(`${result.defender.name} attacks you for ${result.defenderDamage} damage.`, LogSource.Enemy);
             }
         }
 

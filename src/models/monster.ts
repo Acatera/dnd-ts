@@ -4,6 +4,7 @@ export class Monster implements ICombatant {
     #experience: number = 0;
     health: number = 10;
     maxHealth: number = 10;
+    name: string = "Monster";
 
     get experience(): number {
         return this.#experience;

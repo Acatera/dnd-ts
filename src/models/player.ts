@@ -12,6 +12,7 @@ class Player implements ICombatant {
     #game: Game;
     health: number = 10;
     maxHealth: number = 10;
+    name: string = "Player";
 
     weaponSlot: EquipmentSlot<IWeapon> = new EquipmentSlot<IWeapon>(EquipmentSlotType.Weapon);
 

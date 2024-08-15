@@ -5,4 +5,5 @@ export interface ICombatant {
     isAlive: boolean;
     health: number;
     maxHealth: number;
+    name: string;
 }
