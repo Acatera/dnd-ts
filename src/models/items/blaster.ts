@@ -1,4 +1,4 @@
-import { IWeapon } from "../interfaces/weapon";
+import { IWeapon } from "../../interfaces/weapon";
 
 export class Blaster implements IWeapon {
     minDamage: number = 1;

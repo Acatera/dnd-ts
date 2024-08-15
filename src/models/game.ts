@@ -2,14 +2,12 @@ import { Combat } from "./combat";
 import { ICombatant } from "../interfaces/combatant";
 import { Monster } from "./monster";
 import { Player } from "./player";
-import { Blaster } from "./blaster-temp";
 
 export class Game {
     #player: Player;
 
     constructor() {
         this.#player = new Player(this);
-        this.#player.weaponSlot.item = new Blaster();
     }
 
     start() {
@@ -107,13 +105,15 @@ export class Game {
     createCombat() {
         const enemy = this.#createEnemy();
         const combat = new Combat(this.#player, enemy);
-        combat.onTurn = (player: Player, enemy: ICombatant) => {
-            this.addLog("You attack the enemy!", LogSource.Player);
-
-            if (enemy.isAlive) {
-                this.addLog("The enemy attacks you!", LogSource.Enemy);
+        combat.onTurn = (result) => {
+            if (result.attackerDamage > 0) {
+                this.addLog(`You attack the enemy for ${result.attackerDamage} damage with your ${this.#player.weaponSlot.item?.name}!`, LogSource.Player);
+            } 
+            
+            if (result.defenderDamage > 0) {
+                this.addLog(`The enemy attacks you for ${result.defenderDamage} damage!`, LogSource.Enemy);
             }
-        };
+        }
 
         return combat;
     }

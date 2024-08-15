@@ -1,12 +1,13 @@
 import { CombatOutcome } from "./combat-outcome";
 import { ICombatant } from "../interfaces/combatant";
 import { Player } from "./player";
+import { TurnResult } from "./turn-result";
 
 export class Combat {
     #player: Player;
     #enemy: ICombatant;
 
-    onTurn: ((player: Player, enemy: ICombatant) => void) | undefined;
+    onTurn: ((result: TurnResult) => void) | null = null;
 
     constructor(player: Player, enemy: ICombatant) {
         this.#player = player;
@@ -15,10 +16,10 @@ export class Combat {
 
     simulate(): CombatOutcome {
         while (this.#player.isAlive && this.#enemy.isAlive) {
-            this.turn();
+            const turnResult = this.turn();
 
             if (this.onTurn) {
-                this.onTurn(this.#player, this.#enemy);
+                this.onTurn(turnResult);
             }
         }
 
@@ -29,11 +30,16 @@ export class Combat {
         return new CombatOutcome(this.#player, this.#enemy);
     }
 
-    turn() {
-        this.#player.attack(this.#enemy);
+    turn(): TurnResult {
+        const result = new TurnResult(this.#player, this.#enemy);
+
+        result.attackerDamage = this.#player.attack(this.#enemy);
+        result.defenderDamage = 0;
 
         if (this.#enemy.isAlive) {
-            this.#enemy.attack(this.#player);
+            result.defenderDamage = this.#enemy.attack(this.#player);
         }
+
+        return result;
     }
 }

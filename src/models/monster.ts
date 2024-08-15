@@ -13,20 +13,28 @@ export class Monster implements ICombatant {
         return this.health > 0;
     }
 
-    attack(opponent: ICombatant): void {
+    attack(opponent: ICombatant): number {
         if (opponent.isAlive) {
-            opponent.receiveDamage(1);
+            return opponent.receiveDamage(1);
         }
+
+        return 0;
     }
 
     gainExperience(amount: number): void { }
 
-    receiveDamage(amount: number): void {
+    receiveDamage(amount: number): number {
+        if (amount > this.health) {
+            amount = this.health;
+        }
+
+        if (amount < 0) {
+            amount = 0;
+        }
+
         this.health -= amount;
 
-        if (this.health <= 0) {
-            this.health = 0;
-        }
+        return amount;
     }
 
     // This is a placeholder for now
