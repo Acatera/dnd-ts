@@ -2,12 +2,14 @@ import { Combat } from "./combat";
 import { ICombatant } from "../interfaces/combatant";
 import { Monster } from "./monster";
 import { Player } from "./player";
+import { Blaster } from "./blaster-temp";
 
 export class Game {
     #player: Player;
 
     constructor() {
         this.#player = new Player(this);
+        this.#player.weaponSlot.item = new Blaster();
     }
 
     start() {
