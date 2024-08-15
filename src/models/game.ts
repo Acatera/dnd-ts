@@ -2,12 +2,18 @@ import { Combat } from "./combat";
 import { ICombatant } from "../interfaces/combatant";
 import { Monster } from "./monster";
 import { Player } from "./player";
+import { Area } from "./area";
+import { AreaFactory } from "./area-factory";
 
 export class Game {
     #player: Player;
+    #area: Area;
 
     constructor() {
         this.#player = new Player(this);
+        this.#area = AreaFactory.createArea("mine");
+
+        this.#updateMapPanel();
     }
 
     start() {
@@ -89,6 +95,13 @@ export class Game {
             }
 
             levelElement.innerHTML = `Level: ${this.#player.level}`;
+        }
+    }
+
+    #updateMapPanel() {
+        const mapElement = document.getElementById('area');
+        if (mapElement) {
+            mapElement.textContent = this.#area.name;
         }
     }
 

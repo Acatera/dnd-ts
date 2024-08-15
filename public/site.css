@@ -30,9 +30,11 @@ body {
     scroll-behavior: smooth;
 }
 
-#map {
+#area {
     grid-area: map;
     border: 1px solid #555;
+    color: #ddd;
+    font-family: monospace;
 }
 
 #controls {
