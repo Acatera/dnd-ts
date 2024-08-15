@@ -1,9 +1,11 @@
 import { Combat } from "./combat";
 import { ICombatant } from "./interfaces/combatant";
+import { Monster } from "./monster";
 import { Player } from "./player";
 
 export class Game {
     #player: Player;
+    #combat: Combat | null = null;
 
     constructor() {
         this.#player = new Player(this);
@@ -12,11 +14,14 @@ export class Game {
     start() {
         this.addLog("Welcome to RoguePunk!");
         this.addLog("You are a rogue in a cyberpunk world.");
-        this.#player.attack();
     }
 
     attack() {
-        this.#player.attack();
+        if (!this.#combat) {
+            this.#combat = this.createCombat();
+        }
+
+        this.#combat.playerAttack();
 
         this.updatePlayerInfoPanel();
     }
@@ -61,8 +66,13 @@ export class Game {
         }
     }
 
-    createCombat(enemy: ICombatant) {
+    createCombat() {
+        const enemy = this.#createEnemy();
         return new Combat(this.#player, enemy);
+    }
+
+    #createEnemy(): ICombatant {
+        return Monster.createRandomMonster(this);
     }
 }
 

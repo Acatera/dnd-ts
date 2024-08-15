@@ -9,4 +9,9 @@ export class Combat {
         this.#player = player;
         this.#enemy = enemy;
     }
+
+    playerAttack() {
+        this.#player.attack();
+        this.#enemy.attack();
+    }
 }
