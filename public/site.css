@@ -40,6 +40,13 @@ body {
 #controls {
     grid-area: controls;
     border: 1px solid #555;
+    font-family: monospace;
+    color: #ddd;
+}
+
+.control {
+    margin: 0;
+    padding: 0;
 }
 
 .log-line {
