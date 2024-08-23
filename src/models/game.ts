@@ -126,14 +126,12 @@ export class Game {
                 const mobName = MonsterFactory.getMonsterName(mob);
                 mobElement.textContent = mobName;
                 mobListElement.appendChild(mobElement);
-
             }
         }
     }
 
     createCombat() {
         const enemy = this.#createEnemy();
-        this.addLog(`Enemy is ${enemy.name}`, LogSource.Game);
         const combat = new Combat(this.#player, enemy);
         combat.onTurn = (result) => {
             if (result.attackerDamage > 0) {
