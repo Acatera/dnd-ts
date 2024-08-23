@@ -3,7 +3,6 @@ import { ICombatant } from "../interfaces/combatant";
 import { EquipmentSlot } from "./equipment-slot";
 import { EquipmentSlotType } from "./equipment-slot-type";
 import { IWeapon } from "../interfaces/weapon";
-import { ItemFactory } from "../factories/item-factory";
 import { Fists } from "./items/fists";
 
 class Player implements ICombatant {
@@ -11,10 +10,8 @@ class Player implements ICombatant {
     #experience: bigint = 0n;
     #level: number = 1;
     #game: Game;
-    expReward: number = 0;
     health: number = 10;
     maxHealth: number = 10;
-    name: string = "Player";
 
     weaponSlot: EquipmentSlot<IWeapon> = new EquipmentSlot<IWeapon>(EquipmentSlotType.Weapon);
 

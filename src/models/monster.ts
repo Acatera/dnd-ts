@@ -1,21 +1,17 @@
- import { ICombatant } from "../interfaces/combatant";
+import { IMonster } from "../interfaces/monster";
+import { ICombatant } from "../interfaces/combatant";
 
-export class Monster implements ICombatant {
-    #experience: number = 0;
-    expReward: number = 5;
-    health: number = 10;
-    maxHealth: number = 10;
-    name: string = "Monster";
+export class Monster implements IMonster {
+    expReward: number;
+    health: number;
+    maxHealth: number;
+    name: string;
 
     constructor(monsterData: any) {
         this.name = monsterData.name;
         this.maxHealth = monsterData.health;
         this.health = monsterData.health;
         this.expReward = monsterData.expReward;
-    }
-
-    get experience(): number {
-        return this.#experience;
     }
 
     get isAlive(): boolean {
@@ -29,8 +25,6 @@ export class Monster implements ICombatant {
 
         return 0;
     }
-
-    gainExperience(amount: number): void { }
 
     receiveDamage(amount: number): number {
         if (amount > this.health) {
