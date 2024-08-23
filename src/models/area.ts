@@ -1,5 +1,5 @@
 import { Monster } from "./monster";
-import { DroneSwarm } from "./mobs/drone-swarm";
+import { MonsterFactory } from "../factories/monster-factory";
 
 export class Area {
     id: string;
@@ -19,11 +19,7 @@ export class Area {
         const randIndex = Math.floor(Math.random() * this.monsterPool.length);
         const randMonsterId = this.monsterPool[randIndex];
 
-        if (randMonsterId == 'drone-swarm') {
-            return new DroneSwarm();
-        }
-
-        return new Monster(randMonsterId);
+        return MonsterFactory.createMonster(randMonsterId);
     }
 }
 // connections: this connects to a mine, a forest, and a mountain

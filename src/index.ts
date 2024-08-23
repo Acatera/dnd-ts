@@ -3,6 +3,7 @@
  * When you're ready to start on your site, clear the file. Happy hacking!
  **/
 
+import { MonsterFactory } from './factories/monster-factory';
 import Game from './models/game';
 
 const game = new Game();
@@ -21,4 +22,4 @@ if (attackControl) {
     game.attack();
   });
 }
-game.start();
+await game.start();

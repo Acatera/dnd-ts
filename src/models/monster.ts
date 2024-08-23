@@ -2,14 +2,16 @@
 
 export class Monster implements ICombatant {
     #experience: number = 0;
-    #id: string;
     expReward: number = 5;
     health: number = 10;
     maxHealth: number = 10;
     name: string = "Monster";
 
-    constructor(id: string) {
-        this.#id = id;
+    constructor(monsterData: any) {
+        this.name = monsterData.name;
+        this.maxHealth = monsterData.health;
+        this.health = monsterData.health;
+        this.expReward = monsterData.expReward;
     }
 
     get experience(): number {
@@ -42,10 +44,5 @@ export class Monster implements ICombatant {
         this.health -= amount;
 
         return amount;
-    }
-
-    // This is a placeholder for now
-    static createRandomMonster(): Monster {
-        return new Monster('');
     }
 }

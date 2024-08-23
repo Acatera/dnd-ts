@@ -1,0 +1,17 @@
+{
+    "drone_scout": {
+        "name": "Drone Scout",
+        "health": 10,
+        "expReward": 5
+    },
+    "drone_swarm": {
+        "name": "Drone Swarm",
+        "health": 15,
+        "expReward": 10
+    },
+    "drone_leader": {
+        "name": "Drone Leader",
+        "health": 20,
+        "expReward": 15
+    }
+}

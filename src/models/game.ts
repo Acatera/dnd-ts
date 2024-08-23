@@ -1,9 +1,9 @@
 import { Combat } from "./combat";
 import { ICombatant } from "../interfaces/combatant";
-import { Monster } from "./monster";
 import { Player } from "./player";
 import { Area } from "./area";
 import { AreaFactory } from "./area-factory";
+import { MonsterFactory } from "../factories/monster-factory";
 
 export class Game {
     #player: Player;
@@ -16,9 +16,15 @@ export class Game {
         this.#updateMapPanel();
     }
 
-    start() {
+    async start() {
+        await this.init();
+
         this.addLog("Welcome to RoguePunk!");
         this.addLog("You are a rogue in a cyberpunk world.");
+    }
+
+    async init() {
+        await MonsterFactory.loadMonsterData();
     }
 
     attack() {
@@ -143,7 +149,7 @@ export class Game {
             }
         }
 
-        return Monster.createRandomMonster();
+        return MonsterFactory.createRandomMonster();
     }
 }
 
