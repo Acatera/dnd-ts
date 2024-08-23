@@ -1,5 +1,6 @@
 # TODO
 
+- Implement attack speed
 - Implement drops
 - Implement armor
 - Implement mining
