@@ -1,14 +1,15 @@
 import { CombatOutcome } from "./combat-outcome";
 import { ICombatant } from "../interfaces/combatant";
 import { Player } from "./player";
-import { TurnResult } from "./turn-result";
 import { IMonster } from "../interfaces/monster";
 
 export class Combat {
     #player: Player;
     #enemy: IMonster;
 
-    onTurn: ((result: TurnResult) => void) | null = null;
+    onPlayersTurn: ((player: Player, monster: IMonster, damage: number) => void) | null = null;
+    onMonstersTurn: ((player: Player, monster: IMonster, damage: number) => void) | null = null;
+    onMonsterDeath: ((monster: IMonster) => void) | null = null;
 
     constructor(player: Player, enemy: IMonster) {
         this.#player = player;
@@ -17,30 +18,34 @@ export class Combat {
 
     simulate(): CombatOutcome {
         while (this.#player.isAlive && this.#enemy.isAlive) {
-            const turnResult = this.turn();
+            const playerDamage = this.#player.attack(this.#enemy);
 
-            if (this.onTurn) {
-                this.onTurn(turnResult);
+            if (this.onPlayersTurn) {
+                this.onPlayersTurn(this.#player, this.#enemy, playerDamage);
+            }
+
+            if (!this.#enemy.isAlive) {
+                
+                if (this.onMonsterDeath) {
+                    this.onMonsterDeath(this.#enemy);
+                }
+                
+                this.#player.gainExperience(this.#enemy.expReward);
+
+                break;
+            }
+
+            const enemyDamage = this.#enemy.attack(this.#player);
+
+            if (this.onMonstersTurn) {
+                this.onMonstersTurn(this.#player, this.#enemy, enemyDamage);
+            }
+
+            if (!this.#player.isAlive) {
+                break;
             }
         }
 
-        if (!this.#enemy.isAlive) {
-            this.#player.gainExperience(this.#enemy.expReward);
-        }
-
         return new CombatOutcome(this.#player, this.#enemy);
-    }
-
-    turn(): TurnResult {
-        const result = new TurnResult(this.#player, this.#enemy);
-
-        result.attackerDamage = this.#player.attack(this.#enemy);
-        result.defenderDamage = 0;
-
-        if (this.#enemy.isAlive) {
-            result.defenderDamage = this.#enemy.attack(this.#player);
-        }
-
-        return result;
     }
 }

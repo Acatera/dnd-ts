@@ -14,10 +14,10 @@ export class Game {
         this.#player = new Player(this);
         this.#area = new Area({ id: 'test', name: 'Test Area' });
     }
-    
+
     async start() {
         await this.init();
-        
+
         this.addLog("Welcome to RoguePunk!");
         this.addLog("You are a rogue in a cyberpunk world.");
 
@@ -32,16 +32,19 @@ export class Game {
     }
 
     attack() {
-        const combat = this.createCombat();
-        const result = combat.simulate();
-
-        if (result.enemy.isAlive) {
-            this.addLog("You've been defeated!", LogSource.Game);
-        } else {
-            this.addLog(`You've defeated the ${result.enemy.name}!`, LogSource.Game);
-            const weapon = ItemFactory.createWeapon('blaster');
-            this.#player.weaponSlot.item = weapon;
+        if (!this.#player.isAlive) {
+            return;
         }
+
+        const combat = this.createCombat();
+        combat.simulate();
+
+        if (!this.#player.isAlive) {
+            this.addLog("You've been defeated!", LogSource.Game);
+        }
+
+        const weapon = ItemFactory.createWeapon('blaster');
+        this.#player.weaponSlot.item = weapon;
 
         this.updatePlayerInfoPanel();
     }
@@ -137,14 +140,16 @@ export class Game {
     createCombat() {
         const enemy = this.#createEnemy();
         const combat = new Combat(this.#player, enemy);
-        combat.onTurn = (result) => {
-            if (result.attackerDamage > 0) {
-                this.addLog(`You attack ${result.defender.name} for ${result.attackerDamage} damage with your ${this.#player.weaponSlot.item?.name}.`, LogSource.Player);
-            }
+        combat.onMonstersTurn = (player, monster, damage) => {
+            this.addLog(`${monster.name} attacks you for ${damage} damage.`, LogSource.Enemy);
+        }
 
-            if (result.defenderDamage > 0) {
-                this.addLog(`${result.defender.name} attacks you for ${result.defenderDamage} damage.`, LogSource.Enemy);
-            }
+        combat.onPlayersTurn = (player, monster, damage) => {
+            this.addLog(`You attack ${monster.name} for ${damage} damage with your ${player.weaponSlot.item?.name}.`, LogSource.Player);
+        }
+
+        combat.onMonsterDeath = (monster) => {
+            this.addLog(`You've defeated the ${monster.name} and gained ${monster.expReward} experience!`, LogSource.Game);
         }
 
         return combat;
