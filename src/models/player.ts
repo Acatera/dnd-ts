@@ -3,6 +3,7 @@ import { ICombatant } from "../interfaces/combatant";
 import { EquipmentSlot } from "./equipment-slot";
 import { EquipmentSlotType } from "./equipment-slot-type";
 import { IWeapon } from "../interfaces/weapon";
+import { ItemFactory } from "../factories/item-factory";
 import { Fists } from "./items/fists";
 
 class Player implements ICombatant {

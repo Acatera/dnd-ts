@@ -1,0 +1,14 @@
+{
+    "fists":{
+        "name": "Fists",
+        "description": "Your own two hands.",
+        "minDamage": 1,
+        "maxDamage": 3
+    },
+    "blaster": {
+        "name": "Blaster",
+        "description": "A standard-issue blaster.",
+        "minDamage": 2,
+        "maxDamage": 4
+    }
+}

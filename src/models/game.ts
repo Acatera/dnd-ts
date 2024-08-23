@@ -4,6 +4,7 @@ import { Player } from "./player";
 import { Area } from "./area";
 import { AreaFactory } from "../factories/area-factory";
 import { MonsterFactory } from "../factories/monster-factory";
+import { ItemFactory } from "../factories/item-factory";
 
 export class Game {
     #player: Player;
@@ -27,6 +28,7 @@ export class Game {
     async init() {
         await MonsterFactory.loadMonsterData();
         await AreaFactory.loadAreaData();
+        await ItemFactory.loadItemData();
     }
 
     attack() {
@@ -37,6 +39,8 @@ export class Game {
             this.addLog("You've been defeated!", LogSource.Game);
         } else {
             this.addLog(`You've defeated the ${result.enemy.name}!`, LogSource.Game);
+            const weapon = ItemFactory.createWeapon('blaster');
+            this.#player.weaponSlot.item = weapon;
         }
 
         this.updatePlayerInfoPanel();
