@@ -1,0 +1,8 @@
+{
+    "drone_factory":{
+        "name": "Drone Factory",
+        "description": "A massive factory that churns out drones by the hundreds. The air is filled with the sound of machinery and the smell of oil and metal. The drones are relentless and will stop at nothing to protect their factory.",
+        "enemies": ["drone_scout", "drone_swarm", "drone_leader"],
+        "loot": ["copper", "iron", "steel", "plastic", "battery", "circuit_board"]
+    }
+}

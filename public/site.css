@@ -30,15 +30,15 @@ body {
     scroll-behavior: smooth;
 }
 
-#area-name {
-    grid-area: map;
+.area-section-title {
+    font-size: 16px;
+    margin: 5px;
     color: #ddd;
     font-family: monospace;
-    font-size: 14px;
+    font-size: 16px;
 }
 
-#area-mob-list {
-    grid-area: map;
+.area-section {
     color: #ddd;
     font-family: monospace;
     font-size: 14px;

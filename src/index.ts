@@ -1,12 +1,7 @@
-/**
- * This file is just a silly example to show everything working in the browser.
- * When you're ready to start on your site, clear the file. Happy hacking!
- **/
-
-import { MonsterFactory } from './factories/monster-factory';
 import Game from './models/game';
 
 const game = new Game();
+await game.start();
 
 // Add event listener for keydown events
 document.addEventListener('keydown', (event) => {
@@ -22,4 +17,3 @@ if (attackControl) {
     game.attack();
   });
 }
-await game.start();

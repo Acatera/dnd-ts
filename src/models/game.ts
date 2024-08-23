@@ -2,7 +2,7 @@ import { Combat } from "./combat";
 import { ICombatant } from "../interfaces/combatant";
 import { Player } from "./player";
 import { Area } from "./area";
-import { AreaFactory } from "./area-factory";
+import { AreaFactory } from "../factories/area-factory";
 import { MonsterFactory } from "../factories/monster-factory";
 
 export class Game {
@@ -11,20 +11,22 @@ export class Game {
 
     constructor() {
         this.#player = new Player(this);
-        this.#area = AreaFactory.createArea("mine");
-
-        this.#updateMapPanel();
+        this.#area = new Area({ id: 'test', name: 'Test Area' });
     }
-
+    
     async start() {
         await this.init();
-
+        
         this.addLog("Welcome to RoguePunk!");
         this.addLog("You are a rogue in a cyberpunk world.");
+
+        this.#area = AreaFactory.createArea("drone_factory");
+        this.#updateMapPanel();
     }
 
     async init() {
         await MonsterFactory.loadMonsterData();
+        await AreaFactory.loadAreaData();
     }
 
     attack() {
@@ -110,13 +112,19 @@ export class Game {
             nameElement.textContent = this.#area.name;
         }
 
+        const descElement = document.getElementById('area-desc');
+        if (descElement) {
+            descElement.textContent = this.#area.description;
+        }
+
         const mobListElement = document.getElementById('area-mob-list');
         if (mobListElement) {
             mobListElement.innerHTML = '';
 
-            for (const mob of this.#area.monsterPool) {
+            for (const mob of this.#area.enemies) {
                 const mobElement = document.createElement('li');
-                mobElement.textContent = mob;
+                const mobName = MonsterFactory.getMonsterName(mob);
+                mobElement.textContent = mobName;
                 mobListElement.appendChild(mobElement);
 
             }

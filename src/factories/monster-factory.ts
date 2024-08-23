@@ -15,7 +15,15 @@ export class MonsterFactory {
     }
 
     static createRandomMonster(): Monster {
-        return new Monster('');
+        if (!MonsterFactory.monsterData) {
+            throw new Error('Monster data not loaded');
+        }
+
+        const monsterIds = Object.keys(MonsterFactory.monsterData);
+        const randIndex = Math.floor(Math.random() * monsterIds.length);
+        const randMonsterId = monsterIds[randIndex];
+
+        return new Monster(MonsterFactory.monsterData[randMonsterId]);        
     }
 
     static createMonster(id: string): Monster {
@@ -24,5 +32,13 @@ export class MonsterFactory {
         }
 
         return new Monster(MonsterFactory.monsterData[id]);
+    }
+
+    static getMonsterName(id: string): string {
+        if (!MonsterFactory.monsterData || !MonsterFactory.monsterData[id]) {
+            throw new Error(`Monster with id ${id} not found`);
+        }
+
+        return MonsterFactory.monsterData[id].name;
     }
 }

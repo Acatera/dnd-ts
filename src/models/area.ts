@@ -4,20 +4,23 @@ import { MonsterFactory } from "../factories/monster-factory";
 export class Area {
     id: string;
     name: string;
-    monsterPool: string[] = [];
+    description: string = '';
+    enemies: string[] = [];
 
-    constructor(id: string, name: string) {
-        this.id = id;
-        this.name = name;
+    constructor(data: any) {
+        this.id = data.id;
+        this.name = data.name;
+        this.description = data.description;
+        this.enemies = data.enemies;
     }
 
     spawnEncounter(): Monster | null {
-        if (this.monsterPool.length < 0) {
+        if (this.enemies.length < 0) {
             return null;
         }
 
-        const randIndex = Math.floor(Math.random() * this.monsterPool.length);
-        const randMonsterId = this.monsterPool[randIndex];
+        const randIndex = Math.floor(Math.random() * this.enemies.length);
+        const randMonsterId = this.enemies[randIndex];
 
         return MonsterFactory.createMonster(randMonsterId);
     }
