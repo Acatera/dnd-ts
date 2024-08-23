@@ -54,7 +54,6 @@ class Player implements ICombatant {
     }
 
     receiveDamage(amount: number): number {
-        amount *= (100 - this.#level) / 198;
         if (amount > this.health) {
             amount = this.health;
         }

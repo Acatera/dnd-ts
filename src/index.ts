@@ -14,7 +14,7 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-const attackControl = document.getElementById('controls');
+const attackControl = document.getElementById('attack-control');
 
 if (attackControl) {
   attackControl.addEventListener('click', function() {
