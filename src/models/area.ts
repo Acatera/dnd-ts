@@ -4,7 +4,7 @@ import { DroneSwarm } from "./mobs/drone-swarm";
 export class Area {
     id: string;
     name: string;
-    protected monsterPool: string[] = [];
+    monsterPool: string[] = [];
 
     constructor(id: string, name: string) {
         this.id = id;

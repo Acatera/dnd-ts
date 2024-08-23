@@ -99,9 +99,21 @@ export class Game {
     }
 
     #updateMapPanel() {
-        const mapElement = document.getElementById('area');
-        if (mapElement) {
-            mapElement.textContent = this.#area.name;
+        const nameElement = document.getElementById('area-name');
+        if (nameElement) {
+            nameElement.textContent = this.#area.name;
+        }
+
+        const mobListElement = document.getElementById('area-mob-list');
+        if (mobListElement) {
+            mobListElement.innerHTML = '';
+
+            for (const mob of this.#area.monsterPool) {
+                const mobElement = document.createElement('li');
+                mobElement.textContent = mob;
+                mobListElement.appendChild(mobElement);
+
+            }
         }
     }
 
@@ -125,20 +137,11 @@ export class Game {
     #createEnemy(): ICombatant {
         if (this.#area) {
             const monster = this.#area.spawnEncounter();
-            // this.addLog(monster.name, LogSource.Game);
 
             if (monster) {
-//this.addLog('ddd', LogSource.Game);
                 return monster;
-            } else {
-  //              this.addLog('uuuu', LogSource.Game);
             }
-
-    //        this.addLog('Monster was null', LogSource.Game);
-        } else {
-      //      this.addLog('Area was null', LogSource.Game);
         }
-
 
         return Monster.createRandomMonster();
     }
