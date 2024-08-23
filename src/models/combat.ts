@@ -24,7 +24,7 @@ export class Combat {
         }
 
         if (!this.#enemy.isAlive) {
-            this.#player.gainExperience(5);
+            this.#player.gainExperience(this.#enemy.expReward);
         }
 
         return new CombatOutcome(this.#player, this.#enemy);

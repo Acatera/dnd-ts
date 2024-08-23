@@ -74,12 +74,14 @@ body {
 
 #char-health-current {
     background-color: rgb(214, 0, 0);
+    transition: transform 2.5s;
 }
 
 #char-experience {
     background-color: #412300;
     border: 1px solid #d0a702;
     margin: 2px;
+    transition: transform 2.5s;
 }
 
 #char-experience-current {

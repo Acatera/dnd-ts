@@ -107,6 +107,7 @@ export class Game {
 
     createCombat() {
         const enemy = this.#createEnemy();
+        this.addLog(`Enemy is ${enemy.name}`, LogSource.Game);
         const combat = new Combat(this.#player, enemy);
         combat.onTurn = (result) => {
             if (result.attackerDamage > 0) {
@@ -122,6 +123,23 @@ export class Game {
     }
 
     #createEnemy(): ICombatant {
+        if (this.#area) {
+            const monster = this.#area.spawnEncounter();
+            // this.addLog(monster.name, LogSource.Game);
+
+            if (monster) {
+//this.addLog('ddd', LogSource.Game);
+                return monster;
+            } else {
+  //              this.addLog('uuuu', LogSource.Game);
+            }
+
+    //        this.addLog('Monster was null', LogSource.Game);
+        } else {
+      //      this.addLog('Area was null', LogSource.Game);
+        }
+
+
         return Monster.createRandomMonster();
     }
 }

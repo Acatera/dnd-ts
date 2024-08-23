@@ -10,6 +10,7 @@ class Player implements ICombatant {
     #experience: bigint = 0n;
     #level: number = 1;
     #game: Game;
+    expReward: number = 0;
     health: number = 10;
     maxHealth: number = 10;
     name: string = "Player";
@@ -43,6 +44,8 @@ class Player implements ICombatant {
             damage = Math.floor(Math.random() * (weapon.maxDamage - weapon.minDamage + 1)) + weapon.minDamage;
         }
 
+        damage += this.#level;
+
         if (opponent.isAlive) {
             return opponent.receiveDamage(damage);
         }
@@ -51,6 +54,7 @@ class Player implements ICombatant {
     }
 
     receiveDamage(amount: number): number {
+        amount *= (100 - this.#level) / 198;
         if (amount > this.health) {
             amount = this.health;
         }

@@ -14,4 +14,11 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+const attackControl = document.getElementById('controls');
+
+if (attackControl) {
+  attackControl.addEventListener('click', function() {
+    game.attack();
+  });
+}
 game.start();
