@@ -1,6 +1,5 @@
 # TODO
 
-- Better inheritance map for ICombatant, Monster and Player
 - Implement drops
 - Implement armor
 - Implement mining
@@ -24,8 +23,9 @@
 - Regeneration
 - Consumables (batteries, etc)
 - Item scaling & rarity
-- Remove mob weapon and replace it with properties (BaseDamage, the sort)
-- Stores or NPCs
+- Shops
+- NPCs
+- Quests
 - Exo-scheleton (refine the idea: find drawbacks, etc)
 - Mobs don't have armor class
 - Drop/delete items

@@ -1,3 +1,4 @@
+import { IMonster } from "../interfaces/monster";
 import { ICombatant } from "../interfaces/combatant";
 
 export class TurnResult{
@@ -5,10 +6,10 @@ export class TurnResult{
     defenderDamage: number = 0;
     
     attacker: ICombatant;
-    defender: ICombatant;
+    defender: IMonster;
     
 
-    constructor(attacker: ICombatant, defender: ICombatant){
+    constructor(attacker: ICombatant, defender: IMonster){
         this.attacker = attacker;
         this.defender = defender;
     }

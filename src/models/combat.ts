@@ -2,14 +2,15 @@ import { CombatOutcome } from "./combat-outcome";
 import { ICombatant } from "../interfaces/combatant";
 import { Player } from "./player";
 import { TurnResult } from "./turn-result";
+import { IMonster } from "../interfaces/monster";
 
 export class Combat {
     #player: Player;
-    #enemy: ICombatant;
+    #enemy: IMonster;
 
     onTurn: ((result: TurnResult) => void) | null = null;
 
-    constructor(player: Player, enemy: ICombatant) {
+    constructor(player: Player, enemy: IMonster) {
         this.#player = player;
         this.#enemy = enemy;
     }

@@ -1,10 +1,10 @@
 import { Combat } from "./combat";
-import { ICombatant } from "../interfaces/combatant";
 import { Player } from "./player";
 import { Area } from "./area";
 import { AreaFactory } from "../factories/area-factory";
 import { MonsterFactory } from "../factories/monster-factory";
 import { ItemFactory } from "../factories/item-factory";
+import { IMonster } from "../interfaces/monster";
 
 export class Game {
     #player: Player;
@@ -150,7 +150,7 @@ export class Game {
         return combat;
     }
 
-    #createEnemy(): ICombatant {
+    #createEnemy(): IMonster {
         if (this.#area) {
             const monster = this.#area.spawnEncounter();
 
