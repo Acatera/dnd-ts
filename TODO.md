@@ -1,4 +1,31 @@
 # TODO
 
-- Refactor item creation into factory and JSON file
 - Better inheritance map for ICombatant, Monster and Player
+- Implement drops
+- Implement armor
+- Implement mining
+- Implement materials
+- Implement crafting
+- Implement skills
+- Implement bonuses
+- New skills:
+  - Strength
+  - Stamina
+  - Agility
+  - Intelligence
+  - Evade
+  - Pistol
+  - Rifle
+  - Initiative
+  - Ranged
+  - Melee
+- Implants
+- Body parts
+- Regeneration
+- Consumables (batteries, etc)
+- Item scaling & rarity
+- Remove mob weapon and replace it with properties (BaseDamage, the sort)
+- Stores or NPCs
+- Exo-scheleton (refine the idea: find drawbacks, etc)
+- Mobs don't have armor class
+- Drop/delete items
