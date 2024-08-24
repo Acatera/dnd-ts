@@ -25,7 +25,11 @@
         "name": "Plasteel Helmet",
         "description": "A helmet made of plasteel.",
         "slot": "Head",
-        "defense": 1
+        "defense": 1,
+        "requirements": {
+            "Stamina": 20,
+            "Agility": 20
+        }
     },
     "plasteel_body_armor": {
         "type": "armor",

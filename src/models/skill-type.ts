@@ -1,8 +1,16 @@
 export enum SkillType {
+    // Abilities
+    Strength = "Strength",
+    Stamina = "Stamina",
+    Agility = "Agility",
+    Intelligence = "Intelligence",
+    
+    // General
     MaxHealth = "MaxHealth",
     Evades = "Evades",
     Initiative = "Initiative",
 
+    // Combat
     Ranged = "Ranged",
     Bow = "Bow",
     Pistol = "Pistol",

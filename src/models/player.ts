@@ -30,6 +30,12 @@ export class Player implements ICombatant {
         new EquipmentSlot<IArmor>(EquipmentSlotType.Hands)
     ];
     skills: PlayerSkills = {
+        // Abilities
+        [SkillType.Strength]: 1,
+        [SkillType.Stamina]: 1,
+        [SkillType.Agility]: 1,
+        [SkillType.Intelligence]: 1,
+
         // General skills
         [SkillType.MaxHealth]: 10,
         [SkillType.Evades]: 1,
@@ -147,8 +153,11 @@ export class Player implements ICombatant {
 
 
     meetsRequirements(requirements: IItemRequirements): boolean {
+        if (!requirements) {
+            return true;
+        }
+        
         return Object.entries(requirements).every(([skill, level]) => {
-            debugger;
             const skillType = skill as SkillType;
             return this.skills[skillType] >= level;
         });
@@ -165,11 +174,12 @@ export class Player implements ICombatant {
     }
 
     equipArmor(armor: IArmor): boolean {
-        for (let armorSlot of this.armorSlots) {
-            if (armorSlot.slot === armor.slot) {
-                armorSlot.item = armor;
-                return true;
-            }
+        // Armor can be equipped if the player meets the requirements and the slot is correct
+        const armorSlot = this.armorSlots.find(slot => slot.slot === armor.slot);
+        debugger;
+        if (armorSlot && this.meetsRequirements(armor.requirements)) {
+            armorSlot.item = armor;
+            return true;
         }
 
         return false;

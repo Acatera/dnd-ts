@@ -1,12 +1,6 @@
 # TODO
 
-- Implement item requirements
 - Implement item bonuses
-- Implement abilities
-  - Strength
-  - Stamina
-  - Agility
-  - Intelligence
 - Implement trickle-down
 - Crit change and damage
 - Attack and defence rating

@@ -231,6 +231,7 @@ export class Game {
 
                 if (itemType === 'armor') {
                     const newItem = ItemFactory.createArmor(item);
+                    console.log(newItem);
                     this.addLog(`You found a ${newItem.name}!`, LogSource.Item);
 
                     // Automatically equip the armor if it's better than what the player has
@@ -239,11 +240,16 @@ export class Game {
                         if (newItem.defense > currentArmor.defense) {
                             if (this.#player.equipArmor(newItem)) {
                                 this.addLog(`You equip the ${newItem.name}.`, LogSource.Item);
+                            } else {
+                                this.addLog(`You can't equip the ${newItem.name}.`, LogSource.Item);
                             }
                         }
                     } else {
-                        this.#player.armorSlots[newItem.slot].item = newItem;
-                        this.addLog(`You equip the ${newItem.name}.`, LogSource.Item);
+                        if (this.#player.equipArmor(newItem)) {
+                            this.addLog(`You equip the ${newItem.name}.`, LogSource.Item);
+                        } else {
+                            this.addLog(`You can't equip the ${newItem.name}.`, LogSource.Item);
+                        }
                     }
                     continue;
                 }

@@ -1,10 +1,9 @@
 import { IArmor } from "../interfaces/armor";
 import { EquipmentSlotType } from "./equipment-slot-type";
-import { Item } from "./item";
+import { EquippableItem } from "./equippable-item";
 
-export class Armor extends Item implements IArmor {
+export class Armor extends EquippableItem implements IArmor {
     defense: number;
-    slot: EquipmentSlotType;
 
     constructor(id: string, data: any) {
         super(id, data);
@@ -19,8 +18,5 @@ export class Armor extends Item implements IArmor {
         }
 
         this.defense = data.defense;
-
-        // Assign the slot value to the slot property. Translate the string value to the enum value.
-        this.slot = EquipmentSlotType[data.slot as keyof typeof EquipmentSlotType];
     }
 }
