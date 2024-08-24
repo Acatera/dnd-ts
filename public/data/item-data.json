@@ -27,8 +27,8 @@
         "slot": "Head",
         "defense": 1,
         "requirements": {
-            "Stamina": 20,
-            "Agility": 20
+            "Stamina": 5,
+            "Agility": 5
         }
     },
     "plasteel_body_armor": {
@@ -36,27 +36,43 @@
         "name": "Plasteel Body Armor",
         "description": "Body armor made of plasteel.",
         "slot": "Chest",
-        "defense": 2
+        "defense": 2,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        }
     },
     "plasteel_gloves": {
         "type": "armor",
         "name": "Plasteel Gloves",
         "description": "Gloves made of plasteel.",
         "slot": "Hands",
-        "defense": 1
+        "defense": 1,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        }
     },
     "plasteel_pants": {
         "type": "armor",
         "name": "Plasteel Pants",
         "description": "Pants made of plasteel.",
         "slot": "Legs",
-        "defense": 1
+        "defense": 1,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        }
     },
     "plasteel_boots": {
         "type": "armor",
         "name": "Plasteel Boots",
         "description": "Boots made of plasteel.",
         "slot": "Feet",
-        "defense": 1
+        "defense": 1,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        }
     }
 }
