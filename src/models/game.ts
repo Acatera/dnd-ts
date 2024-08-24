@@ -5,6 +5,7 @@ import { AreaFactory } from "../factories/area-factory";
 import { MonsterFactory } from "../factories/monster-factory";
 import { ItemFactory } from "../factories/item-factory";
 import { IMonster } from "../interfaces/monster";
+import { EquipmentSlotType } from "./equipment-slot-type";
 
 export class Game {
     #player: Player;
@@ -107,6 +108,39 @@ export class Game {
             }
 
             levelElement.innerHTML = `Level: ${this.#player.level}`;
+        }
+
+        const equipmentPanel = document.getElementById('char-equipment');
+        if (equipmentPanel) {
+            const weaponSlot = document.getElementById('char-equipment-weapon');
+            if (weaponSlot) {
+                weaponSlot.innerHTML = `${this.#player.weaponSlot.item?.name || 'None'}`;
+            }
+
+            const headSlot = document.getElementById('char-equipment-head');
+            if (headSlot) {
+                headSlot.innerHTML = `${this.#player.armorSlots[EquipmentSlotType.Head].item?.name || 'None'}`;
+            }
+
+            const chestSlot = document.getElementById('char-equipment-chest');
+            if (chestSlot) {
+                chestSlot.innerHTML = `${this.#player.armorSlots[EquipmentSlotType.Chest].item?.name || 'None'}`;
+            }
+
+            const legsSlot = document.getElementById('char-equipment-legs');
+            if (legsSlot) {
+                legsSlot.innerHTML = `${this.#player.armorSlots[EquipmentSlotType.Legs].item?.name || 'None'}`;
+            }
+
+            const feetSlot = document.getElementById('char-equipment-feet');
+            if (feetSlot) {
+                feetSlot.innerHTML = `${this.#player.armorSlots[EquipmentSlotType.Feet].item?.name || 'None'}`;
+            }
+
+            const handsSlot = document.getElementById('char-equipment-hands');
+            if (handsSlot) {
+                handsSlot.innerHTML = `${this.#player.armorSlots[EquipmentSlotType.Hands].item?.name || 'None'}`;
+            }
         }
     }
 

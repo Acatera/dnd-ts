@@ -12,10 +12,25 @@ body {
     height: 100vh;
 }
 
+/* Char info will have three child divs, columns */
 #char-info {
     grid-area: char-info;
     border: 1px solid #555;
     color: #ddd;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 
+        "char-stats char-equipment char-name";
+}
+
+/* One row with Key: Value format */
+.char-equipment-item{
+    margin: 0px;
+    padding: 0px;
+    font-family: monospace;
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
 }
 
 #logs {
@@ -44,7 +59,7 @@ body {
     font-size: 14px;
 }
 
-.controls-title{
+.controls-title {
     font-size: 16px;
     margin: 5px;
 }
@@ -59,7 +74,7 @@ body {
 
 /* matrix style theme, green on black */
 #attack-control {
-    margin:  0px 0px;
+    margin: 0px 0px;
     color: #fff;
     border: 1px solid #00ff00;
     border-radius: 5px;

@@ -13,15 +13,48 @@
 <body>
     <div id="main">
         <div id="char-info">
-            <div id="char-health" class="char-info-bar">
-                <div id="char-health-current" style="height:100%; width: 100%;"></div>
+            <div id="char-stats">
+                <div id="char-health" class="char-info-bar">
+                    <div id="char-health-current" style="height:100%; width: 100%;"></div>
+                </div>
+
+                <div id="char-experience" class="char-info-bar">
+                    <div id="char-experience-current" style="height:100%; width: 0%;"></div>
+                </div>
+
+                <p id="char-level" class="char-info-line">Level: 1</p>
             </div>
 
-            <div id="char-experience" class="char-info-bar">
-                <div id="char-experience-current" style="height:100%; width: 0%;"></div>
-            </div>
+            <div id="char-equipment">
+                <div class="char-equipment-item">
+                    <label>Weapon</label>
+                    <span id="char-equipment-weapon">Fists</span>
+                </div>
+                <div class="char-equipment-item">
+                    <label>Head</label>
+                    <span id="char-equipment-head">None</span>
+                </div>
 
-            <p id="char-level" class="char-info-line">Level: 1</p>
+                <div class="char-equipment-item">
+                    <label>Chest</label>
+                    <span id="char-equipment-chest">None</span>
+                </div>
+
+                <div class="char-equipment-item">
+                    <label>Hands</label>
+                    <span id="char-equipment-hands">None</span>
+                </div>
+
+                <div class="char-equipment-item">
+                    <label>Legs</label>
+                    <span id="char-equipment-legs">None</span>
+                </div>
+
+                <div class="char-equipment-item">
+                    <label>Feet</label>
+                    <span id="char-equipment-feet">None</span>
+                </div>
+            </div>
         </div>
         <div id="logs"></div>
         <div id="area">
