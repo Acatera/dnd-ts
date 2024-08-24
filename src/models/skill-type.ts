@@ -11,7 +11,6 @@ export enum SkillType {
     Initiative = "Initiative",
 
     // Combat
-    Ranged = "Ranged",
     Bow = "Bow",
     Pistol = "Pistol",
     SMG = "SMG",
@@ -22,7 +21,6 @@ export enum SkillType {
     Explosive = "Explosive",
     Thrown = "Thrown",
 
-    // Melee,
     // Unarmed,
     // OneHBlunt,
     // OneHSharp,

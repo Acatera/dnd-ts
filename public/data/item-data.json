@@ -16,11 +16,10 @@
         "attackSpeed": 20,
         "slot": "Weapon",
         "requirements": {
-            "Ranged": 1,
             "Pistol": 1
         },
         "bonuses": {
-            "Agility": 1
+            "Pistol": 25
         }
     },
     "plasteel_helmet": {
@@ -34,7 +33,7 @@
             "Agility": 5
         },
         "bonuses": {
-            "Agility": 1
+            "Pistol": 25
         }
     },
     "plasteel_body_armor": {
@@ -48,7 +47,7 @@
             "Agility": 5
         },
         "bonuses": {
-            "Agility": 1
+            "Pistol": 25
         }
     },
     "plasteel_gloves": {
@@ -62,7 +61,7 @@
             "Agility": 5
         },
         "bonuses": {
-            "Agility": 1
+            "Pistol": 25
         }
     },
     "plasteel_pants": {
@@ -76,7 +75,7 @@
             "Agility": 5
         },
         "bonuses": {
-            "Agility": 1
+            "Pistol": 25
         }
     },
     "plasteel_boots": {
@@ -90,7 +89,7 @@
             "Agility": 5
         },
         "bonuses": {
-            "Agility": 1
+            "Pistol": 25
         }
     }
 }

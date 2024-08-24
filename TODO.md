@@ -1,5 +1,6 @@
 # TODO
 
+- Evades
 - Inventory
 - Implement materials
 - Implement other item types (materials, etc)
@@ -7,7 +8,6 @@
 - Implement trickle-down
 - Implement crafting
 - Crit change and damage
-- Attack and defence rating
 - Item scaling & rarity
 - Implement mining
 - Implants

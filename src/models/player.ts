@@ -42,7 +42,6 @@ export class Player implements ICombatant {
         [SkillType.Initiative]: 1,
 
         // Ranged skills
-        [SkillType.Ranged]: 1,
         [SkillType.Bow]: 1,
         [SkillType.Pistol]: 1,
         [SkillType.SMG]: 1,
@@ -91,7 +90,6 @@ export class Player implements ICombatant {
 
     getSkill(skill: SkillType): number {
         const skillBonuses = this.#getSkillBonuses(skill);
-        console.log(skillBonuses);
         return this.#skills[skill] + skillBonuses;
     }
 
@@ -107,17 +105,27 @@ export class Player implements ICombatant {
         return totalBonus;
     }
 
+    getAttackRating(): number {
+        let attackRating = 1; // TODO: replace this with unarmed attack rating
+        if (this.weaponSlot.item){
+            const primarySkill = this.weaponSlot.item.getPrimarySkill();
+            attackRating = this.getSkill(primarySkill);
+        }
+        return attackRating;
+    }
+
     attack(opponent: ICombatant): number {
         let damage = 1;
         let attackSpeed = 20;
 
         if (this.weaponSlot.item) {
-            // Calculate the damage based on the weapon
-            const weapon = this.weaponSlot.item as IWeapon;
-            damage = Math.floor(Math.random() * (weapon.maxDamage - weapon.minDamage + 1)) + weapon.minDamage;
-            attackSpeed = weapon.attackSpeed;
+            const attackRating = this.getAttackRating();
+            const minDamage = this.weaponSlot.item.minDamage * (1 + attackRating / 400);
+            const maxDamage = this.weaponSlot.item.maxDamage * (1 + attackRating / 400);
+            damage = Math.floor(Math.random() * (maxDamage - minDamage + 1) + minDamage);
+            attackSpeed = this.weaponSlot.item.attackSpeed;
         }
-
+        
         if (opponent.isAlive) {
             this.#idleTicks -= attackSpeed;
             return opponent.receiveDamage(damage);
@@ -194,7 +202,6 @@ export class Player implements ICombatant {
     equipArmor(armor: IArmor): boolean {
         // Armor can be equipped if the player meets the requirements and the slot is correct
         const armorSlot = this.armorSlots.find(slot => slot.slot === armor.slot);
-        debugger;
         if (armorSlot && this.meetsRequirements(armor.requirements)) {
             armorSlot.item = armor;
             return true;

@@ -230,7 +230,6 @@ export class Game {
 
                 if (itemType === 'armor') {
                     const newItem = ItemFactory.createArmor(item);
-                    console.log(newItem);
                     this.addLog(`You found a ${newItem.name}!`, LogSource.Item);
 
                     // Automatically equip the armor if it's better than what the player has
