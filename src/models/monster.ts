@@ -8,6 +8,7 @@ export class Monster implements IMonster {
     maxHealth: number;
     name: string;
     attackSpeed: number = 20;
+    evasion: number;
     drops: string[];
 
     constructor(monsterData: any) {
@@ -31,6 +32,7 @@ export class Monster implements IMonster {
         this.maxHealth = monsterData.health;
         this.health = monsterData.health;
         this.expReward = monsterData.expReward;
+        this.evasion = monsterData.evasion || 1;
         this.drops = monsterData.drops || [];
     }
 
