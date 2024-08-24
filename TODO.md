@@ -1,6 +1,6 @@
 # TODO
 
-- Implement armor
+- Show equipment
 - Implement mining
 - Implement materials
 - Implement crafting

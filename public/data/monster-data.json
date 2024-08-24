@@ -5,6 +5,13 @@
         "expReward": 5,
         "attackSpeed": 20
     },
+    "plasteel_drone": {
+        "name": "Plasteel Drone",
+        "health": 10,
+        "expReward": 10,
+        "attackSpeed": 25,
+        "drops":["plasteel_helmet","plasteel_body_armor","plasteel_gloves","plasteel_pants","plasteel_boots"]
+    },
     "drone_swarm": {
         "name": "Drone Swarm",
         "health": 15,

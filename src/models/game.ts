@@ -150,16 +150,37 @@ export class Game {
 
             const loot = monster.generateLoot();
             for (const item of loot) {
-                if (item === 'blaster') {
+                const itemType = ItemFactory.getItemType(item);
+
+                if (itemType === 'armor') {
+                    const newItem = ItemFactory.createArmor(item);
+                    this.addLog(`You found a ${newItem.name}!`, LogSource.Item);
+
+                    // Automatically equip the armor if it's better than what the player has
+                    const currentArmor = this.#player.armorSlots[newItem.slot].item;
+                    if (currentArmor) {
+                        if (newItem.defense > currentArmor.defense) {
+                            this.#player.armorSlots[newItem.slot].item = newItem;
+                            this.addLog(`You equip the ${newItem.name}.`, LogSource.Item);
+                        }
+                    } else {
+                        this.#player.armorSlots[newItem.slot].item = newItem;
+                        this.addLog(`You equip the ${newItem.name}.`, LogSource.Item);
+                    }
+                    continue;
+                }
+
+                if (itemType === 'weapon') {
                     if (this.#player.weaponSlot.item?.id === 'blaster') {
                         this.addLog(`You found a blaster! You already have one, so you leave it behind.`, LogSource.Item);
                         continue;
                     }
                     const newItem = ItemFactory.createWeapon(item);
                     this.#player.weaponSlot.item = newItem;
-                    this.addLog(`You found a ${item}! You equip it immediately.`, LogSource.Item);
+                    this.addLog(`You found a ${newItem.name}! You equip it immediately.`, LogSource.Item);
                     continue;
                 }
+
                 this.addLog(`You found a ${item}!`, LogSource.Item);
             }
         }

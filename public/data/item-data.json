@@ -14,5 +14,40 @@
         "minDamage": 2,
         "maxDamage": 4,
         "attackSpeed": 10
+    },
+    "plasteel_helmet": {
+        "type": "armor",
+        "name": "Plasteel Helmet",
+        "description": "A helmet made of plasteel.",
+        "slot": "Head",
+        "defense": 1
+    },
+    "plasteel_body_armor": {
+        "type": "armor",
+        "name": "Plasteel Body Armor",
+        "description": "Body armor made of plasteel.",
+        "slot": "Chest",
+        "defense": 2
+    },
+    "plasteel_gloves": {
+        "type": "armor",
+        "name": "Plasteel Gloves",
+        "description": "Gloves made of plasteel.",
+        "slot": "Hands",
+        "defense": 1
+    },
+    "plasteel_pants": {
+        "type": "armor",
+        "name": "Plasteel Pants",
+        "description": "Pants made of plasteel.",
+        "slot": "Legs",
+        "defense": 1
+    },
+    "plasteel_boots": {
+        "type": "armor",
+        "name": "Plasteel Boots",
+        "description": "Boots made of plasteel.",
+        "slot": "Feet",
+        "defense": 1
     }
 }

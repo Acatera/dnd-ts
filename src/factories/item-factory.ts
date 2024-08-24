@@ -1,3 +1,5 @@
+import { Armor } from "../models/armor";
+import { IArmor } from "../interfaces/armor";
 import { IWeapon } from "../interfaces/weapon";
 import { Weapon } from "../models/weapon";
 
@@ -15,12 +17,27 @@ export class ItemFactory {
         return ItemFactory.itemData;
     }
 
-    static createWeapon(id: string): IWeapon {
+    static getItemType(id: string): string {
+        if (!ItemFactory.itemData || !ItemFactory.itemData[id]) {
+            throw new Error(`Item data not found for ID: ${id}`);
+        }
 
+        return ItemFactory.itemData[id].type;
+    }
+
+    static createWeapon(id: string): IWeapon {
         if (!ItemFactory.itemData || !ItemFactory.itemData[id]) {
             throw new Error(`Weapon data not found for ID: ${id}`);
         }
 
         return new Weapon(id, ItemFactory.itemData[id]);
+    }
+
+    static createArmor(id: string): IArmor {
+        if (!ItemFactory.itemData || !ItemFactory.itemData[id]) {
+            throw new Error(`Armor data not found for ID: ${id}`);
+        }
+
+        return new Armor(id, ItemFactory.itemData[id]);
     }
 }

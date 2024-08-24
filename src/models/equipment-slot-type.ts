@@ -3,7 +3,7 @@
  */
 export enum EquipmentSlotType {
     Head,
-    Body,
+    Chest,
     Legs,
     Feet,
     Hands,
