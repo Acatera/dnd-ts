@@ -2,15 +2,15 @@ import { IItem } from "../interfaces/item";
 import { EquipmentSlotType } from "./equipment-slot-type";
 
 export class EquipmentSlot<T extends IItem> {
-    #slotType: EquipmentSlotType;
+    #slot: EquipmentSlotType;
 
     item: T | null = null;
 
-    get slotType(): EquipmentSlotType {
-        return this.#slotType;
+    get slot(): EquipmentSlotType {
+        return this.#slot;
     }
 
     constructor(slotType: EquipmentSlotType) {
-        this.#slotType = slotType;
+        this.#slot = slotType;
     }
 }

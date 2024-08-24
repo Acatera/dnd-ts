@@ -1,7 +1,6 @@
 import { EquipmentSlotType } from "../models/equipment-slot-type";
-import { IItem } from "./item";
+import { IEquippable } from "./equippable";
 
-export interface IArmor extends IItem {
+export interface IArmor extends IEquippable {
     defense: number;
-    slot: EquipmentSlotType;
 }

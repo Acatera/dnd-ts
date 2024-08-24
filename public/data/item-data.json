@@ -1,5 +1,5 @@
 {
-    "fists":{
+    "fists": {
         "type": "weapon",
         "name": "Fists",
         "description": "Your own two hands.",
@@ -13,7 +13,12 @@
         "description": "A standard-issue blaster.",
         "minDamage": 2,
         "maxDamage": 4,
-        "attackSpeed": 20
+        "attackSpeed": 20,
+        "slot": "Weapon",
+        "requirements": {
+            "Ranged": 1,
+            "Pistol": 1
+        }
     },
     "plasteel_helmet": {
         "type": "armor",

@@ -1,6 +1,6 @@
-import { IItem } from "./item";
+import { IEquippable } from "./equippable";
 
-export interface IWeapon extends IItem {
+export interface IWeapon extends IEquippable {
     minDamage: number;
     maxDamage: number;
     attackSpeed: number;

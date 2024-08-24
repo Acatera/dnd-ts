@@ -172,7 +172,7 @@ export class Game {
 
         const skillsPanel = document.getElementById('char-skills');
         if (skillsPanel) {
-            const skills =  this.#player.skills;
+            const skills = this.#player.skills;
             for (const skill in skills) {
                 const skillName = skill.charAt(0).toLowerCase() + skill.slice(1);
                 const skillElement = document.getElementById(`char-skill-${skillName}`);
@@ -237,8 +237,9 @@ export class Game {
                     const currentArmor = this.#player.armorSlots[newItem.slot].item;
                     if (currentArmor) {
                         if (newItem.defense > currentArmor.defense) {
-                            this.#player.armorSlots[newItem.slot].item = newItem;
-                            this.addLog(`You equip the ${newItem.name}.`, LogSource.Item);
+                            if (this.#player.equipArmor(newItem)) {
+                                this.addLog(`You equip the ${newItem.name}.`, LogSource.Item);
+                            }
                         }
                     } else {
                         this.#player.armorSlots[newItem.slot].item = newItem;
@@ -253,8 +254,13 @@ export class Game {
                         continue;
                     }
                     const newItem = ItemFactory.createWeapon(item);
-                    this.#player.weaponSlot.item = newItem;
-                    this.addLog(`You found a ${newItem.name}! You equip it immediately.`, LogSource.Item);
+                    if (this.#player.wieldWeapon(newItem)) {
+                        this.addLog(`You found a ${newItem.name}! You equip it immediately.`, LogSource.Item);
+                        continue;
+                    } else {
+                        this.addLog(`You found a ${newItem.name}! You leave it behind.`, LogSource.Item);
+                        continue;
+                    }
                     continue;
                 }
 

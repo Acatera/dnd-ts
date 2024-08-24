@@ -7,6 +7,7 @@ import { Fists } from "./items/fists";
 import { IArmor } from "../interfaces/armor";
 import { SkillType } from "./skill-type";
 import { PlayerSkills } from "./player-skills";
+import { IItemRequirements } from "../interfaces/item-requirements";
 
 export class Player implements ICombatant {
     readonly experienceLevels: bigint[] = [10n, 15n, 23n, 34n, 51n, 76n, 114n, 171n, 256n, 384n, 577n, 865n, 1297n, 1946n, 2919n, 4379n, 6568n, 9853n, 14779n, 22168n, 33253n, 49879n, 74818n, 112227n, 168341n, 252512n, 378768n, 568151n, 852227n, 1278340n, 1917511n, 2876266n, 4314399n, 6471598n, 9707397n, 14561096n, 21841644n, 32762466n, 49143699n, 73715549n, 110573323n, 165859985n, 248789977n, 373184966n, 559777449n, 839666173n, 1259499260n, 1889248890n, 2833873334n, 4250810001n, 6376215002n, 9564322503n, 14346483755n, 21519725632n, 32279588448n, 48419382673n, 72629074009n, 108943611013n, 163415416520n, 245123124780n, 367684687169n, 551527030754n, 827290546131n, 1240935819196n, 1861403728795n, 2792105593192n, 4188158389788n, 6282237584682n, 9423356377023n, 14135034565535n, 21202551848303n, 31803827772454n, 47705741658681n, 71558612488021n, 107337918732031n, 161006878098047n, 241510317147071n, 362265475720606n, 543398213580909n, 815097320371364n, 1222645980557050n, 1833968970835570n, 2750953456253350n, 4126430184380030n, 6189645276570040n, 9284467914855070n, 13926701872282600n, 20890052808423900n, 31335079212635800n, 47002618818953800n, 70503928228430700n, 105755892342646000n, 158633838513969000n, 237950757770953000n, 356926136656430000n, 535389204984645000n, 803083807476968000n, 1204625711215450000n, 1806938566823180000n];
@@ -15,7 +16,7 @@ export class Player implements ICombatant {
     #level: number = 1;
     #game: Game;
     health: number = 10;
-    
+
     get maxHealth(): number {
         return this.skills[SkillType.MaxHealth];
     }
@@ -65,7 +66,7 @@ export class Player implements ICombatant {
 
         this.weaponSlot.item = new Fists();
     }
-    
+
     get canAttack(): boolean {
         if (this.weaponSlot.item) {
             return this.weaponSlot.item.attackSpeed <= this.#idleTicks;
@@ -134,7 +135,7 @@ export class Player implements ICombatant {
             this.skills.MaxHealth += 1;
 
             // Increase the player's skills
-            for (let skill in this.skills) {
+            for (const skill in this.skills) {
                 this.skills[skill as SkillType]++;
             }
 
@@ -142,6 +143,36 @@ export class Player implements ICombatant {
             this.#game.addLog(`You've been healed to full health!`, LogSource.Game);
             this.health = this.maxHealth;
         }
+    }
+
+
+    meetsRequirements(requirements: IItemRequirements): boolean {
+        return Object.entries(requirements).every(([skill, level]) => {
+            debugger;
+            const skillType = skill as SkillType;
+            return this.skills[skillType] >= level;
+        });
+    }
+
+    wieldWeapon(weapon: IWeapon): boolean {
+        // Weapon can be wielded if the player meets the requirements and the slot is correct
+        if (this.meetsRequirements(weapon.requirements) && this.weaponSlot.slot === weapon.slot) {
+            this.weaponSlot.item = weapon;
+            return true;
+        }
+
+        return false;
+    }
+
+    equipArmor(armor: IArmor): boolean {
+        for (let armorSlot of this.armorSlots) {
+            if (armorSlot.slot === armor.slot) {
+                armorSlot.item = armor;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     #totalDefence(): number {

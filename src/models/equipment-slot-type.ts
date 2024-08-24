@@ -7,7 +7,5 @@ export enum EquipmentSlotType {
     Legs,
     Feet,
     Hands,
-    Weapon,
-    Accessory,
-    Inventory
+    Weapon
 }

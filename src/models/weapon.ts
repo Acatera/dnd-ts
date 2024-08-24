@@ -1,7 +1,7 @@
 import { IWeapon } from "../interfaces/weapon";
-import { Item } from "./item";
+import { EquippableItem as EquippableItem } from "./equippable-item";
 
-export class Weapon extends Item implements IWeapon {
+export class Weapon extends EquippableItem implements IWeapon {
     minDamage: number;
     maxDamage: number;
     attackSpeed: number;
