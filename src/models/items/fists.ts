@@ -5,6 +5,6 @@ export class Fists implements IWeapon {
     minDamage = 1;
     maxDamage = 3;
     name = "Fists";
-    attackSpeed = 20;
+    attackSpeed = 10;
     description = "Your own two hands.";
 }

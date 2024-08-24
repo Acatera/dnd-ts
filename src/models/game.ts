@@ -175,6 +175,10 @@ export class Game {
             this.addLog(`${monster.name} attacks you for ${damage} damage.`, LogSource.Enemy);
         }
 
+        combat.onMonsterMiss = (monster) => {
+            this.addLog(`${monster.name} misses you!`, LogSource.Enemy);
+        }
+
         combat.onPlayersTurn = (player, monster, damage) => {
             this.addLog(`You attack ${monster.name} for ${damage} damage with your ${player.weaponSlot.item?.name}.`, LogSource.Player);
         }

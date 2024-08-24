@@ -8,6 +8,7 @@ export class Combat {
 
     onPlayersTurn: ((player: Player, monster: IMonster, damage: number) => void) | null = null;
     onMonstersTurn: ((player: Player, monster: IMonster, damage: number) => void) | null = null;
+    onMonsterMiss: ((monster: IMonster) => void) | null = null;
     onMonsterDeath: ((monster: IMonster) => void) | null = null;
 
     constructor(player: Player, enemy: IMonster) {
@@ -25,24 +26,28 @@ export class Combat {
                 }
 
                 if (!this.#enemy.isAlive) {
-                    
+
                     if (this.onMonsterDeath) {
                         this.onMonsterDeath(this.#enemy);
                     }
-                    
+
                     this.#player.gainExperience(this.#enemy.expReward);
-    
+
                     break;
                 }
             }
 
             if (this.#enemy.canAttack) {
                 const enemyDamage = this.#enemy.attack(this.#player);
-    
-                if (this.onMonstersTurn) {
+
+                if (enemyDamage === 0 && this.onMonsterMiss) {
+                    this.onMonsterMiss(this.#enemy);
+                }
+
+                if (enemyDamage > 0 && this.onMonstersTurn) {
                     this.onMonstersTurn(this.#player, this.#enemy, enemyDamage);
                 }
-    
+
                 if (!this.#player.isAlive) {
                     break;
                 }

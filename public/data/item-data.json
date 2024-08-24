@@ -13,7 +13,7 @@
         "description": "A standard-issue blaster.",
         "minDamage": 2,
         "maxDamage": 4,
-        "attackSpeed": 10
+        "attackSpeed": 20
     },
     "plasteel_helmet": {
         "type": "armor",

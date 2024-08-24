@@ -1,6 +1,5 @@
 # TODO
 
-- Add armor effect
 - Implement mining
 - Implement materials
 - Implement crafting
