@@ -1,5 +1,6 @@
 {
     "fists":{
+        "type": "weapon",
         "name": "Fists",
         "description": "Your own two hands.",
         "minDamage": 1,
@@ -7,6 +8,7 @@
         "attackSpeed": 20
     },
     "blaster": {
+        "type": "weapon",
         "name": "Blaster",
         "description": "A standard-issue blaster.",
         "minDamage": 2,
