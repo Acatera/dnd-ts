@@ -10,4 +10,5 @@ export class Fists implements IWeapon {
     attackSpeed = 10;
     slot: EquipmentSlotType = EquipmentSlotType.Weapon;
     requirements = {};
+    bonuses = {};
 }

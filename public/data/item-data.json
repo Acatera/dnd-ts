@@ -18,6 +18,9 @@
         "requirements": {
             "Ranged": 1,
             "Pistol": 1
+        },
+        "bonuses": {
+            "Agility": 1
         }
     },
     "plasteel_helmet": {
@@ -29,6 +32,9 @@
         "requirements": {
             "Stamina": 5,
             "Agility": 5
+        },
+        "bonuses": {
+            "Agility": 1
         }
     },
     "plasteel_body_armor": {
@@ -40,6 +46,9 @@
         "requirements": {
             "Stamina": 5,
             "Agility": 5
+        },
+        "bonuses": {
+            "Agility": 1
         }
     },
     "plasteel_gloves": {
@@ -51,6 +60,9 @@
         "requirements": {
             "Stamina": 5,
             "Agility": 5
+        },
+        "bonuses": {
+            "Agility": 1
         }
     },
     "plasteel_pants": {
@@ -62,6 +74,9 @@
         "requirements": {
             "Stamina": 5,
             "Agility": 5
+        },
+        "bonuses": {
+            "Agility": 1
         }
     },
     "plasteel_boots": {
@@ -73,6 +88,9 @@
         "requirements": {
             "Stamina": 5,
             "Agility": 5
+        },
+        "bonuses": {
+            "Agility": 1
         }
     }
 }

@@ -1,16 +1,15 @@
 # TODO
 
-- Implement item bonuses
+- Inventory
+- Implement materials
 - Implement other item types (materials, etc)
 - Implement consumables (healing items)
 - Implement trickle-down
+- Implement crafting
 - Crit change and damage
 - Attack and defence rating
 - Item scaling & rarity
-- Inventory
 - Implement mining
-- Implement materials
-- Implement crafting
 - Implants
 - Body parts
 - Regeneration

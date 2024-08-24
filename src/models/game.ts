@@ -40,7 +40,7 @@ export class Game {
         if (skillsPanel) {
             skillsPanel.innerHTML = '';
 
-            for (const skill in this.#player.skills) {
+            for (const skill of Object.keys(SkillType)) {
                 const skillName = skill.charAt(0).toLowerCase() + skill.slice(1);
                 const skillElement = document.createElement('div');
                 skillElement.classList.add('char-skills-item');
@@ -50,7 +50,7 @@ export class Game {
                 skillElement.appendChild(skillLabel);
 
                 const skillValue = document.createElement('span');
-                skillValue.textContent = `${this.#player.skills[skill as SkillType]}`;
+                skillValue.textContent = `${this.#player.getSkill(skill as SkillType)}`;
                 skillValue.id = `char-skill-${skillName}`;
                 skillElement.appendChild(skillValue);
 
@@ -172,12 +172,11 @@ export class Game {
 
         const skillsPanel = document.getElementById('char-skills');
         if (skillsPanel) {
-            const skills = this.#player.skills;
-            for (const skill in skills) {
+            for (const skill of Object.keys(SkillType)) {
                 const skillName = skill.charAt(0).toLowerCase() + skill.slice(1);
                 const skillElement = document.getElementById(`char-skill-${skillName}`);
                 if (skillElement) {
-                    skillElement.innerHTML = `${skills[skill as SkillType]}`;
+                    skillElement.innerHTML = `${this.#player.getSkill(skill as SkillType)}`;
                 }
             }
         }

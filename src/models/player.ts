@@ -18,7 +18,7 @@ export class Player implements ICombatant {
     health: number = 10;
 
     get maxHealth(): number {
-        return this.skills[SkillType.MaxHealth];
+        return this.#skills[SkillType.MaxHealth];
     }
 
     weaponSlot: EquipmentSlot<IWeapon> = new EquipmentSlot<IWeapon>(EquipmentSlotType.Weapon);
@@ -29,7 +29,7 @@ export class Player implements ICombatant {
         new EquipmentSlot<IArmor>(EquipmentSlotType.Feet),
         new EquipmentSlot<IArmor>(EquipmentSlotType.Hands)
     ];
-    skills: PlayerSkills = {
+    #skills: PlayerSkills = {
         // Abilities
         [SkillType.Strength]: 1,
         [SkillType.Stamina]: 1,
@@ -89,6 +89,24 @@ export class Player implements ICombatant {
         this.#idleTicks++;
     }
 
+    getSkill(skill: SkillType): number {
+        const skillBonuses = this.#getSkillBonuses(skill);
+        console.log(skillBonuses);
+        return this.#skills[skill] + skillBonuses;
+    }
+
+    #getSkillBonuses(skill: SkillType): number {
+        let totalBonus = 0;
+
+        for (let armorSlot of this.armorSlots) {
+            if (armorSlot.item) {
+                totalBonus += armorSlot.item.bonuses[skill] || 0;
+            }
+        }
+
+        return totalBonus;
+    }
+
     attack(opponent: ICombatant): number {
         let damage = 1;
         let attackSpeed = 20;
@@ -138,11 +156,11 @@ export class Player implements ICombatant {
             this.#game.addLog(`You've reached level ${this.#level}!`, LogSource.Game);
 
             // Increase the player's health
-            this.skills.MaxHealth += 1;
+            this.#skills.MaxHealth += 1;
 
             // Increase the player's skills
-            for (const skill in this.skills) {
-                this.skills[skill as SkillType]++;
+            for (const skill in this.#skills) {
+                this.#skills[skill as SkillType]++;
             }
 
             // Heal the player to full health
@@ -159,7 +177,7 @@ export class Player implements ICombatant {
         
         return Object.entries(requirements).every(([skill, level]) => {
             const skillType = skill as SkillType;
-            return this.skills[skillType] >= level;
+            return this.#skills[skillType] >= level;
         });
     }
 
