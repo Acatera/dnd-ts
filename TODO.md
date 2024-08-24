@@ -1,26 +1,24 @@
 # TODO
 
-- Implement mining
-- Implement materials
-- Implement crafting
-- Implement skills
-- Implement bonuses
-- New skills:
+- Implement item requirements
+- Implement item bonuses
+- Implement abilities
   - Strength
   - Stamina
   - Agility
   - Intelligence
-  - Evade
-  - Pistol
-  - Rifle
-  - Initiative
-  - Ranged
-  - Melee
+- Implement trickle-down
+- Crit change and damage
+- Attack and defence rating
+- Item scaling & rarity
+- Inventory
+- Implement mining
+- Implement materials
+- Implement crafting
 - Implants
 - Body parts
 - Regeneration
 - Consumables (batteries, etc)
-- Item scaling & rarity
 - Shops
 - NPCs
 - Quests

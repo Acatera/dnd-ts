@@ -6,6 +6,7 @@ import { MonsterFactory } from "../factories/monster-factory";
 import { ItemFactory } from "../factories/item-factory";
 import { IMonster } from "../interfaces/monster";
 import { EquipmentSlotType } from "./equipment-slot-type";
+import { SkillType } from "./skill-type";
 
 export class Game {
     #player: Player;
@@ -30,6 +31,32 @@ export class Game {
         await MonsterFactory.loadMonsterData();
         await AreaFactory.loadAreaData();
         await ItemFactory.loadItemData();
+
+        this.initPlayerSkillPanel();
+    }
+
+    initPlayerSkillPanel() {
+        const skillsPanel = document.getElementById('char-skills');
+        if (skillsPanel) {
+            skillsPanel.innerHTML = '';
+
+            for (const skill in this.#player.skills) {
+                const skillName = skill.charAt(0).toLowerCase() + skill.slice(1);
+                const skillElement = document.createElement('div');
+                skillElement.classList.add('char-skills-item');
+
+                const skillLabel = document.createElement('label');
+                skillLabel.textContent = skill;
+                skillElement.appendChild(skillLabel);
+
+                const skillValue = document.createElement('span');
+                skillValue.textContent = `${this.#player.skills[skill as SkillType]}`;
+                skillValue.id = `char-skill-${skillName}`;
+                skillElement.appendChild(skillValue);
+
+                skillsPanel.appendChild(skillElement);
+            }
+        }
     }
 
     attack() {
@@ -140,6 +167,18 @@ export class Game {
             const handsSlot = document.getElementById('char-equipment-hands');
             if (handsSlot) {
                 handsSlot.innerHTML = `${this.#player.armorSlots[EquipmentSlotType.Hands].item?.name || 'None'}`;
+            }
+        }
+
+        const skillsPanel = document.getElementById('char-skills');
+        if (skillsPanel) {
+            const skills =  this.#player.skills;
+            for (const skill in skills) {
+                const skillName = skill.charAt(0).toLowerCase() + skill.slice(1);
+                const skillElement = document.getElementById(`char-skill-${skillName}`);
+                if (skillElement) {
+                    skillElement.innerHTML = `${skills[skill as SkillType]}`;
+                }
             }
         }
     }

@@ -19,18 +19,27 @@ body {
     color: #ddd;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas: 
-        "char-stats char-equipment char-name";
+    grid-template-areas:
+        "char-stats char-equipment char-skills";
 }
 
 /* One row with Key: Value format */
-.char-equipment-item{
+.char-equipment-item {
     margin: 0px;
     padding: 0px;
     font-family: monospace;
     font-size: 14px;
     display: grid;
     grid-template-columns: 1fr 3fr;
+}
+
+.char-skills-item {
+    margin: 0px;
+    padding: 0px;
+    font-family: monospace;
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
 }
 
 #logs {
@@ -77,10 +86,19 @@ body {
     margin: 0px 0px;
     color: #fff;
     border: 1px solid #00ff00;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 3px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.monospace {
+    font-family: monospace;
+}
+
+.title {
+    margin: 5px 0px;
+    font-size: 16px;
 }
 
 #attack-control:hover {
