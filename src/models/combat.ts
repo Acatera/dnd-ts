@@ -1,5 +1,4 @@
 import { CombatOutcome } from "./combat-outcome";
-import { ICombatant } from "../interfaces/combatant";
 import { Player } from "./player";
 import { IMonster } from "../interfaces/monster";
 
@@ -18,32 +17,39 @@ export class Combat {
 
     simulate(): CombatOutcome {
         while (this.#player.isAlive && this.#enemy.isAlive) {
-            const playerDamage = this.#player.attack(this.#enemy);
+            if (this.#player.canAttack) {
+                const playerDamage = this.#player.attack(this.#enemy);
 
-            if (this.onPlayersTurn) {
-                this.onPlayersTurn(this.#player, this.#enemy, playerDamage);
-            }
-
-            if (!this.#enemy.isAlive) {
-                
-                if (this.onMonsterDeath) {
-                    this.onMonsterDeath(this.#enemy);
+                if (this.onPlayersTurn) {
+                    this.onPlayersTurn(this.#player, this.#enemy, playerDamage);
                 }
-                
-                this.#player.gainExperience(this.#enemy.expReward);
 
-                break;
+                if (!this.#enemy.isAlive) {
+                    
+                    if (this.onMonsterDeath) {
+                        this.onMonsterDeath(this.#enemy);
+                    }
+                    
+                    this.#player.gainExperience(this.#enemy.expReward);
+    
+                    break;
+                }
             }
 
-            const enemyDamage = this.#enemy.attack(this.#player);
-
-            if (this.onMonstersTurn) {
-                this.onMonstersTurn(this.#player, this.#enemy, enemyDamage);
+            if (this.#enemy.canAttack) {
+                const enemyDamage = this.#enemy.attack(this.#player);
+    
+                if (this.onMonstersTurn) {
+                    this.onMonstersTurn(this.#player, this.#enemy, enemyDamage);
+                }
+    
+                if (!this.#player.isAlive) {
+                    break;
+                }
             }
 
-            if (!this.#player.isAlive) {
-                break;
-            }
+            this.#player.addIdleTicks();
+            this.#enemy.addIdleTicks();
         }
 
         return new CombatOutcome(this.#player, this.#enemy);

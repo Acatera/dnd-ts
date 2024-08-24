@@ -2,11 +2,13 @@ import { IMonster } from "../interfaces/monster";
 import { ICombatant } from "../interfaces/combatant";
 
 export class Monster implements IMonster {
+    #idleTicks: number = 0;
     expReward: number;
     health: number;
     maxHealth: number;
     name: string;
-
+    attackSpeed: number = 20;
+    
     constructor(monsterData: any) {
         this.name = monsterData.name;
         this.maxHealth = monsterData.health;
@@ -18,8 +20,17 @@ export class Monster implements IMonster {
         return this.health > 0;
     }
 
+    get idleTicks(): number {
+        return this.#idleTicks;
+    }
+
+    addIdleTicks(): void {
+        this.#idleTicks++;
+    }
+
     attack(opponent: ICombatant): number {
         if (opponent.isAlive) {
+            this.#idleTicks -= this.attackSpeed;
             return opponent.receiveDamage(1);
         }
 
@@ -38,5 +49,9 @@ export class Monster implements IMonster {
         this.health -= amount;
 
         return amount;
+    }
+
+    get canAttack(): boolean {
+        return this.#idleTicks >= this.attackSpeed;
     }
 }

@@ -3,12 +3,14 @@
         "name": "Fists",
         "description": "Your own two hands.",
         "minDamage": 1,
-        "maxDamage": 3
+        "maxDamage": 3,
+        "attackSpeed": 20
     },
     "blaster": {
         "name": "Blaster",
         "description": "A standard-issue blaster.",
         "minDamage": 2,
-        "maxDamage": 4
+        "maxDamage": 4,
+        "attackSpeed": 10
     }
 }
