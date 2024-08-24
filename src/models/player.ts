@@ -107,7 +107,7 @@ export class Player implements ICombatant {
 
     getAttackRating(): number {
         let attackRating = 1; // TODO: replace this with unarmed attack rating
-        if (this.weaponSlot.item){
+        if (this.weaponSlot.item) {
             const primarySkill = this.weaponSlot.item.getPrimarySkill();
             attackRating = this.getSkill(primarySkill);
         }
@@ -117,15 +117,15 @@ export class Player implements ICombatant {
     attack(opponent: ICombatant): number {
         let damage = 1;
         let attackSpeed = 20;
+        const attackRating = this.getAttackRating();
 
         if (this.weaponSlot.item) {
-            const attackRating = this.getAttackRating();
             const minDamage = this.weaponSlot.item.minDamage * (1 + attackRating / 400);
             const maxDamage = this.weaponSlot.item.maxDamage * (1 + attackRating / 400);
             damage = Math.floor(Math.random() * (maxDamage - minDamage + 1) + minDamage);
             attackSpeed = this.weaponSlot.item.attackSpeed;
         }
-        
+
         if (opponent.isAlive) {
             this.#idleTicks -= attackSpeed;
             return opponent.receiveDamage(damage);
@@ -182,7 +182,7 @@ export class Player implements ICombatant {
         if (!requirements) {
             return true;
         }
-        
+
         return Object.entries(requirements).every(([skill, level]) => {
             const skillType = skill as SkillType;
             return this.#skills[skillType] >= level;
