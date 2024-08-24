@@ -8,12 +8,30 @@ export class Monster implements IMonster {
     maxHealth: number;
     name: string;
     attackSpeed: number = 20;
-    
+    drops: string[];
+
     constructor(monsterData: any) {
+        if (!monsterData.name) {
+            throw new Error("Monster data must have name property");
+        }
+
+        if (!monsterData.health) {
+            throw new Error("Monster data must have health property");
+        }
+
+        if (!monsterData.expReward) {
+            throw new Error("Monster data must have expReward property");
+        }
+
+        if (monsterData.attackSpeed) {
+            this.attackSpeed = monsterData.attackSpeed;
+        }
+
         this.name = monsterData.name;
         this.maxHealth = monsterData.health;
         this.health = monsterData.health;
         this.expReward = monsterData.expReward;
+        this.drops = monsterData.drops || [];
     }
 
     get isAlive(): boolean {
@@ -26,6 +44,10 @@ export class Monster implements IMonster {
 
     addIdleTicks(): void {
         this.#idleTicks++;
+    }
+
+    get canAttack(): boolean {
+        return this.#idleTicks >= this.attackSpeed;
     }
 
     attack(opponent: ICombatant): number {
@@ -51,7 +73,16 @@ export class Monster implements IMonster {
         return amount;
     }
 
-    get canAttack(): boolean {
-        return this.#idleTicks >= this.attackSpeed;
+    generateLoot(): string[] {
+        if (this.drops.length === 0) {
+            return [];
+        } else {
+            const loot: string[] = [];
+            const dropCount = Math.ceil(Math.random() * this.drops.length);
+            for (let i = 0; i < dropCount; i++) {
+                loot.push(this.drops[Math.floor(Math.random() * this.drops.length)]);
+            }
+            return loot;
+        }
     }
 }

@@ -6,8 +6,8 @@ export class Weapon extends Item implements IWeapon {
     maxDamage: number;
     attackSpeed: number;
 
-    constructor(data: { [key: string]: any }) {
-        super(data);
+    constructor(id: string, data: { [key: string]: any }) {
+        super(id, data);
 
         this.minDamage = data.minDamage;
         this.maxDamage = data.maxDamage;

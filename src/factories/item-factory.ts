@@ -21,6 +21,6 @@ export class ItemFactory {
             throw new Error(`Weapon data not found for ID: ${id}`);
         }
 
-        return new Weapon(ItemFactory.itemData[id]);
+        return new Weapon(id, ItemFactory.itemData[id]);
     }
 }

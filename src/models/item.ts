@@ -5,8 +5,8 @@ export class Item implements IItem {
     name: string;
     description: string;
 
-    constructor(data: { [key: string]: any }) {
-        this.id = data.id;
+    constructor(id: string, data: { [key: string]: any }) {
+        this.id = id;
         this.name = data.name;
         this.description = data.description;
     }

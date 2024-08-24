@@ -43,9 +43,6 @@ export class Game {
             this.addLog("You've been defeated!", LogSource.Game);
         }
 
-        const weapon = ItemFactory.createWeapon('blaster');
-        this.#player.weaponSlot.item = weapon;
-
         this.updatePlayerInfoPanel();
     }
 
@@ -150,6 +147,21 @@ export class Game {
 
         combat.onMonsterDeath = (monster) => {
             this.addLog(`You've defeated the ${monster.name} and gained ${monster.expReward} experience!`, LogSource.Game);
+
+            const loot = monster.generateLoot();
+            for (const item of loot) {
+                if (item === 'blaster') {
+                    if (this.#player.weaponSlot.item?.id === 'blaster') {
+                        this.addLog(`You found a blaster! You already have one, so you leave it behind.`, LogSource.Item);
+                        continue;
+                    }
+                    const newItem = ItemFactory.createWeapon(item);
+                    this.#player.weaponSlot.item = newItem;
+                    this.addLog(`You found a ${item}! You equip it immediately.`, LogSource.Item);
+                    continue;
+                }
+                this.addLog(`You found a ${item}!`, LogSource.Item);
+            }
         }
 
         return combat;
