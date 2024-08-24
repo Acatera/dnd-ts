@@ -1,6 +1,8 @@
 # TODO
 
 - Implement item bonuses
+- Implement other item types (materials, etc)
+- Implement consumables (healing items)
 - Implement trickle-down
 - Crit change and damage
 - Attack and defence rating
