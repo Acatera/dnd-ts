@@ -84,6 +84,10 @@ export class Player implements ICombatant {
         return this.#idleTicks;
     }
 
+    get evasion(): number {
+        return this.#skills[SkillType.Evades];
+    }
+
     addIdleTicks(): void {
         this.#idleTicks++;
     }
@@ -115,9 +119,24 @@ export class Player implements ICombatant {
     }
 
     attack(opponent: ICombatant): number {
+        if (!opponent.isAlive) {
+            this.#idleTicks = 0;
+            return 0;
+        }
+
         let damage = 1;
         let attackSpeed = 20;
         const attackRating = this.getAttackRating();
+        const defenseRating = opponent.evasion <= 0 ? 1 : opponent.evasion;
+        const hitCoefficient = 25;
+        const hitChance = (attackRating + hitCoefficient) / (attackRating + defenseRating + hitCoefficient);
+
+        console.log(`Player hit chance: ${hitChance}`);
+
+        if (Math.random() > hitChance) {
+            this.#idleTicks -= attackSpeed;
+            return -1;
+        }
 
         if (this.weaponSlot.item) {
             const minDamage = this.weaponSlot.item.minDamage * (1 + attackRating / 400);
@@ -126,12 +145,8 @@ export class Player implements ICombatant {
             attackSpeed = this.weaponSlot.item.attackSpeed;
         }
 
-        if (opponent.isAlive) {
-            this.#idleTicks -= attackSpeed;
-            return opponent.receiveDamage(damage);
-        }
-
-        return 0;
+        this.#idleTicks -= attackSpeed;
+        return opponent.receiveDamage(damage);
     }
 
     receiveDamage(amount: number): number {

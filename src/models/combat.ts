@@ -7,6 +7,7 @@ export class Combat {
     #enemy: IMonster;
 
     onPlayersTurn: ((player: Player, monster: IMonster, damage: number) => void) | null = null;
+    onPlayerMiss: ((player: Player) => void) | null = null
     onMonstersTurn: ((player: Player, monster: IMonster, damage: number) => void) | null = null;
     onMonsterMiss: ((monster: IMonster) => void) | null = null;
     onMonsterDeath: ((monster: IMonster) => void) | null = null;
@@ -21,7 +22,11 @@ export class Combat {
             if (this.#player.canAttack) {
                 const playerDamage = this.#player.attack(this.#enemy);
 
-                if (this.onPlayersTurn) {
+                if (this.onPlayerMiss && playerDamage < 0) {
+                    this.onPlayerMiss(this.#player);
+                }
+
+                if (this.onPlayersTurn && playerDamage >= 0) {
                     this.onPlayersTurn(this.#player, this.#enemy, playerDamage);
                 }
 

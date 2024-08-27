@@ -1,6 +1,11 @@
 # TODO
 
-- Evades
+- Evades & miss chance
+- Damage types & resistances
+- Initiatives
+  > Every 10 (`TBD`) points reduce attack time by 1 unit
+
+- Make combat real time
 - Inventory
 - Implement materials
 - Implement other item types (materials, etc)

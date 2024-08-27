@@ -4,5 +4,6 @@ export interface ICombatant {
     canAttack: boolean;
     isAlive: boolean;
     idleTicks: number;
+    evasion: number;
     addIdleTicks(): void;
 }

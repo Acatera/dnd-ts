@@ -28,5 +28,13 @@
         "attackSpeed": 20,
         "evasion": 5,
         "drops":["blaster"]
+    },
+    "drone_boss": {
+        "name": "Drone Boss",
+        "health": 20,
+        "expReward": 15,
+        "attackSpeed": 20,
+        "evasion": 15,
+        "drops": ["blaster"]
     }
 }

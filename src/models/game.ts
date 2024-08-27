@@ -221,6 +221,10 @@ export class Game {
             this.addLog(`You attack ${monster.name} for ${damage} damage with your ${player.weaponSlot.item?.name}.`, LogSource.Player);
         }
 
+        combat.onPlayerMiss = (player) => {
+            this.addLog('You miss your attack!', LogSource.Game);
+        }
+
         combat.onMonsterDeath = (monster) => {
             this.addLog(`You've defeated the ${monster.name} and gained ${monster.expReward} experience!`, LogSource.Game);
 
