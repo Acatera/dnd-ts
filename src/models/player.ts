@@ -85,11 +85,16 @@ export class Player implements ICombatant {
     }
 
     get attackSpeed(): number {
+        let attackSpeed = 0;
+
         if (this.weaponSlot.item) {
-            return Math.max(this.weaponSlot.item.attackSpeed, 20);
+            attackSpeed = this.weaponSlot.item.attackSpeed
         }
 
-        return 20; // Default attack speed
+        // Add initiative bonus: for every 10 points of initiative, reduce attack speed by 1/20th of a second
+        attackSpeed -= this.#skills[SkillType.Initiative] / 10;
+
+        return Math.max(attackSpeed, 20);   
     }
 
     addIdleTicks(): void {

@@ -1,9 +1,6 @@
 # TODO
 
 - Damage types & resistances
-- Initiatives
-  > Every 10 (`TBD`) points reduce attack time by 1 unit
-
 - Inventory
 - Implement materials
 - Implement other item types (materials, etc)
