@@ -66,12 +66,6 @@ export class Game {
 
         const combat = this.createCombat();
         combat.simulate();
-
-        if (!this.#player.isAlive) {
-            this.addLog("You've been defeated!", LogSource.Game);
-        }
-
-        this.updatePlayerInfoPanel();
     }
 
     addLog(message: string, source: LogSource = LogSource.Game) {
@@ -225,6 +219,18 @@ export class Game {
             this.addLog('You miss your attack!', LogSource.Game);
         }
 
+        combat.onTurn = (player, monster) => {
+            this.#updateAttackSpeedBars(player, monster);
+        }
+
+        combat.onCombatEnd = () => {
+            if (!this.#player.isAlive) {
+                this.addLog("You've been defeated!", LogSource.Game);
+            }
+
+            this.updatePlayerInfoPanel();
+        }
+
         combat.onMonsterDeath = (monster) => {
             this.addLog(`You've defeated the ${monster.name} and gained ${monster.expReward} experience!`, LogSource.Game);
 
@@ -277,6 +283,28 @@ export class Game {
         }
 
         return combat;
+    }
+
+    #updateAttackSpeedBars(player: Player, monster: IMonster) {
+        const attackerAttackSpeedElement = document.getElementById('attacker-attack-speed-progress');
+        const defenderAttackSpeedElement = document.getElementById('defender-attack-speed-progress');
+
+        const attackerTimeLeft = Math.max(player.idleTicks / (player.attackSpeed), 0);
+        const defenderTimeLeft = Math.max(monster.idleTicks / monster.attackSpeed, 0);
+
+        if (attackerAttackSpeedElement && defenderAttackSpeedElement) {
+            attackerAttackSpeedElement.style.width = `${attackerTimeLeft * 100}%`;
+            defenderAttackSpeedElement.style.width = `${defenderTimeLeft * 100}%`;
+        }
+
+        console.log('Attacker time left:', attackerTimeLeft);
+        console.log('Defender time left:', defenderTimeLeft);
+
+        const healthElement = document.getElementById('char-health-current');
+
+        if (healthElement) {
+            healthElement.style.width = `${(this.#player.health / this.#player.maxHealth) * 100}%`;
+        }
     }
 
     #createEnemy(): IMonster {

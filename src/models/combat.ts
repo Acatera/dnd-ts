@@ -12,56 +12,78 @@ export class Combat {
     onMonsterMiss: ((monster: IMonster) => void) | null = null;
     onMonsterDeath: ((monster: IMonster) => void) | null = null;
 
+    onTurn: ((player: Player, monster: IMonster) => void) | null = null;
+    onCombatEnd: (() => void) | null = null;
+
     constructor(player: Player, enemy: IMonster) {
         this.#player = player;
         this.#enemy = enemy;
     }
 
-    simulate(): CombatOutcome {
-        while (this.#player.isAlive && this.#enemy.isAlive) {
-            if (this.#player.canAttack) {
-                const playerDamage = this.#player.attack(this.#enemy);
+    simulate() {
+        if (this.#player.canAttack) {
+            const playerDamage = this.#player.attack(this.#enemy);
 
-                if (this.onPlayerMiss && playerDamage < 0) {
-                    this.onPlayerMiss(this.#player);
-                }
-
-                if (this.onPlayersTurn && playerDamage >= 0) {
-                    this.onPlayersTurn(this.#player, this.#enemy, playerDamage);
-                }
-
-                if (!this.#enemy.isAlive) {
-
-                    if (this.onMonsterDeath) {
-                        this.onMonsterDeath(this.#enemy);
-                    }
-
-                    this.#player.gainExperience(this.#enemy.expReward);
-
-                    break;
-                }
+            if (this.onPlayerMiss && playerDamage < 0) {
+                this.onPlayerMiss(this.#player);
             }
 
-            if (this.#enemy.canAttack) {
-                const enemyDamage = this.#enemy.attack(this.#player);
-
-                if (enemyDamage === 0 && this.onMonsterMiss) {
-                    this.onMonsterMiss(this.#enemy);
-                }
-
-                if (enemyDamage > 0 && this.onMonstersTurn) {
-                    this.onMonstersTurn(this.#player, this.#enemy, enemyDamage);
-                }
-
-                if (!this.#player.isAlive) {
-                    break;
-                }
+            if (this.onPlayersTurn && playerDamage >= 0) {
+                this.onPlayersTurn(this.#player, this.#enemy, playerDamage);
             }
 
-            this.#player.addIdleTicks();
-            this.#enemy.addIdleTicks();
+            if (!this.#enemy.isAlive) {
+
+                if (this.onMonsterDeath) {
+                    this.onMonsterDeath(this.#enemy);
+                }
+
+                this.#player.gainExperience(this.#enemy.expReward);
+
+                this.#player.resetIdleTicks();
+                this.#enemy.resetIdleTicks();
+
+                if (this.onCombatEnd) {
+                    this.onCombatEnd();
+                }
+            }
         }
 
-        return new CombatOutcome(this.#player, this.#enemy);
+        if (this.#enemy.canAttack) {
+            const enemyDamage = this.#enemy.attack(this.#player);
+
+            if (enemyDamage === 0 && this.onMonsterMiss) {
+                this.onMonsterMiss(this.#enemy);
+            }
+
+            if (enemyDamage > 0 && this.onMonstersTurn) {
+                this.onMonstersTurn(this.#player, this.#enemy, enemyDamage);
+            }
+
+            if (!this.#player.isAlive) {
+                this.#player.resetIdleTicks();
+                this.#enemy.resetIdleTicks();
+
+                if (this.onCombatEnd) {
+                    this.onCombatEnd();
+                }
+            }
+        }
+
+        if (this.onTurn) {
+            this.onTurn(this.#player, this.#enemy);
+        }
+
+        this.#player.addIdleTicks();
+        this.#enemy.addIdleTicks();
+
+        console.log(`Player alive: ${this.#player.isAlive}`);
+        console.log(`Monster alive: ${this.#enemy.isAlive}`);
+
+        if (this.#player.isAlive && this.#enemy.isAlive) {
+            setTimeout(() => {
+                this.simulate();
+            }, 1000 / 20);
+        }
     }
 }

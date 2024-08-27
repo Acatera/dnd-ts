@@ -25,7 +25,7 @@ export class Monster implements IMonster {
         }
 
         if (monsterData.attackSpeed) {
-            this.attackSpeed = monsterData.attackSpeed;
+            this.attackSpeed = Math.max(monsterData.attackSpeed, 20);
         }
 
         this.name = monsterData.name;
@@ -48,6 +48,10 @@ export class Monster implements IMonster {
         this.#idleTicks++;
     }
 
+    resetIdleTicks(): void {
+        this.#idleTicks = 0;
+    }
+    
     get canAttack(): boolean {
         return this.#idleTicks >= this.attackSpeed;
     }

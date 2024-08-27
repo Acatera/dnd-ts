@@ -33,7 +33,7 @@
         "name": "Drone Boss",
         "health": 20,
         "expReward": 15,
-        "attackSpeed": 20,
+        "attackSpeed": 10,
         "evasion": 15,
         "drops": ["blaster"]
     }

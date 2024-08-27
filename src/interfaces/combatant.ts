@@ -6,4 +6,6 @@ export interface ICombatant {
     idleTicks: number;
     evasion: number;
     addIdleTicks(): void;
+    resetIdleTicks(): void;
+    attackSpeed: number;
 }

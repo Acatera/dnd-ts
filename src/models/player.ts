@@ -73,11 +73,7 @@ export class Player implements ICombatant {
     }
 
     get canAttack(): boolean {
-        if (this.weaponSlot.item) {
-            return this.weaponSlot.item.attackSpeed <= this.#idleTicks;
-        }
-
-        return this.#idleTicks >= 20; // Default attack speed
+        return this.#idleTicks >= this.attackSpeed;
     }
 
     get idleTicks(): number {
@@ -88,8 +84,20 @@ export class Player implements ICombatant {
         return this.#skills[SkillType.Evades];
     }
 
+    get attackSpeed(): number {
+        if (this.weaponSlot.item) {
+            return Math.max(this.weaponSlot.item.attackSpeed, 20);
+        }
+
+        return 20; // Default attack speed
+    }
+
     addIdleTicks(): void {
         this.#idleTicks++;
+    }
+
+    resetIdleTicks(): void {
+        this.#idleTicks = 0;
     }
 
     getSkill(skill: SkillType): number {
@@ -125,7 +133,6 @@ export class Player implements ICombatant {
         }
 
         let damage = 1;
-        let attackSpeed = 20;
         const attackRating = this.getAttackRating();
         const defenseRating = opponent.evasion <= 0 ? 1 : opponent.evasion;
         const hitCoefficient = 25;
@@ -133,19 +140,18 @@ export class Player implements ICombatant {
 
         console.log(`Player hit chance: ${hitChance}`);
 
-        if (Math.random() > hitChance) {
-            this.#idleTicks -= attackSpeed;
-            return -1;
-        }
-
         if (this.weaponSlot.item) {
             const minDamage = this.weaponSlot.item.minDamage * (1 + attackRating / 400);
             const maxDamage = this.weaponSlot.item.maxDamage * (1 + attackRating / 400);
             damage = Math.floor(Math.random() * (maxDamage - minDamage + 1) + minDamage);
-            attackSpeed = this.weaponSlot.item.attackSpeed;
         }
 
-        this.#idleTicks -= attackSpeed;
+        if (Math.random() > hitChance) {
+            this.#idleTicks -= this.attackSpeed;
+            return -1;
+        }
+
+        this.#idleTicks -= this.attackSpeed;
         return opponent.receiveDamage(damage);
     }
 

@@ -1,11 +1,9 @@
 # TODO
 
-- Evades & miss chance
 - Damage types & resistances
 - Initiatives
   > Every 10 (`TBD`) points reduce attack time by 1 unit
 
-- Make combat real time
 - Inventory
 - Implement materials
 - Implement other item types (materials, etc)
@@ -14,6 +12,9 @@
 - Implement crafting
 - Crit change and damage
 - Item scaling & rarity
+- Quality levels
+- Magic
+  > Program scripts, either with UI (ars nuveau style) or code
 - Implement mining
 - Implants
 - Body parts

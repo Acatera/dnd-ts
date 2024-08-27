@@ -7,8 +7,8 @@ body {
 #main {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: "char-info map" "logs controls";
+    grid-template-rows: 2fr 1fr 3fr;
+    grid-template-areas: "char-info map" "combat controls" "logs controls";
     height: 100vh;
 }
 
@@ -134,7 +134,7 @@ body {
 
 #char-health-current {
     background-color: rgb(214, 0, 0);
-    transition: transform 2.5s;
+    transition: width 0.5s ease;
 }
 
 #char-experience {
@@ -145,5 +145,29 @@ body {
 
 #char-experience-current {
     background-color: #ffcc00;
-    transition: transform 2.5s;
+    transition: width 0.5s ease;
+}
+
+#attacker-attack-speed-progress {
+    background-color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 2px;
+    margin: 2px;
+    transition: width 0.1s ease;
+}
+
+#attacker-attack-speed {
+    background-color: #003300;
+}
+
+#defender-attack-speed-progress {
+    background-color: #ff0000;
+    border: 1px solid #ff0000;
+    padding: 2px;
+    transition: width 0.1s ease;
+    margin: 2px;
+}
+
+#defender-attack-speed {
+    background-color: #330000;
 }
