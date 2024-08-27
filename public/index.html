@@ -94,6 +94,75 @@
             <p class="control" id="attack-control">Attack</p>
         </div>
     </div>
+
+    <div id="inventory-container" class="hidden">
+        <div id="inventory">
+            <div class="monospace title">Inventory</div>
+            <div id="inventory-items"></div>
+            <div id="inventory-actions">
+                <button id="inventory-close">Close</button>
+            </div>
+        </div>
+        <style>
+            .hidden {
+                display: none;
+            }
+
+            #inventory-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                z-index: 100;
+                padding: 20px;
+            }
+
+            #inventory {
+                background-color: #444;
+                padding: 20px;
+                border-radius: 5px;
+                width: 50%;
+                z-index: 101;
+                margin: auto auto;
+                border: 1px solid #000;
+                color: #fff;
+            }
+
+            .title {
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            /* Limit height of inventory items */
+            #inventory-items {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .inventory-item {
+                font-size: 14px;
+                font-family: monospace;
+            }
+
+            .inventory-item label {
+                display: inline-block;
+                width: 100px;
+            }
+
+            .inventory-item span {
+                display: inline-block;
+            }
+        </style>
+        <script>
+            // Add event listener to close inventory
+            document.getElementById('inventory-close').addEventListener('click', () => {
+                document.getElementById('inventory-container').classList.add('hidden');
+            });
+        </script>
+    </div>
 </body>
 
 </html>

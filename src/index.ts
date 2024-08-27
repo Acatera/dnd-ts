@@ -8,6 +8,10 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'a') {
     game.attack();
   }
+
+  if (event.key === 'i') {
+    game.toggleInventory();
+  }
 });
 
 const attackControl = document.getElementById('attack-control');

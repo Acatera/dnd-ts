@@ -7,6 +7,7 @@ import { ItemFactory } from "../factories/item-factory";
 import { IMonster } from "../interfaces/monster";
 import { EquipmentSlotType } from "./equipment-slot-type";
 import { SkillType } from "./skill-type";
+import { ItemStack } from "./item-stack";
 
 export class Game {
     #player: Player;
@@ -249,6 +250,7 @@ export class Game {
                             if (this.#player.equipArmor(newItem)) {
                                 this.addLog(`You equip the ${newItem.name}.`, LogSource.Item);
                             } else {
+                                this.#player.inventory.push(new ItemStack(newItem, 1));
                                 this.addLog(`You can't equip the ${newItem.name}.`, LogSource.Item);
                             }
                         }
@@ -256,6 +258,7 @@ export class Game {
                         if (this.#player.equipArmor(newItem)) {
                             this.addLog(`You equip the ${newItem.name}.`, LogSource.Item);
                         } else {
+                            this.#player.inventory.push(new ItemStack(newItem, 1));
                             this.addLog(`You can't equip the ${newItem.name}.`, LogSource.Item);
                         }
                     }
@@ -263,16 +266,18 @@ export class Game {
                 }
 
                 if (itemType === 'weapon') {
+                    const newItem = ItemFactory.createWeapon(item);
                     if (this.#player.weaponSlot.item?.id === 'blaster') {
-                        this.addLog(`You found a blaster! You already have one, so you leave it behind.`, LogSource.Item);
+                        this.#player.inventory.push(new ItemStack(newItem, 1));
+                        this.addLog(`You found a ${newItem.name}! You put it in your inventory.`, LogSource.Item);
                         continue;
                     }
-                    const newItem = ItemFactory.createWeapon(item);
                     if (this.#player.wieldWeapon(newItem)) {
                         this.addLog(`You found a ${newItem.name}! You equip it immediately.`, LogSource.Item);
                         continue;
                     } else {
-                        this.addLog(`You found a ${newItem.name}! You leave it behind.`, LogSource.Item);
+                        this.#player.inventory.push(new ItemStack(newItem, 1));
+                        this.addLog(`You found a ${newItem.name}! You can't equip it, so you put it in your inventory.`, LogSource.Item);
                         continue;
                     }
                     continue;
@@ -304,6 +309,41 @@ export class Game {
 
         if (healthElement) {
             healthElement.style.width = `${(this.#player.health / this.#player.maxHealth) * 100}%`;
+        }
+    }
+
+    toggleInventory() {
+        const inventoryPanel = document.getElementById('inventory-container');
+        if (inventoryPanel) {
+            if (inventoryPanel.classList.contains('hidden')) {
+                this.updatePlayerInventory();
+                inventoryPanel.classList.remove('hidden');
+            } else {
+                inventoryPanel.classList.add('hidden');
+            }
+        }
+    }
+
+    updatePlayerInventory() {
+        const inventoryPanel = document.getElementById('inventory-items');
+        if (inventoryPanel) {
+            inventoryPanel.innerHTML = '';
+            
+            for (const itemStack of this.#player.inventory) {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('inventory-item');
+
+                const itemLabel = document.createElement('label');
+                itemLabel.textContent = itemStack.item.name;
+                itemElement.appendChild(itemLabel);
+
+                const itemValue = document.createElement('span');
+                itemValue.textContent = itemStack.item.description;
+                itemValue.id = `inventory-${itemStack.item.id}`;
+                itemElement.appendChild(itemValue);
+
+                inventoryPanel.appendChild(itemElement);
+            }
         }
     }
 
