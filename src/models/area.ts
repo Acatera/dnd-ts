@@ -22,7 +22,8 @@ export class Area {
         const randIndex = Math.floor(Math.random() * this.enemies.length);
         const randMonsterId = this.enemies[randIndex];
 
-        return MonsterFactory.createMonster(randMonsterId);
+        // return MonsterFactory.createMonster(randMonsterId);
+        return MonsterFactory.createScaledMonster(randMonsterId, 5);
     }
 }
 // connections: this connects to a mine, a forest, and a mountain

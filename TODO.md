@@ -1,7 +1,9 @@
 # TODO
 
+- Mobs should scale in level, up to an area's max scale level
+- Mobs should have configurable damage output
 - Damage types & resistances
-- Inventory
+- Inventory functionality (equip item, unequip, drop, etc)
 - Implement materials
 - Implement other item types (materials, etc)
 - Implement consumables (healing items)

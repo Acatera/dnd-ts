@@ -6,13 +6,36 @@
         "attackSpeed": 20,
         "evasion": 5
     },
+    "tiered_drone_scout": {
+        "name": "Drone Scout",
+        "tiers": {
+            "1": {
+                "health": 10,
+                "expReward": 5,
+                "attackSpeed": 20,
+                "evasion": 5
+            },
+            "5": {
+                "health": 20,
+                "expReward": 10,
+                "attackSpeed": 20,
+                "evasion": 5
+            }
+        }
+    },
     "plasteel_drone": {
         "name": "Plasteel Drone",
         "health": 10,
         "expReward": 10,
         "attackSpeed": 25,
         "evasion": 5,
-        "drops":["plasteel_helmet","plasteel_body_armor","plasteel_gloves","plasteel_pants","plasteel_boots"]
+        "drops": [
+            "plasteel_helmet",
+            "plasteel_body_armor",
+            "plasteel_gloves",
+            "plasteel_pants",
+            "plasteel_boots"
+        ]
     },
     "drone_swarm": {
         "name": "Drone Swarm",
@@ -27,7 +50,9 @@
         "expReward": 15,
         "attackSpeed": 20,
         "evasion": 5,
-        "drops":["blaster"]
+        "drops": [
+            "blaster"
+        ]
     },
     "drone_boss": {
         "name": "Drone Boss",
@@ -35,6 +60,8 @@
         "expReward": 15,
         "attackSpeed": 10,
         "evasion": 15,
-        "drops": ["blaster"]
+        "drops": [
+            "blaster"
+        ]
     }
 }
