@@ -1,4 +1,6 @@
 import { Area } from "../types/Area";
+import { Monster } from "../types/Monster";
+import { createMonster } from "./createMonster";
 
 let areas = {};
 
@@ -16,5 +18,16 @@ export function createArea(id: string): Area {
     return {
         id,
         ...areas[id],
+        spawnEncounter(): Monster | null {
+            if (this.enemies.length < 0) {
+                return null;
+            }
+    
+            const randIndex = Math.floor(Math.random() * this.enemies.length);
+            const randMonsterId = this.enemies[randIndex];
+    
+            // return MonsterFactory.createMonster(randMonsterId);
+            return createMonster(randMonsterId);
+        }
     };
 }
