@@ -1,0 +1,95 @@
+{
+    "fists": {
+        "type": "weapon",
+        "name": "Fists",
+        "description": "Your own two hands.",
+        "minDamage": 1,
+        "maxDamage": 3,
+        "attackSpeed": 20
+    },
+    "blaster": {
+        "type": "weapon",
+        "name": "Blaster",
+        "description": "A standard-issue blaster.",
+        "minDamage": 2,
+        "maxDamage": 4,
+        "attackSpeed": 20,
+        "slot": "Weapon",
+        "requirements": {
+            "Pistol": 1
+        },
+        "bonuses": {
+            "Pistol": 25
+        }
+    },
+    "plasteel_helmet": {
+        "type": "armor",
+        "name": "Plasteel Helmet",
+        "description": "A helmet made of plasteel.",
+        "slot": "Head",
+        "defense": 1,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        },
+        "bonuses": {
+            "Pistol": 25
+        }
+    },
+    "plasteel_body_armor": {
+        "type": "armor",
+        "name": "Plasteel Body Armor",
+        "description": "Body armor made of plasteel.",
+        "slot": "Chest",
+        "defense": 2,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        },
+        "bonuses": {
+            "Pistol": 25
+        }
+    },
+    "plasteel_gloves": {
+        "type": "armor",
+        "name": "Plasteel Gloves",
+        "description": "Gloves made of plasteel.",
+        "slot": "Hands",
+        "defense": 1,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        },
+        "bonuses": {
+            "Pistol": 25
+        }
+    },
+    "plasteel_pants": {
+        "type": "armor",
+        "name": "Plasteel Pants",
+        "description": "Pants made of plasteel.",
+        "slot": "Legs",
+        "defense": 1,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        },
+        "bonuses": {
+            "Pistol": 25
+        }
+    },
+    "plasteel_boots": {
+        "type": "armor",
+        "name": "Plasteel Boots",
+        "description": "Boots made of plasteel.",
+        "slot": "Feet",
+        "defense": 1,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        },
+        "bonuses": {
+            "Pistol": 25
+        }
+    }
+}

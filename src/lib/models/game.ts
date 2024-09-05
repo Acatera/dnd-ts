@@ -4,9 +4,9 @@ import { Area } from "./area";
 import { AreaFactory } from "../factories/area-factory";
 import { MonsterFactory } from "../factories/monster-factory";
 import { ItemFactory } from "../factories/item-factory";
-import { IMonster } from "../interfaces/monster";
+import { Monster } from "../../types/Monster";
 import { EquipmentSlotType } from "./equipment-slot-type";
-import { SkillType } from "./skill-type";
+import { SkillType } from "../../types/skill-type";
 import { ItemStack } from "./item-stack";
 
 export class Game {
@@ -290,7 +290,7 @@ export class Game {
         return combat;
     }
 
-    #updateAttackSpeedBars(player: Player, monster: IMonster) {
+    #updateAttackSpeedBars(player: Player, monster: Monster) {
         const attackerAttackSpeedElement = document.getElementById('attacker-attack-speed-progress');
         const defenderAttackSpeedElement = document.getElementById('defender-attack-speed-progress');
 
@@ -347,7 +347,7 @@ export class Game {
         }
     }
 
-    #createEnemy(): IMonster {
+    #createEnemy(): Monster {
         if (this.#area) {
             const monster = this.#area.spawnEncounter();
 

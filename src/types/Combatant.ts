@@ -1,11 +1,13 @@
-export interface ICombatant {
-    attack(enemy: ICombatant): number;
+import { Attacker } from "./Attacker";
+
+export interface Combatant extends Attacker {
+    health: number;
+    maxHealth: number;
     receiveDamage(amount: number): number;
-    canAttack: boolean;
     isAlive: boolean;
     idleTicks: number;
-    evasion: number;
     addIdleTicks(): void;
     resetIdleTicks(): void;
     attackSpeed: number;
+    evasion: number;
 }

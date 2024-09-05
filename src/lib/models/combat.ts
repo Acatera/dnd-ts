@@ -1,21 +1,21 @@
 import { CombatOutcome } from "./combat-outcome";
 import { Player } from "./player";
-import { IMonster } from "../interfaces/monster";
+import { Monster } from "../../types/Monster";
 
 export class Combat {
     #player: Player;
-    #enemy: IMonster;
+    #enemy: Monster;
 
-    onPlayersTurn: ((player: Player, monster: IMonster, damage: number) => void) | null = null;
+    onPlayersTurn: ((player: Player, monster: Monster, damage: number) => void) | null = null;
     onPlayerMiss: ((player: Player) => void) | null = null
-    onMonstersTurn: ((player: Player, monster: IMonster, damage: number) => void) | null = null;
-    onMonsterMiss: ((monster: IMonster) => void) | null = null;
-    onMonsterDeath: ((monster: IMonster) => void) | null = null;
+    onMonstersTurn: ((player: Player, monster: Monster, damage: number) => void) | null = null;
+    onMonsterMiss: ((monster: Monster) => void) | null = null;
+    onMonsterDeath: ((monster: Monster) => void) | null = null;
 
-    onTurn: ((player: Player, monster: IMonster) => void) | null = null;
+    onTurn: ((player: Player, monster: Monster) => void) | null = null;
     onCombatEnd: (() => void) | null = null;
 
-    constructor(player: Player, enemy: IMonster) {
+    constructor(player: Player, enemy: Monster) {
         this.#player = player;
         this.#enemy = enemy;
     }

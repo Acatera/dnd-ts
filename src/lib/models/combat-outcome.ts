@@ -1,11 +1,11 @@
-import { IMonster } from "../interfaces/monster";
-import { ICombatant } from "../interfaces/combatant";
+import { Monster } from "../../types/Monster";
+import { Combatant } from "../../types/Combatant";
 
 export class CombatOutcome {
-    player: ICombatant;
-    enemy: IMonster;
+    player: Combatant;
+    enemy: Monster;
     
-    constructor(player: ICombatant, enemy: IMonster) {
+    constructor(player: Combatant, enemy: Monster) {
         this.player = player;
         this.enemy = enemy;
     }

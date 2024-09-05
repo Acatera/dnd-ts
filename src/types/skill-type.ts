@@ -41,3 +41,7 @@ export enum SkillType {
     // Biology,
 
 }
+
+export type PlayerSkills = {
+    [key in SkillType]: number;
+};

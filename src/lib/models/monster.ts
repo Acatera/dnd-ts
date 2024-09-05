@@ -1,7 +1,7 @@
-import { IMonster } from "../interfaces/monster";
-import { ICombatant } from "../interfaces/combatant";
+import { Monster } from "../../types/Monster";
+import { Combatant } from "../../types/Combatant";
 
-export class Monster implements IMonster {
+export class Monster implements Monster {
     #idleTicks: number = 0;
     expReward: number;
     health: number;
@@ -56,7 +56,7 @@ export class Monster implements IMonster {
         return this.#idleTicks >= this.attackSpeed;
     }
 
-    attack(opponent: ICombatant): number {
+    attack(opponent: Combatant): number {
         if (opponent.isAlive) {
             this.#idleTicks -= this.attackSpeed;
             return opponent.receiveDamage(1);

@@ -1,4 +1,4 @@
-import { SkillType } from "../models/skill-type";
+import { SkillType } from "../../types/skill-type";
 import { IEquippable } from "./equippable";
 
 export interface IWeapon extends IEquippable {
