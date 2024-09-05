@@ -6,28 +6,19 @@
 	import EventLog from "./components/EventLog.svelte";
 	import Grid from "./components/Grid.svelte";
 	import GridItem from "./components/GridItem.svelte";
-	import { createArea, loadAreaData } from "./game/createArea";
-	import { createMonster, loadMonsterData } from "./game/createMonster";
-    import { createPlayer } from "./game/createPlayer";
+	import { loadAreaData } from "./game/createArea";
+	import { createGame } from "./game/createGame";
+	import { loadMonsterData } from "./game/createMonster";
 
-	
 	let assetsLoaded = false;
-	let area = null;
-	let player = null;
-	
+	let game = null;
+
 	async function loadAssets() {
 		await loadAreaData();
 		await loadMonsterData();
-		
-		area = createArea("drone_factory");
-		
-		const monster = createMonster("tiered_drone_scout");
-		player = createPlayer();
-		
-		const damage = player.attack(monster);
 
-		console.log(damage);
-
+		game = createGame();
+		game.loadArea("drone_factory");
 		assetsLoaded = true;
 	}
 
@@ -40,12 +31,12 @@
 			<h1>Loading game data...</h1>
 		</div>
 	{:else}
-		<Grid columns="8fr 2fr" rows="3fr 2fr 5fr" gap="0">
+		<Grid columns="8fr 2fr" rows="3fr 2fr 5fr" gap="0.25rem">
 			<GridItem maxHeight="30vh">
-				<CharacterInfo {player} />
+				<CharacterInfo player={game.player} />
 			</GridItem>
 			<GridItem rowSpan={2}>
-				<AreaInfo {area} />
+				<AreaInfo area={game.area} />
 			</GridItem>
 			<GridItem>
 				<Combat />
@@ -54,7 +45,7 @@
 				<EventLog />
 			</GridItem>
 			<GridItem>
-				<Controls />
+				<Controls game={game} />
 			</GridItem>
 		</Grid>
 	{/if}

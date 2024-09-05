@@ -16,6 +16,7 @@
       gap: {gap};
       align-items: {align};
       justify-items: {justify};
+      max-height: 100vh;
       overflow: hidden;
     "
   >

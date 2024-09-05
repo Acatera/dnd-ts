@@ -12,7 +12,7 @@
     <!-- First 14 skills -->
      <Grid columns="1fr 1fr">
         <GridItem>
-            {#each Object.keys(player.skills).slice(0, 14) as skill}
+            {#each Object.keys(player.skills).slice(0, 13) as skill}
                 <div class="skill">
                     <span>{skill}</span>
                     <span>{player.skills[skill]}</span>
@@ -20,7 +20,7 @@
             {/each}
         </GridItem>
         <GridItem>
-            {#each Object.keys(player.skills).slice(14) as skill}
+            {#each Object.keys(player.skills).slice(13) as skill}
                 <div class="skill">
                     <span>{skill}</span>
                     <span>{player.skills[skill]}</span>

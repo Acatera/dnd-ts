@@ -1,12 +1,17 @@
+<script lang="ts">
+    import { Game } from "../types/Game";
+
+    let game: Game;
+
+    export { game };
+
+    function startCombat() {
+        game.startCombat();
+    }
+</script>
+
 <main>
     <h2>Controls</h2>
 
-    <button>Start Combat</button>
-    <button>End Combat</button>
-    <button>Next Round</button>
-    <button>Next Turn</button>
-    <button>Previous Turn</button>
-    <button>Reset Combat</button>
-    <button>Add Combatant</button>
-    <button>Remove Combatant</button>   
+    <button on:click={startCombat}>Start Combat</button>
 </main>

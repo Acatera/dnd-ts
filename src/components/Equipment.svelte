@@ -19,7 +19,6 @@
     <p>Armor: </p>
     <p>Armor: </p>
     <p>Armor: </p>
-    <p>Armor: </p>
 </main>
 
 <style>
