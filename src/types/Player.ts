@@ -1,8 +1,6 @@
 import { Armor } from "./Armor";
 import { createEquipmentSlot, EquipmentSlot } from "./EquipmentSlot";
 import { EquipmentSlotType } from "./EquipmentSlotType";
-import { Equippable } from "./Equippable";
-import { Item } from "./Item";
 import { Monster } from "./Monster";
 import { PlayerSkills } from "./PlayerSkills";
 import { SkillType } from "./SkillType";
@@ -126,7 +124,7 @@ export function createPlayer(): Player {
                 return 0;
             }
 
-            let damage = 1;
+            let damage = 5;
             const attackRating = this.attackRating;
             const defenseRating = enemy.evasion <= 0 ? 1 : enemy.evasion;
             const hitCoefficient = 25;

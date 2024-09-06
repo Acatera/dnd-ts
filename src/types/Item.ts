@@ -25,7 +25,7 @@ export function createItem(id: string): Item {
 
 export function getItemName(id: string): string {
     if (!items[id]) {
-        throw new Error(`Item with id ${id} not found`);
+        return `Unknown item (${id})`;
     }
 
     return items[id].name;

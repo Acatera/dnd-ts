@@ -7,6 +7,7 @@ import { Combat, createCombat } from "./Combat";
 import { GameEvent } from "./GameEvent";
 import { GameEventSource } from "./GameEventSource";
 import { createPlayer, Player } from "./Player";
+import { getItemName } from "./Item";
 
 export interface Game {
     area: Area | null;
@@ -83,6 +84,14 @@ export function createGame(): Game {
                 // Update player experience and player store
                 this.player.gainExperience(monster.expReward);
                 playerStore.set(this.player);
+                monsterStore.set(null);
+
+                const loot = monster.generateLoot();
+                if (loot.length > 0) {
+                    for (const item of loot) {
+                        this.addEvent("You've found a " + getItemName(item) + "!", GameEventSource.Game);
+                    }
+                }
             };
 
             this.combat.onCombatEnd = () => {

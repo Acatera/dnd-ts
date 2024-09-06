@@ -4,7 +4,10 @@
         "health": 10,
         "expReward": 5,
         "attackSpeed": 20,
-        "evasion": 5
+        "evasion": 5,
+        "loot_table": [
+           "circuit_board"
+        ]
     },
     "tiered_drone_scout": {
         "name": "Drone Scout",
@@ -26,7 +29,7 @@
     "drone_scout2": {
         "name": "Drone Scout",
         "description": "A small, fast drone that is equipped with a laser weapon. It is capable of dodging attacks and can be difficult to hit.",
-        "loot": [
+        "loot_table": [
             "copper",
             "iron",
             "steel",
@@ -41,7 +44,7 @@
         "expReward": 10,
         "attackSpeed": 25,
         "evasion": 5,
-        "drops": [
+        "loot_table": [
             "plasteel_helmet",
             "plasteel_body_armor",
             "plasteel_gloves",
@@ -62,7 +65,7 @@
         "expReward": 15,
         "attackSpeed": 20,
         "evasion": 5,
-        "drops": [
+        "loot_table": [
             "blaster"
         ]
     },
@@ -72,7 +75,7 @@
         "expReward": 15,
         "attackSpeed": 10,
         "evasion": 15,
-        "drops": [
+        "loot_table": [
             "blaster"
         ]
     }

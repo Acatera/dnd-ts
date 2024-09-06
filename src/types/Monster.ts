@@ -32,9 +32,13 @@ export function createMonster(id: string): Monster {
         throw new Error(`Monster with id ${id} not found`);
     }
 
+    const lootTable = monsters[id].loot_table || [];
+
     const monster = {
-        health: 10,
-        maxHealth: 10,
+        name: monsters[id].name || "Unknown",
+        expReward: monsters[id].expReward || 0,
+        health: monsters[id].health,
+        maxHealth: monsters[id].health,
         receiveDamage(amount: number) {
             this.health -= amount;
             return amount;
@@ -58,9 +62,21 @@ export function createMonster(id: string): Monster {
         resetIdleTicks() {
             this.idleTicks = 0;
         },
-        attackSpeed: 20,
-        evasion: 1,
-        ...monsters[id],
+        attackSpeed: Math.max(monsters[id].attackSpeed || 20, 20),
+        evasion: monsters[id].evasion || 1,
+        generateLoot(): string[] {
+            console.log(lootTable);
+            if (lootTable.length === 0) {
+                return [];
+            } else {
+                const loot: string[] = [];
+                const dropCount = Math.ceil(Math.random() * lootTable.length);
+                for (let i = 0; i < dropCount; i++) {
+                    loot.push(lootTable[Math.floor(Math.random() * lootTable.length)]);
+                }
+                return loot;
+            }
+        }
     };
 
     if (monster.attackSpeed === undefined) {
