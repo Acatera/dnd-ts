@@ -1,6 +1,6 @@
 import { Armor } from "../models/armor";
-import { IArmor } from "../interfaces/armor";
-import { IWeapon } from "../interfaces/weapon";
+import { IArmor } from "../../src/types/Armor";
+import { IWeapon } from "../../src/types/Weapon";
 import { Weapon } from "../models/weapon";
 
 export class ItemFactory {

@@ -2,12 +2,12 @@ import Game, { LogSource } from "./game";
 import { Combatant } from "../../types/Combatant";
 import { EquipmentSlot } from "./equipment-slot";
 import { EquipmentSlotType } from "./equipment-slot-type";
-import { IWeapon } from "../interfaces/weapon";
+import { IWeapon } from "../../src/types/Weapon";
 import { Fists } from "./items/fists";
-import { IArmor } from "../interfaces/armor";
+import { IArmor } from "../../src/types/Armor";
 import { SkillType } from "../../types/SkillType";
 import { PlayerSkills } from "./player-skills";
-import { IItemRequirements } from "../interfaces/item-requirements";
+import { IItemRequirements } from "../../src/types/ItemRequirements";
 import { ItemStack } from "./item-stack";
 
 export class Player implements Combatant {

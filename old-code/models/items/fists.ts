@@ -1,4 +1,4 @@
-import { IWeapon } from "../../interfaces/weapon";
+import { IWeapon } from "../../../src/types/Weapon";
 import { EquipmentSlotType } from "../equipment-slot-type";
 import { SkillType } from "../../../types/SkillType";
 
