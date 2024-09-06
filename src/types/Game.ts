@@ -8,6 +8,7 @@ import { GameEvent } from "./GameEvent";
 import { GameEventSource } from "./GameEventSource";
 import { createPlayer, Player } from "./Player";
 import { getItemName } from "./Item";
+import { inventoryStore } from "../stores/inventory";
 
 export interface Game {
     area: Area | null;
@@ -22,6 +23,7 @@ export interface Game {
 export function createGame(): Game {
     const player = createPlayer();
     playerStore.set(player);
+    inventoryStore.set(player.inventory);
 
     return {
         area: null as Area | null,
