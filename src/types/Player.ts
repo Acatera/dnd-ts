@@ -120,6 +120,8 @@ export function createPlayer(): Player {
         armorSlots: armorSlots,
         inventory: [
             createItemStack(createItem("blaster"), 1),
+            createItemStack(createItem("blaster"), 1),
+            createItemStack(createItem("blaster"), 1),
         ],
         get maxHealth(): number {
             return this.skills.MaxHealth;
