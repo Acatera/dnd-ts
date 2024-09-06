@@ -8,12 +8,14 @@
 	import GridItem from "./components/GridItem.svelte";
     import { loadAreaData } from "./types/Area";
 	import { createGame, Game } from "./types/Game";
+    import { loadItemData } from "./types/Item";
     import { loadMonsterData } from "./types/Monster";
 
 	let assetsLoaded = false;
 	let game: Game | null = null;
 
 	async function loadAssets() {
+		await loadItemData();
 		await loadAreaData();
 		await loadMonsterData();
 
