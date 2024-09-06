@@ -54,6 +54,8 @@ export function createPlayer(): Player {
         item: null
     };
 
+    
+
     return {
         health: 10,
         receiveDamage(amount: number) {
@@ -73,7 +75,16 @@ export function createPlayer(): Player {
         resetIdleTicks() {
             this.idleTicks = 0;
         },
-        attackSpeed: 20,
+        get attackSpeed(): number {
+            let attackSpeed = 20;
+            
+            // TODO: add initiative bonus from gear
+            
+            // Add initiative bonus: for every 10 points of initiative, reduce attack speed by 1/20th of a second
+            attackSpeed -= this.skills.Initiative / 10;
+
+            return Math.max(20, attackSpeed);
+        },
         evasion: 1,
         experience: 0,
         experienceToLevelUp: experienceLevels[0] as number,
