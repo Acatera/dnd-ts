@@ -6,10 +6,9 @@
 	import EventLog from "./components/EventLog.svelte";
 	import Grid from "./components/Grid.svelte";
 	import GridItem from "./components/GridItem.svelte";
-	import { loadAreaData } from "./game/createArea";
-	import { createGame } from "./game/createGame";
-	import { loadMonsterData } from "./game/createMonster";
-	import { Game } from "./types/Game";
+    import { loadAreaData } from "./types/Area";
+	import { createGame, Game } from "./types/Game";
+    import { loadMonsterData } from "./types/Monster";
 
 	let assetsLoaded = false;
 	let game: Game | null = null;
