@@ -25,7 +25,6 @@ export function createWeapon(id: string): Weapon {
             // If the requirement is higher than the highestRequirement, set the primarySkill to the current skill.
             // Return the primarySkill.
             for (const [skill, requirement] of Object.entries(this.requirements) as [keyof typeof SkillType, number][]) {
-                debugger;
                 if (requirement > highestRequirement) {
                     primarySkill = SkillType[skill];
                     highestRequirement = requirement;

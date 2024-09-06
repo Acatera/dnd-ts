@@ -22,7 +22,7 @@
             {#each skills.slice(0, 13) as skill}
                 <div class="skill">
                     <span>{skill}</span>
-                    <span>{player.skills[skill]}</span>
+                    <span>{player.getTotalSkill(skill)}</span>
                 </div>
             {/each}
         </GridItem>
@@ -30,7 +30,7 @@
             {#each skills.slice(13) as skill}
                 <div class="skill">
                     <span>{skill}</span>
-                    <span>{player.skills[skill]}</span>
+                    <span>{player.getTotalSkill(skill)}</span>
                 </div>
             {/each}
         </GridItem>

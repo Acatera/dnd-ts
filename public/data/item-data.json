@@ -9,6 +9,9 @@
         "slot": "Weapon",
         "requirements": {
             "Unarmed": 1
+        },
+        "bonuses": {
+            "Unarmed": 25
         }
     },
     "blaster": {

@@ -124,88 +124,6 @@ export class Player implements Combatant {
         return totalBonus;
     }
 
-    getAttackRating(): number {
-        let attackRating = 1; // TODO: replace this with unarmed attack rating
-        if (this.weaponSlot.item) {
-            const primarySkill = this.weaponSlot.item.getPrimarySkill();
-            attackRating = this.getSkill(primarySkill);
-        }
-        return attackRating;
-    }
-
-    attack(opponent: Combatant): number {
-        if (!opponent.isAlive) {
-            this.#idleTicks = 0;
-            return 0;
-        }
-
-        let damage = 1;
-        const attackRating = this.getAttackRating();
-        const defenseRating = opponent.evasion <= 0 ? 1 : opponent.evasion;
-        const hitCoefficient = 25;
-        const hitChance = (attackRating + hitCoefficient) / (attackRating + defenseRating + hitCoefficient);
-
-        console.log(`Player hit chance: ${hitChance}`);
-
-        if (this.weaponSlot.item) {
-            const minDamage = this.weaponSlot.item.minDamage * (1 + attackRating / 400);
-            const maxDamage = this.weaponSlot.item.maxDamage * (1 + attackRating / 400);
-            damage = Math.floor(Math.random() * (maxDamage - minDamage + 1) + minDamage);
-        }
-
-        if (Math.random() > hitChance) {
-            this.#idleTicks -= this.attackSpeed;
-            return -1;
-        }
-
-        this.#idleTicks -= this.attackSpeed;
-        return opponent.receiveDamage(damage);
-    }
-
-    receiveDamage(amount: number): number {
-        const totalArmor = this.#totalDefence();
-        const damage = amount - totalArmor;
-
-        if (damage < 0) {
-            return 0;
-        }
-
-
-        if (damage > this.health) {
-            this.health = 0;
-            return this.health;
-        }
-
-        this.health -= damage;
-
-        return damage;
-    }
-
-    gainExperience(amount: number) {
-        this.#experience = this.#experience + BigInt(amount);
-
-        // Check if we've leveled up
-        while (this.#experience >= this.experienceLevels[this.#level - 1]) {
-            this.#experience -= this.experienceLevels[this.#level - 1];
-            this.#level++;
-
-            this.#game.addLog(`You've reached level ${this.#level}!`, LogSource.Game);
-
-            // Increase the player's health
-            this.#skills.MaxHealth += 1;
-
-            // Increase the player's skills
-            for (const skill in this.#skills) {
-                this.#skills[skill as SkillType]++;
-            }
-
-            // Heal the player to full health
-            this.#game.addLog(`You've been healed to full health!`, LogSource.Game);
-            this.health = this.maxHealth;
-        }
-    }
-
-
     meetsRequirements(requirements: IItemRequirements): boolean {
         if (!requirements) {
             return true;
@@ -236,17 +154,5 @@ export class Player implements Combatant {
         }
 
         return false;
-    }
-
-    #totalDefence(): number {
-        let totalArmor = 0;
-
-        for (let armorSlot of this.armorSlots) {
-            if (armorSlot.item) {
-                totalArmor += armorSlot.item.defense;
-            }
-        }
-
-        return totalArmor;
     }
 }

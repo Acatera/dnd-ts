@@ -26,9 +26,12 @@ export interface Player {
     experience: number,
     experienceToLevelUp: number,
     level: number,
-    skills: PlayerSkills,
+    getTotalSkill(skill: SkillType): number,
+    getBaseSkill(skill: SkillType): number,
+    getSkillBonus(skill: SkillType): number,
     skillPoints: number,
     attackRating: number,
+    armorRating: number,
     gainExperience(amount: number): void,
     levelUp(): void,
     weaponSlot: EquipmentSlot<Weapon>;
@@ -71,13 +74,10 @@ export function createPlayer(): Player {
     ];
     const inventory = createInventory();
     inventory.add(createItemStack(createItem("blaster"), 1));
+    const skills = createSkills();
 
     return {
         health: 10,
-        receiveDamage(amount: number) {
-            this.health -= amount;
-            return amount;
-        },
         isAlive() {
             return this.health > 0;
         },
@@ -97,7 +97,7 @@ export function createPlayer(): Player {
             // TODO: add initiative bonus from gear
 
             // Add initiative bonus: for every 10 points of initiative, reduce attack speed by 1/20th of a second
-            attackSpeed -= this.skills.Initiative / 10;
+            attackSpeed -= this.getTotalSkill(SkillType.Initiative) / 10;
 
             return Math.max(20, attackSpeed);
         },
@@ -106,12 +106,34 @@ export function createPlayer(): Player {
         experienceToLevelUp: experienceLevels[0] as number,
         level: 1,
         skillPoints: 0,
-        skills: createSkills(),
+        getTotalSkill(skill: SkillType): number {
+            return this.getBaseSkill(skill) + this.getSkillBonus(skill);
+        },
+        getBaseSkill(skill: SkillType): number {
+            return skills[skill];
+        },
+        getSkillBonus(skill: SkillType): number {
+            let bonus = 0;
+
+            if (weaponSlot.item) {
+                bonus += weaponSlot.item.bonuses[skill] || 0;
+            }
+
+            for (const slot of this.armorSlots) {
+                if (slot.item) {
+                    console.log(`Checking item ${slot.item.name} for skill bonus`);
+                    bonus += slot.item.bonuses[skill] || 0;
+                }
+            }
+            
+            console.log(`Skill bonus for ${SkillType[skill]}: ${bonus}`);
+            return bonus;
+        },
         weaponSlot: weaponSlot,
         armorSlots: armorSlots,
         inventory: inventory,
         get maxHealth(): number {
-            return this.skills.MaxHealth;
+            return this.getTotalSkill(SkillType.MaxHealth);
         },
         attack(enemy: Monster): number {
             if (!enemy.isAlive) {
@@ -119,17 +141,17 @@ export function createPlayer(): Player {
                 return 0;
             }
 
-            let damage = 5;
+            let damage = 1;
             const attackRating = this.attackRating;
             const defenseRating = enemy.evasion <= 0 ? 1 : enemy.evasion;
             const hitCoefficient = 25;
             const hitChance = (attackRating + hitCoefficient) / (attackRating + defenseRating + hitCoefficient);
 
-            // if (weaponSlot.item) {
-            //     const minDamage = weaponSlot.item.minDamage * (1 + attackRating / 400);
-            //     const maxDamage = weaponSlot.item.maxDamage * (1 + attackRating / 400);
-            //     damage = Math.floor(Math.random() * (maxDamage - minDamage + 1) + minDamage);
-            // }
+            if (weaponSlot.item) {
+                const minDamage = weaponSlot.item.minDamage * (1 + attackRating / 400);
+                const maxDamage = weaponSlot.item.maxDamage * (1 + attackRating / 400);
+                damage = Math.floor(Math.random() * (maxDamage - minDamage + 1) + minDamage);
+            }
 
             if (Math.random() > hitChance) {
                 this.idleTicks -= this.attackSpeed;
@@ -139,16 +161,42 @@ export function createPlayer(): Player {
             this.idleTicks -= this.attackSpeed;
             return enemy.receiveDamage(damage);
         },
+        receiveDamage(amount: number) {
+            // Every 10 points of armor rating reduces damage by 1
+            const damage = amount - this.armorRating / 10;
+
+            if (damage < 0) {
+                return 0;
+            }
+
+            if (damage > this.health) {
+                this.health = 0;
+                return this.health;
+            }
+
+            this.health -= damage;
+
+            return damage;
+        },
+        get armorRating(): number {
+            let armorRating = 0;
+
+            for (const slot of this.armorSlots) {
+                if (slot.item) {
+                    armorRating += slot.item.defense;
+                }
+            }
+
+            return armorRating;
+        },
         get attackRating(): number {
-            let attackRating = 1; // TODO: replace this with unarmed attack rating
-            debugger;
+            let attackRating = this.getTotalSkill(SkillType.Unarmed);
+
             if (weaponSlot.item) {
                 const primarySkill = weaponSlot.item.getPrimarySkill();
-                console.log(primarySkill);
-                attackRating = this.skills[primarySkill];
-                console.log(attackRating);
+                attackRating = this.getTotalSkill(primarySkill);
             }
-            
+
             return attackRating;
         },
         gainExperience(amount: number) {
@@ -164,11 +212,11 @@ export function createPlayer(): Player {
             this.level++;
 
             // Increase the player's health
-            this.skills.MaxHealth += 1;
+            skills.MaxHealth += 1;
 
             // Increase the player's skills
-            for (const skill in this.skills) {
-                this.skills[skill as SkillType]++;
+            for (const skill in skills) {
+                skills[skill as SkillType]++;
             }
 
             // Heal the player to full health

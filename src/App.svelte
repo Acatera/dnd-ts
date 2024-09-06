@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tick } from "svelte";
 	import AreaInfo from "./components/AreaInfo.svelte";
 	import CharacterInfo from "./components/CharacterInfo.svelte";
 	import Combat from "./components/Combat.svelte";
@@ -13,7 +14,6 @@
 	import { loadItemData } from "./types/Item";
 	import { loadMonsterData } from "./types/Monster";
 
-	let assetsLoaded = false;
 	let game: Game | null = null;
 	let gameScreen: GameScreen;
 
@@ -28,8 +28,7 @@
 
 		game = createGame();
 		game.loadArea("drone_factory");
-
-		assetsLoaded = true;
+		await tick();
 		gameScreenStore.update(() => GameScreen.Game);
 	}
 
