@@ -1,5 +1,6 @@
 import { createEquippable, Equippable } from "./Equippable";
 import { SkillType } from "./SkillType";
+import { items } from "./Item";
 
 export interface Weapon extends Equippable {
     minDamage: number;
@@ -9,11 +10,15 @@ export interface Weapon extends Equippable {
 }
 
 export function createWeapon(id: string): Weapon {
+    if (!items[id]) {
+        throw new Error(`Item with id ${id} not found`);
+    }
+
     return {
         ...createEquippable(id),
-        minDamage: 1,
-        maxDamage: 1,
-        attackSpeed: 1,
+        minDamage: items[id].minDamage,
+        maxDamage: items[id].maxDamage,
+        attackSpeed: items[id].attackSpeed,
         getPrimarySkill(): SkillType {
             // Primary skill is the skill that the weapon uses to calculate damage.
             // Highest requirement is the primary skill.
