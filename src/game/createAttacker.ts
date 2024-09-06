@@ -1,6 +1,6 @@
 import { Attacker } from "../types/Attacker";
 
-export function createAttacker(): Attacker{
+export function createAttacker(): Attacker {
     return {
         canAttack: false,
         attack(enemy) {

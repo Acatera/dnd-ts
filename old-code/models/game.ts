@@ -6,7 +6,7 @@ import { MonsterFactory } from "../factories/monster-factory";
 import { ItemFactory } from "../factories/item-factory";
 import { Monster } from "../../types/Monster";
 import { EquipmentSlotType } from "./equipment-slot-type";
-import { SkillType } from "../../types/skill-type";
+import { SkillType } from "../../types/SkillType";
 import { ItemStack } from "./item-stack";
 
 export class Game {

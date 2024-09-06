@@ -1,6 +1,6 @@
 import { IWeapon } from "../../interfaces/weapon";
 import { EquipmentSlotType } from "../equipment-slot-type";
-import { SkillType } from "../../../types/skill-type";
+import { SkillType } from "../../../types/SkillType";
 
 export class Fists implements IWeapon {
     id = "fists";

@@ -25,16 +25,30 @@ export function createGame(): Game {
             gameArea.set(this.area);
         },
         startCombat() {
+            if (!this.area) {
+                return;
+            }
+
             const monster = this.area.spawnEncounter();
-            console.log(monster);
+            
+            if (!monster) {
+                this.addEvent("There are no enemies here.", GameEventSource.Environment);
+                return;
+            }
+
             this.addEvent("You've encountered a " + monster.name + "!", GameEventSource.Enemy);
             this.combat = {
                 player: this.player,
-                monster: monster,
+                enemy: monster,
             };
         },
         travelToArea(areaId: string){
             this.loadArea(areaId);
+
+            if (!this.area) {
+                return;
+            }
+            
             this.addEvent("You've traveled to " + this.area.name, GameEventSource.Environment);
         }
     };

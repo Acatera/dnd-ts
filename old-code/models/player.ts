@@ -5,7 +5,7 @@ import { EquipmentSlotType } from "./equipment-slot-type";
 import { IWeapon } from "../interfaces/weapon";
 import { Fists } from "./items/fists";
 import { IArmor } from "../interfaces/armor";
-import { SkillType } from "../../types/skill-type";
+import { SkillType } from "../../types/SkillType";
 import { PlayerSkills } from "./player-skills";
 import { IItemRequirements } from "../interfaces/item-requirements";
 import { ItemStack } from "./item-stack";

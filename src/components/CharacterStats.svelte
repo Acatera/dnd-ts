@@ -14,7 +14,7 @@
         barColor="rgb(214, 0, 0)"
     />
     <ProgressBar
-        maxValue={player.experienceToNextLevel}
+        maxValue={player.experienceToLevelUp}
         value={player.experience}
         backgroundColor="rgb(65, 35, 0)"
         barColor="rgb(255, 204, 0)"

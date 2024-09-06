@@ -43,42 +43,33 @@ export default {
 		svelte({
 			preprocess: sveltePreprocess({ sourceMap: !production }),
 			compilerOptions: {
-				// enable run-time checks when not in production
-				dev: !production
+				dev: !production // enable run-time checks when not in production
 			}
 		}),
-		// we'll extract any component CSS out into
-		// a separate file - better for performance
-		css({ output: 'bundle.css' }),
+		css({ output: 'bundle.css' }), // extract component CSS into a separate file
 
-		// If you have external dependencies installed from
-		// npm, you'll most likely need these plugins. In
-		// some cases you'll need additional configuration -
-		// consult the documentation for details:
-		// https://github.com/rollup/plugins/tree/master/packages/commonjs
 		resolve({
 			browser: true,
 			dedupe: ['svelte'],
 			exportConditions: ['svelte']
 		}),
 		commonjs(),
+
 		typescript({
 			sourceMap: !production,
-			inlineSources: !production
+			inlineSources: !production,
+			noEmitOnError: true // Stop build on TypeScript errors
 		}),
 
-		// In dev mode, call `npm run start` once
-		// the bundle has been generated
-		!production && serve(),
+		!production && serve(), // In dev mode, call `npm run start` once the bundle has been generated
 
-		// Watch the `public` directory and refresh the
-		// browser on changes when not in production
-		!production && livereload('public'),
+		!production && livereload('public'), // Watch the `public` directory and refresh the browser on changes when not in production
 
-		// If we're building for production (npm run build
-		// instead of npm run dev), minify
-		production && terser()
+		production && terser() // Minify for production builds
 	],
+	onwarn: () => {
+		// Ignore all warnings
+	},
 	watch: {
 		clearScreen: false
 	}

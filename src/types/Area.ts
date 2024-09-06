@@ -1,4 +1,3 @@
-import { Game } from "./Game";
 import { Monster } from "./Monster";
 
 export interface Area {

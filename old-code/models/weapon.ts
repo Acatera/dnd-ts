@@ -1,6 +1,6 @@
 import { IWeapon } from "../interfaces/weapon";
 import { EquippableItem as EquippableItem } from "./equippable-item";
-import { SkillType } from "../../types/skill-type";
+import { SkillType } from "../../types/SkillType";
 
 export class Weapon extends EquippableItem implements IWeapon {
     minDamage: number;

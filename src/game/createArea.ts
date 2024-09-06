@@ -2,7 +2,7 @@ import { Area } from "../types/Area";
 import { Monster } from "../types/Monster";
 import { createMonster } from "./createMonster";
 
-let areas = {};
+let areas: { [key: string]: any } = {};
 
 export async function loadAreaData() {
     const response = await fetch("data/area-data.json");
@@ -34,6 +34,10 @@ export function createArea(id: string): Area {
     
             const randIndex = Math.floor(Math.random() * this.enemies.length);
             const randMonsterId = this.enemies[randIndex];
+
+            if (!randMonsterId) {
+                return null;
+            }
     
             // return MonsterFactory.createMonster(randMonsterId);
             return createMonster(randMonsterId);

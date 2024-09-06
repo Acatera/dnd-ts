@@ -9,9 +9,10 @@
 	import { loadAreaData } from "./game/createArea";
 	import { createGame } from "./game/createGame";
 	import { loadMonsterData } from "./game/createMonster";
+	import { Game } from "./types/Game";
 
 	let assetsLoaded = false;
-	let game = null;
+	let game: Game | null = null;
 
 	async function loadAssets() {
 		await loadAreaData();
@@ -19,6 +20,7 @@
 
 		game = createGame();
 		game.loadArea("drone_factory");
+
 		assetsLoaded = true;
 	}
 
@@ -29,6 +31,10 @@
 	{#if !assetsLoaded}
 		<div class="loading-screen">
 			<h1>Loading game data...</h1>
+		</div>
+	{:else if game === null}
+		<div class="creating-game">
+			<h1>Creating game...</h1>
 		</div>
 	{:else}
 		<Grid columns="8fr 2fr" rows="3fr 2fr 5fr" gap="0.25rem">
@@ -53,6 +59,17 @@
 
 <style>
 	.loading-screen {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+	}
+
+	h1 {
+		font-size: 2rem;
+	}
+
+	.creating-game {
 		display: flex;
 		align-items: center;
 		justify-content: center;

@@ -1,10 +1,9 @@
 import { Area } from "./Area";
 import { Combat } from "./Combat";
-import { Monster } from "./Monster";
 import { Player } from "./Player";
 
 export interface Game {
-    area: Area;
+    area: Area | null;
     player: Player;
     combat: Combat | null;
     addEvent(message: string, source: GameEventSource): void;

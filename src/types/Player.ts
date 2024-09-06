@@ -1,9 +1,9 @@
-import { PlayerSkills } from "./skill-type";
+import { PlayerSkills } from "./PlayerSkills";
 import { Combatant } from "./Combatant";
 
 export interface Player extends Combatant {
     experience: number,
-    experienceToNextLevel: number,
+    experienceToLevelUp: number,
     level: number,
     skills: PlayerSkills,
     skillPoints: number,

@@ -37,8 +37,12 @@ export function createPlayer(): Player & Combatant & Attacker {
         ...createAttacker(),
         idleTicks: 0,
         experience: 0,
-        get experienceToNextLevel() {
-            return experienceLevels[this.level - 1];
+        get experienceToLevelUp() {
+            const experienceToLevelUp = experienceLevels[this.level - 1];
+            if (!experienceToLevelUp) {
+                return 0;
+            }
+            return experienceToLevelUp;
         },
         level: 1,
         skillPoints: 0,
@@ -51,37 +55,37 @@ export function createPlayer(): Player & Combatant & Attacker {
                 this.idleTicks = 0;
                 return 0;
             }
-    
+
             let damage = 1;
             const attackRating = this.attackRating;
             const defenseRating = enemy.evasion <= 0 ? 1 : enemy.evasion;
             const hitCoefficient = 25;
             const hitChance = (attackRating + hitCoefficient) / (attackRating + defenseRating + hitCoefficient);
-    
-            if (weaponSlot.item) {
-                const minDamage = weaponSlot.item.minDamage * (1 + attackRating / 400);
-                const maxDamage = weaponSlot.item.maxDamage * (1 + attackRating / 400);
-                damage = Math.floor(Math.random() * (maxDamage - minDamage + 1) + minDamage);
-            }
-    
+
+            // if (weaponSlot.item) {
+            //     const minDamage = weaponSlot.item.minDamage * (1 + attackRating / 400);
+            //     const maxDamage = weaponSlot.item.maxDamage * (1 + attackRating / 400);
+            //     damage = Math.floor(Math.random() * (maxDamage - minDamage + 1) + minDamage);
+            // }
+
             if (Math.random() > hitChance) {
                 this.idleTicks -= this.attackSpeed;
                 return -1;
             }
-    
+
             this.idleTicks -= this.attackSpeed;
             return enemy.receiveDamage(damage);
         },
 
         get attackRating(): number {
             let attackRating = 1; // TODO: replace this with unarmed attack rating
-            if (weaponSlot.item) {
-                const primarySkill = weaponSlot.item.getPrimarySkill();
-                attackRating = this.getSkill(primarySkill);
-            }
+            // if (weaponSlot.item) {
+            //     const primarySkill = weaponSlot.item.getPrimarySkill();
+            //     attackRating = this.getSkill(primarySkill);
+            // }
             return attackRating;
         }
-    
-    
+
+
     };
 }

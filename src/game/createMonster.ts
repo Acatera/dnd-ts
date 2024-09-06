@@ -3,7 +3,7 @@ import { Attacker } from "../types/Attacker";
 import { createAttacker } from "./createAttacker";
 import { createCombatant } from "./createCombatant";
 
-let monsters = {};
+let monsters: { [key: string]: Monster } = {};
 
 export async function loadMonsterData() {
     const response = await fetch("data/monster-data.json");
@@ -28,9 +28,10 @@ export function createMonster(id: string): Monster & Attacker {
 }
 
 export function getMonsterName(id: string): string {
-    if (!monsters[id]) {
-        return id;
+    const monster = monsters[id];
+    if (!monster) {
+        return "Unknown";
     }
     
-    return monsters[id].name;
+    return monster.name;
 }

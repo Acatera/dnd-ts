@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Player } from "../types/Player";
-    import { SkillType } from "../types/skill-type";
+    import { SkillType } from "../types/SkillType";
     import Grid from "./Grid.svelte";
     import GridItem from "./GridItem.svelte";
 
