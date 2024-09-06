@@ -5,7 +5,11 @@
         "description": "Your own two hands.",
         "minDamage": 1,
         "maxDamage": 3,
-        "attackSpeed": 20
+        "attackSpeed": 20,
+        "slot": "Weapon",
+        "requirements": {
+            "Unarmed": 1
+        }
     },
     "blaster": {
         "type": "weapon",

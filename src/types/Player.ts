@@ -7,7 +7,7 @@ import { createItemStack } from "./ItemStack";
 import { Monster } from "./Monster";
 import { PlayerSkills } from "./PlayerSkills";
 import { SkillType } from "./SkillType";
-import { Weapon } from "./Weapon";
+import { createWeapon, Weapon } from "./Weapon";
 
 export interface Player {
     health: number;
@@ -57,23 +57,11 @@ export function createPlayer(): Player {
             Energy: 1,
             Explosive: 1,
             Thrown: 1,
+            Unarmed: 10,
         };
     };
 
-    const weaponSlot = createEquipmentSlot<Weapon>(EquipmentSlotType.Weapon, {
-        name: "Fists",
-        description: "Your fists are your only weapon",
-        id: "fists",
-        slot: EquipmentSlotType.Weapon,
-        requirements: {},
-        bonuses: {},
-        minDamage: 1,
-        maxDamage: 1,
-        attackSpeed: 1,
-        getPrimarySkill() {
-            return SkillType.Strength;
-        }
-    });
+    const weaponSlot = createEquipmentSlot<Weapon>(EquipmentSlotType.Weapon, createWeapon("fists"));
     const armorSlots = [
         createEquipmentSlot<Armor>(EquipmentSlotType.Head),
         createEquipmentSlot<Armor>(EquipmentSlotType.Chest),
@@ -153,10 +141,14 @@ export function createPlayer(): Player {
         },
         get attackRating(): number {
             let attackRating = 1; // TODO: replace this with unarmed attack rating
-            // if (weaponSlot.item) {
-            //     const primarySkill = weaponSlot.item.getPrimarySkill();
-            //     attackRating = this.getSkill(primarySkill);
-            // }
+
+            if (weaponSlot.item) {
+                const primarySkill = weaponSlot.item.getPrimarySkill();
+                console.log(primarySkill);
+                attackRating = this.skills[primarySkill];
+                console.log(attackRating);
+            }
+            
             return attackRating;
         },
         gainExperience(amount: number) {

@@ -21,7 +21,7 @@ export enum SkillType {
     Explosive = "Explosive",
     Thrown = "Thrown",
 
-    // Unarmed,
+    Unarmed = "Unarmed",
     // OneHBlunt,
     // OneHSharp,
     // TwoHBlunt,
