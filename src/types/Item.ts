@@ -4,7 +4,7 @@ export interface Item {
     description: string;
 }
 
-let items: { [key: string]: any } = {};
+export let items: { [key: string]: any } = {};
 
 export async function loadItemData() {
     const response = await fetch("data/item-data.json");

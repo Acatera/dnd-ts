@@ -57,7 +57,7 @@ export function createPlayer(): Player {
             Energy: 1,
             Explosive: 1,
             Thrown: 1,
-            Unarmed: 10,
+            Unarmed: 1,
         };
     };
 
@@ -141,7 +141,7 @@ export function createPlayer(): Player {
         },
         get attackRating(): number {
             let attackRating = 1; // TODO: replace this with unarmed attack rating
-
+            debugger;
             if (weaponSlot.item) {
                 const primarySkill = weaponSlot.item.getPrimarySkill();
                 console.log(primarySkill);
