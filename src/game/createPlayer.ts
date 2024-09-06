@@ -1,6 +1,7 @@
 import { Attacker } from "../types/Attacker";
 import { Combatant } from "../types/Combatant";
 import { Player } from "../types/Player";
+import { SkillType } from "../types/SkillType";
 import { createAttacker } from "./createAttacker";
 import { createCombatant } from "./createCombatant";
 
@@ -37,13 +38,7 @@ export function createPlayer(): Player & Combatant & Attacker {
         ...createAttacker(),
         idleTicks: 0,
         experience: 0,
-        get experienceToLevelUp() {
-            const experienceToLevelUp = experienceLevels[this.level - 1];
-            if (!experienceToLevelUp) {
-                return 0;
-            }
-            return experienceToLevelUp;
-        },
+        experienceToLevelUp: experienceLevels[0] as number,
         level: 1,
         skillPoints: 0,
         skills: createSkills(),
@@ -76,7 +71,6 @@ export function createPlayer(): Player & Combatant & Attacker {
             this.idleTicks -= this.attackSpeed;
             return enemy.receiveDamage(damage);
         },
-
         get attackRating(): number {
             let attackRating = 1; // TODO: replace this with unarmed attack rating
             // if (weaponSlot.item) {
@@ -84,8 +78,33 @@ export function createPlayer(): Player & Combatant & Attacker {
             //     attackRating = this.getSkill(primarySkill);
             // }
             return attackRating;
+        },
+        gainExperience(amount: number) {
+            this.experience = this.experience + amount;
+
+            // Check if we've leveled up
+            while (this.experience >= this.experienceToLevelUp) {
+                this.levelUp();
+
+                // this.game.addLog(`You've reached level ${this.level}!`, LogSource.Game);
+
+                // Increase the player's health
+                this.skills.MaxHealth += 1;
+
+                // Increase the player's skills
+                for (const skill in this.skills) {
+                    this.skills[skill as SkillType]++;
+                }
+
+                // Heal the player to full health
+                // this.#game.addLog(`You've been healed to full health!`, LogSource.Game);
+                this.health = this.maxHealth;
+            }
+        },
+        levelUp() {
+            this.experience -= this.experienceToLevelUp;
+            this.experienceToLevelUp = experienceLevels[this.level - 1] as number;
+            this.level++;
         }
-
-
     };
 }

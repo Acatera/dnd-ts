@@ -5,12 +5,16 @@ import { createArea } from "./createArea";
 import { createPlayer } from "./createPlayer";
 import { gameEvents } from "../stores/gameEvents";
 import { gameArea } from "../stores/gameArea";
+import { playerStore } from "../stores/player";
 
 export function createGame(): Game {
+    const player = createPlayer();
+    playerStore.set(player);
+
     return {
         area: null as Area | null,
         combat: null as Combat | null,
-        player: createPlayer(),
+        player: player,
         addEvent(message, source) {
             gameEvents.update((events: GameEvent[]) => {
                 events.push({ message, source });

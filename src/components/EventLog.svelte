@@ -1,16 +1,19 @@
 <script lang="ts">
+    import { tick } from "svelte";
     import { gameEvents } from "../stores/gameEvents";
     import { GameEvent, GameEventSource } from "../types/Game";
     let events: GameEvent[] = [];
     let mainElement: HTMLElement;
 
     // Subscribe to the gameEvents store and update the events array
-    gameEvents.subscribe((value) => {
+    gameEvents.subscribe(async (value) => {
         events = value;
-       
+
+        await tick();
+
         // Scroll to the bottom after each new event
         if (mainElement) {
-            mainElement.scrollTop = mainElement.scrollHeight;
+            mainElement.scrollTop = mainElement.scrollHeight + mainElement.clientHeight;
         }
     });
 </script>
@@ -27,7 +30,7 @@
     main {
         height: 100%;
         overflow-y: auto;
-        padding: 1rem;
+        padding: 0.25rem;
     }
 
     .player-event {

@@ -1,8 +1,13 @@
 <script lang="ts">
     import { Player } from "../types/Player";
     import ProgressBar from "./ProgressBar.svelte";
+    import { playerStore } from "../stores/player";
 
-    export let player: Player;
+    let player: Player;
+
+    playerStore.subscribe((value) => {
+        player = value;
+    });
 </script>
 
 <main>
@@ -22,4 +27,5 @@
     <p>Level: {player.level}</p>
     <p>Skill points: {player.skillPoints}</p>
     <p>Attack Rating: {player.attackRating}</p>
+    <p>Experience: {player.experience}</p>
 </main>

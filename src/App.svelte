@@ -39,7 +39,7 @@
 	{:else}
 		<Grid columns="8fr 2fr" rows="3fr 2fr 5fr" gap="0.25rem">
 			<GridItem maxHeight="30vh">
-				<CharacterInfo player={game.player} />
+				<CharacterInfo />
 			</GridItem>
 			<GridItem rowSpan={2}>
 				<AreaInfo {game} />

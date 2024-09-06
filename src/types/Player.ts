@@ -8,4 +8,6 @@ export interface Player extends Combatant {
     skills: PlayerSkills,
     skillPoints: number,
     attackRating: number,
+    gainExperience(amount: number): void,
+    levelUp(): void,
 }

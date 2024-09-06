@@ -3,16 +3,23 @@
     import { SkillType } from "../types/SkillType";
     import Grid from "./Grid.svelte";
     import GridItem from "./GridItem.svelte";
+    import { playerStore } from "../stores/player";
 
-    export let player: Player;
+    let player: Player;
+
+    playerStore.subscribe((value) => {
+        player = value;
+    });
+
+    const skills = Object.values(SkillType);
 </script>
 
 <main>
     <h1>Skills</h1>
     <!-- First 14 skills -->
-     <Grid columns="1fr 1fr">
+    <Grid columns="1fr 1fr">
         <GridItem>
-            {#each Object.keys(player.skills).slice(0, 13) as skill}
+            {#each skills.slice(0, 13) as skill}
                 <div class="skill">
                     <span>{skill}</span>
                     <span>{player.skills[skill]}</span>
@@ -20,7 +27,7 @@
             {/each}
         </GridItem>
         <GridItem>
-            {#each Object.keys(player.skills).slice(13) as skill}
+            {#each skills.slice(13) as skill}
                 <div class="skill">
                     <span>{skill}</span>
                     <span>{player.skills[skill]}</span>

@@ -1,7 +1,5 @@
 <script lang="ts">
-    import { Player } from "../types/Player";
 
-    export let player: Player;
 </script>
 
 <main>

@@ -1,22 +1,31 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
-
-  "include": ["src/**/*"],
-  "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
+  "include": [
+    "src/**/*",
+    "src/**/*.svelte"
+  ],
+  "exclude": [
+    "node_modules/*",
+    "__sapper__/*",
+    "public/*"
+  ],
   "compilerOptions": {
+    "types": [
+      "svelte"
+    ],
     "importsNotUsedAsValues": "remove",
     "preserveValueImports": false,
-    "strict": true,                    // Enables all strict mode options below
-    "noImplicitAny": true,              // Disallow `any` types
-    "strictNullChecks": true,           // Ensure `null` and `undefined` are handled
-    "strictFunctionTypes": true,        // Strict variance checks for function types
-    "strictBindCallApply": true,        // Ensure the proper typing of `bind`, `call`, and `apply` methods
+    "strict": true, // Enables all strict mode options below
+    "noImplicitAny": true, // Disallow `any` types
+    "strictNullChecks": true, // Ensure `null` and `undefined` are handled
+    "strictFunctionTypes": true, // Strict variance checks for function types
+    "strictBindCallApply": true, // Ensure the proper typing of `bind`, `call`, and `apply` methods
     "strictPropertyInitialization": true, // Ensure all class properties are initialized
-    "noImplicitThis": true,             // Warns when `this` is implicitly typed as `any`
-    "alwaysStrict": true,               // Always include `use strict` directive in emitted JavaScript
-    "noImplicitReturns": true,          // Ensure all code paths return a value in functions
+    "noImplicitThis": true, // Warns when `this` is implicitly typed as `any`
+    "alwaysStrict": true, // Always include `use strict` directive in emitted JavaScript
+    "noImplicitReturns": true, // Ensure all code paths return a value in functions
     "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in `switch` statements
-    "noUncheckedIndexedAccess": true,   // Strictly check index signatures and array accesses
-    "exactOptionalPropertyTypes": true  // Ensure that optional properties cannot be incorrectly assumed as always defined
+    "noUncheckedIndexedAccess": true, // Strictly check index signatures and array accesses
+    "exactOptionalPropertyTypes": true // Ensure that optional properties cannot be incorrectly assumed as always defined
   }
 }

@@ -5,8 +5,7 @@
     let backgroundColor = "black";
     let barColor = "red";
     let showValue: ShowValue = "value";
-    let progress = ((value - minValue) / (maxValue - minValue)) * 100;
-
+    
     type ShowValue = "percentage" | "value" | "none";
 
     export {
@@ -16,8 +15,9 @@
         backgroundColor,
         barColor,
         showValue,
-        progress,
     };
+
+    let progress = ((value - minValue) / (maxValue - minValue)) * 100;
 </script>
 
 <main>
@@ -25,7 +25,7 @@
         class="progress-bar"
         style="background-color: {backgroundColor}; border-color: {barColor}"
         data-text={showValue === "percentage"
-            ? `${progress}%`
+            ? `${((value - minValue) / (maxValue - minValue)) * 100}%`
             : showValue === "value"
                 ? `${value} / ${maxValue}`
                 : ""
@@ -33,7 +33,7 @@
     >
         <div
             class="progress"
-            style="width: {progress}%; background-color: {barColor}"
+            style="width: {((value - minValue) / (maxValue - minValue)) * 100}%; background-color: {barColor}"
         ></div>
     </div>
 </main>
@@ -51,7 +51,7 @@
     }
 
     .progress {
-        transition: width 0.5s;
+        transition: width 0.2s;
         height: 10px;
         z-index: 1; /* Ensure the progress bar is beneath the text */
     }
