@@ -23,7 +23,7 @@
         <GridItem>Weapon:</GridItem>
         <GridItem>
             {#if player.weaponSlot && player.weaponSlot.item}
-                <p
+                <p class="clickable"
                     on:click={() => handleClick(EquipmentSlotType.Weapon)}
                     on:keypress={() => handleClick(EquipmentSlotType.Weapon)}
                 >
@@ -40,7 +40,7 @@
             </GridItem>
             <GridItem>
                 {#if armorSlot.item}
-                    <p
+                    <p class="clickable"
                         on:click={() => handleClick(armorSlot.slot)}
                         on:keypress={() => handleClick(armorSlot.slot)}
                     >
@@ -55,7 +55,8 @@
 </main>
 
 <style>
-    main p {
+    .clickable:hover {
+        text-shadow: 0 0 5px #d4a14e;
         cursor: pointer;
     }
 </style>

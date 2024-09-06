@@ -11,7 +11,7 @@
             "Unarmed": 1
         },
         "bonuses": {
-            "Unarmed": 25
+            "Unarmed": 123
         }
     },
     "blaster": {
@@ -26,7 +26,7 @@
             "Pistol": 1
         },
         "bonuses": {
-            "Pistol": 25
+            "Pistol": 321
         }
     },
     "plasteel_helmet": {
