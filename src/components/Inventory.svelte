@@ -2,6 +2,10 @@
     import { inventoryStore } from "../stores/inventory";
     import { GameScreen, gameScreenStore } from "../stores/gameScreen";
     import { Inventory } from "../types/Inventory";
+    import { getItemType, Item } from "../types/Item";
+    import { equipArmor, equipWeapon } from "../stores/player";
+    import { Armor } from "../types/Armor";
+    import { Weapon } from "../types/Weapon";
 
     let inventory: Inventory;
 
@@ -11,6 +15,16 @@
 
     function goBack() {
         gameScreenStore.update(() => GameScreen.Game);
+    }
+
+    function handleClick(item: Item) {
+        const itemType = getItemType(item.id);
+        debugger;
+        if (itemType === "Weapon") {
+            equipWeapon(item as Weapon);
+        } else if (itemType === "Armor") {
+            equipArmor(item as Armor);
+        }
     }
 </script>
 
@@ -22,7 +36,12 @@
             {#if itemStack.quantity > 1}
                 <li>{itemStack.item.name} x{itemStack.quantity}</li>
             {:else}
-                <li>{itemStack.item.name}</li>
+                <li
+                    on:click={() => handleClick(itemStack.item)}
+                    on:keypress={() => handleClick(itemStack.item)}
+                >
+                    {itemStack.item.name}
+                </li>
             {/if}
         {/each}
     </ul>

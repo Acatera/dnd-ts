@@ -1,6 +1,6 @@
 {
     "fists": {
-        "type": "weapon",
+        "type": "Weapon",
         "name": "Fists",
         "description": "Your own two hands.",
         "minDamage": 1,
@@ -15,7 +15,7 @@
         }
     },
     "blaster": {
-        "type": "weapon",
+        "type": "Weapon",
         "name": "Blaster",
         "description": "A standard-issue blaster.",
         "minDamage": 2,
@@ -30,7 +30,7 @@
         }
     },
     "plasteel_helmet": {
-        "type": "armor",
+        "type": "Armor",
         "name": "Plasteel Helmet",
         "description": "A helmet made of plasteel.",
         "slot": "Head",
@@ -44,7 +44,7 @@
         }
     },
     "plasteel_body_armor": {
-        "type": "armor",
+        "type": "Armor",
         "name": "Plasteel Body Armor",
         "description": "Body armor made of plasteel.",
         "slot": "Chest",
@@ -58,7 +58,7 @@
         }
     },
     "plasteel_gloves": {
-        "type": "armor",
+        "type": "Armor",
         "name": "Plasteel Gloves",
         "description": "Gloves made of plasteel.",
         "slot": "Hands",
@@ -72,7 +72,7 @@
         }
     },
     "plasteel_pants": {
-        "type": "armor",
+        "type": "Armor",
         "name": "Plasteel Pants",
         "description": "Pants made of plasteel.",
         "slot": "Legs",
@@ -86,7 +86,7 @@
         }
     },
     "plasteel_boots": {
-        "type": "armor",
+        "type": "Armor",
         "name": "Plasteel Boots",
         "description": "Boots made of plasteel.",
         "slot": "Feet",

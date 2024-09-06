@@ -3,7 +3,7 @@ import { ItemStack } from "./ItemStack";
 export interface Inventory {
     items: ItemStack[];
     add(item: ItemStack): void;
-    remove(item: ItemStack): void;
+    remove(itemId: string): void;
 }
 
 export function createInventory(): Inventory {
@@ -14,11 +14,15 @@ export function createInventory(): Inventory {
         add(item: ItemStack) {
             items.push(item);
         },
-        remove(item: ItemStack) {
-            const index = items.indexOf(item);
+        remove(itemId: string) {
+            const index = items.findIndex((itemStack) => itemStack.item.id === itemId);
             if (index !== -1) {
                 items.splice(index, 1);
+
+                return true;
+
             }
+            return false;
         },
     };
 }
