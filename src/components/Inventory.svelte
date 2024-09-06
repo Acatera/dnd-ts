@@ -1,10 +1,9 @@
 <script lang="ts">
     import { inventoryStore } from "../stores/inventory";
-    import { ItemStack } from "../types/ItemStack";
     import { GameScreen, gameScreenStore } from "../stores/gameScreen";
-    import { attr } from "svelte/internal";
+    import { Inventory } from "../types/Inventory";
 
-    let inventory: ItemStack[] = [];
+    let inventory: Inventory;
 
     inventoryStore.subscribe((value) => {
         inventory = value;
@@ -19,7 +18,7 @@
     <h1>Inventory</h1>
 
     <ul>
-        {#each inventory as itemStack}
+        {#each inventory.items as itemStack}
             {#if itemStack.quantity > 1}
                 <li>{itemStack.item.name} x{itemStack.quantity}</li>
             {:else}

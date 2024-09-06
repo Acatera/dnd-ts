@@ -1,4 +1,4 @@
 import { writable } from "svelte/store";
-import { ItemStack } from "../types/ItemStack";
+import { Inventory } from "../types/Inventory";
 
-export const inventoryStore = writable<ItemStack[]>([]);
+export const inventoryStore = writable<Inventory>();

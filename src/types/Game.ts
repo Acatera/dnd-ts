@@ -7,8 +7,9 @@ import { Combat, createCombat } from "./Combat";
 import { GameEvent } from "./GameEvent";
 import { GameEventSource } from "./GameEventSource";
 import { createPlayer, Player } from "./Player";
-import { getItemName } from "./Item";
+import { createItem, getItemName } from "./Item";
 import { inventoryStore } from "../stores/inventory";
+import { createItemStack } from "./ItemStack";
 
 export interface Game {
     area: Area | null;
@@ -90,8 +91,10 @@ export function createGame(): Game {
 
                 const loot = monster.generateLoot();
                 if (loot.length > 0) {
-                    for (const item of loot) {
-                        this.addEvent("You've found a " + getItemName(item) + "!", GameEventSource.Game);
+                    for (const itemId of loot) {
+                        const item = createItem(itemId);
+                        this.player.inventory.add(createItemStack(item, 1));
+                        this.addEvent(`You've found a ${item.name}.`, GameEventSource.Game);
                     }
                 }
             };
