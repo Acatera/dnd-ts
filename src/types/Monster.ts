@@ -1,11 +1,4 @@
-import { Attacker } from "./Attacker";
-import { Combatant, createCombatant } from "./Combatant";
-
-export interface Monster extends Combatant {
-    expReward: number;
-    name: string;
-    generateLoot(): string[];
-}
+import { Player } from "./Player";
 
 let monsters: { [key: string]: any } = {};
 
@@ -15,13 +8,58 @@ export async function loadMonsterData() {
     monsters = data;
 }
 
-export function createMonster(id: string): Monster & Attacker {
+export interface Monster {
+    health: number;
+    maxHealth: number;
+    isAlive(): boolean;
+
+    canAttack(): boolean;
+    attack(enemy: Player): number;
+    receiveDamage(amount: number): number;
+    idleTicks: number;
+    addIdleTicks(): void;
+    resetIdleTicks(): void;
+
+    attackSpeed: number;
+    evasion: number;
+    expReward: number;
+    name: string;
+    generateLoot(): string[];
+}
+
+export function createMonster(id: string): Monster {
     if (!monsters[id]) {
         throw new Error(`Monster with id ${id} not found`);
     }
 
     const monster = {
-        ...createCombatant(),
+        health: 10,
+        maxHealth: 10,
+        receiveDamage(amount: number) {
+            this.health -= amount;
+            return amount;
+        },
+        isAlive() {
+            return this.health > 0;
+        },
+        idleTicks: 0,
+        addIdleTicks() {
+            this.idleTicks++;
+        },
+        canAttack() {
+            return this.idleTicks >= this.attackSpeed;
+        },
+        attack(enemy: Player) {
+            const damage = 1;
+            this.idleTicks -= this.attackSpeed;
+            enemy.receiveDamage(damage);
+            return damage;
+        },
+        resetIdleTicks() {
+            this.idleTicks = 0;
+        },
+        attackSpeed: 20,
+        evasion: 1,
         ...monsters[id],
     };
 

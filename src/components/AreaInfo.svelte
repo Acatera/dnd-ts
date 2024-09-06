@@ -1,9 +1,8 @@
 <script lang="ts">
-    import { Area } from "../types/Area";
-    import { getMonsterName } from "../game/createMonster";
-    import { getAreaName } from "../game/createArea";
+    import { Area, getAreaName } from "../types/Area";
     import { Game } from "../types/Game";
     import { gameArea } from "../stores/gameArea";
+    import { getMonsterName } from "../types/Monster";
 
     let area: Area;
     let game: Game;

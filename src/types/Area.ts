@@ -48,10 +48,7 @@ export function createArea(id: string): Area {
     
             // return MonsterFactory.createMonster(randMonsterId);
 
-            console.log("randMonsterId", randMonsterId);
-            const monster = createMonster(randMonsterId);
-            console.log("monster", monster);
-            return monster;
+            return createMonster(randMonsterId);
         }
     };
 }

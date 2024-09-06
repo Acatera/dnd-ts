@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
-import { GameEvent, GameEventSource } from '../types/Game';
+import { GameEvent } from "../types/GameEvent";
+import { GameEventSource } from "../types/GameEventSource";
 
 export const gameEvents = writable<GameEvent[]>([
     {

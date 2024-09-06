@@ -1,8 +1,11 @@
 import { gameArea } from "../stores/gameArea";
 import { gameEvents } from "../stores/gameEvents";
 import { playerStore } from "../stores/player";
+import { monsterStore } from "../stores/monsterStore";
 import { Area, createArea } from "./Area";
 import { Combat, createCombat } from "./Combat";
+import { GameEvent } from "./GameEvent";
+import { GameEventSource } from "./GameEventSource";
 import { createPlayer, Player } from "./Player";
 
 export interface Game {
@@ -13,19 +16,6 @@ export interface Game {
     loadArea(areaId: string): void;
     travelToArea(areaId: string): void;
     startCombat(): void;
-}
-
-export enum GameEventSource {
-    Player,
-    Enemy,
-    Environment,
-    Game,
-    Item,
-}
-
-export interface GameEvent{
-    message: string;
-    source: GameEventSource;
 }
 
 export function createGame(): Game {
@@ -61,31 +51,43 @@ export function createGame(): Game {
                 return;
             }
 
-            this.addEvent("You've encountered a " + monster.name + "!", GameEventSource.Enemy);
+            this.addEvent("You've encountered a " + monster.name + "!", GameEventSource.Game);
             this.combat = createCombat(this.player, monster);
 
             this.combat.onPlayersTurn = (player, monster, damage) => {
                 this.addEvent("You attacked the " + monster.name + " for " + damage + " damage.", GameEventSource.Player);
+                monsterStore.set(monster);
             };
 
             this.combat.onPlayerMiss = (player) => {
-                this.addEvent("You missed the " + monster.name + ".", GameEventSource.Player);
+                this.addEvent("You missed the " + monster.name + ".", GameEventSource.Game);
             };
+
+            this.combat.onPlayerDeath = (player) => {
+                this.addEvent("You've been defeated by the " + monster.name + ".", GameEventSource.Game);
+            }
 
             this.combat.onMonstersTurn = (player, monster, damage) => {
                 this.addEvent("The " + monster.name + " attacked you for " + damage + " damage.", GameEventSource.Enemy);
+                playerStore.set(this.player);
             };
 
             this.combat.onMonsterMiss = (monster) => {
-                this.addEvent("The " + monster.name + " missed you.", GameEventSource.Enemy);
+                this.addEvent("The " + monster.name + " missed you.", GameEventSource.Game);
             };
 
             this.combat.onMonsterDeath = (monster) => {
-                this.addEvent("You've defeated the " + monster.name + "!", GameEventSource.Enemy);
+                this.addEvent("You've defeated the " + monster.name + "!", GameEventSource.Game);
+                this.addEvent("You've gained " + monster.expReward + " experience.", GameEventSource.Game);
+
+                // Update player experience and player store
+                this.player.gainExperience(monster.expReward);
+                playerStore.set(this.player);
             };
 
             this.combat.onCombatEnd = () => {
                 this.combat = null;
+                monsterStore.set(null);
             };
 
             this.combat.simulate();

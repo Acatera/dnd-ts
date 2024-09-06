@@ -1,7 +1,9 @@
 <script lang="ts">
     import { tick } from "svelte";
     import { gameEvents } from "../stores/gameEvents";
-    import { GameEvent, GameEventSource } from "../types/Game";
+    
+    import { GameEvent } from "../types/GameEvent";
+    import { GameEventSource } from "../types/GameEventSource";
     let events: GameEvent[] = [];
     let mainElement: HTMLElement;
 
