@@ -23,6 +23,18 @@
             }
         }
     },
+    "drone_scout2": {
+        "name": "Drone Scout",
+        "description": "A small, fast drone that is equipped with a laser weapon. It is capable of dodging attacks and can be difficult to hit.",
+        "loot": [
+            "copper",
+            "iron",
+            "steel",
+            "plastic",
+            "battery",
+            "circuit_board"
+        ]
+    },
     "plasteel_drone": {
         "name": "Plasteel Drone",
         "health": 10,

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberpunk RPG - Sample 7: Futuristic UI (Darkened)</title>
+    <style>
+        /* Theme 7: Sci-fi Futuristic UI (Darkened) */
+        .theme7 {
+            background-color: #090F14; /* Darkened background */
+            color: #00CC9F; /* Darkened cyan text */
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+        .theme7 h1, .theme7 h2, .theme7 p {
+            font-family: 'Arial', sans-serif;
+            color: #00CC9F; /* Darkened main text color */
+        }
+        .theme7 h1 {
+            color: #00D1D1; /* Darkened title cyan */
+            text-transform: uppercase;
+        }
+        .theme7 p {
+            color: #94D7C6; /* Darkened light teal for paragraphs */
+        }
+        .theme7 a {
+            color: #CCCC00; /* Darkened neon yellow for links */
+            text-decoration: none;
+        }
+        .theme7 a:hover {
+            color: #A4CC50; /* Darkened yellow-green on hover */
+        }
+        .theme7 button {
+            background-color: #00303D; /* Darkened cyan background for buttons */
+            color: #00CC9F;
+            border: 2px solid #00CC9F;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .theme7 button:hover {
+            background-color: #00CC9F;
+            color: #00303D;
+            border-color: #00D1D1;
+        }
+        .theme7 .card {
+            background-color: #00242B; /* Darkened card background */
+            border: 1px solid #00CC9F;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+        .theme7 .card h2 {
+            color: #00D1D1;
+            margin-bottom: 10px;
+        }
+        .theme7 .stats {
+            display: flex;
+            justify-content: space-between;
+            color: #94D7C6;
+        }
+        .theme7 .stats div {
+            width: 30%;
+            background-color: #00333B; /* Darkened stat background */
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .theme7 .inventory {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .theme7 .inventory .item {
+            width: 60px;
+            height: 60px;
+            background-color: #002C34; /* Darkened inventory item background */
+            border: 2px solid #00CC9F;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body class="theme7">
+    <h1>Theme 7: Futuristic Sci-Fi UI (Darkened)</h1>
+    <p>This theme takes inspiration from modern sci-fi interfaces, with glowing accents and a darker, sleek backdrop.</p>
+    
+    <div class="card">
+        <h2>Character Stats</h2>
+        <div class="stats">
+            <div>
+                <strong>Strength</strong><br>850
+            </div>
+            <div>
+                <strong>Dexterity</strong><br>745
+            </div>
+            <div>
+                <strong>Luck</strong><br>540
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>Inventory</h2>
+        <div class="inventory">
+            <div class="item">🗡</div>
+            <div class="item">🛡</div>
+            <div class="item">💊</div>
+            <div class="item">🔫</div>
+        </div>
+    </div>
+
+    <p><a href="#">Achievements</a></p>
+    
+    <button>Exit Game</button>
+</body>
+</html>

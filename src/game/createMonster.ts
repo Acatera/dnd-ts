@@ -29,7 +29,7 @@ export function createMonster(id: string): Monster & Attacker {
 
 export function getMonsterName(id: string): string {
     if (!monsters[id]) {
-        throw new Error(`Monster with id ${id} not found`);
+        return id;
     }
     
     return monsters[id].name;

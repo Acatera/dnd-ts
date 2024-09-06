@@ -10,6 +10,14 @@ export async function loadAreaData() {
     areas = data;
 }
 
+export function getAreaName(id: string): string {
+    if (!areas[id]) {
+        throw new Error(`Area with id ${id} not found`);
+    }
+
+    return areas[id].name;
+}
+
 export function createArea(id: string): Area {
     if (!areas[id]) {
         throw new Error(`Area with id ${id} not found`);
@@ -18,6 +26,7 @@ export function createArea(id: string): Area {
     return {
         id,
         ...areas[id],
+        adjacentAreaIds: areas[id].adjacent_areas,
         spawnEncounter(): Monster | null {
             if (this.enemies.length < 0) {
                 return null;

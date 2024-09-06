@@ -4,6 +4,7 @@ import { Game, GameEvent, GameEventSource } from "../types/Game";
 import { createArea } from "./createArea";
 import { createPlayer } from "./createPlayer";
 import { gameEvents } from "../stores/gameEvents";
+import { gameArea } from "../stores/gameArea";
 
 export function createGame(): Game {
     return {
@@ -21,6 +22,7 @@ export function createGame(): Game {
         },
         loadArea(areaId) {
             this.area = createArea(areaId);
+            gameArea.set(this.area);
         },
         startCombat() {
             const monster = this.area.spawnEncounter();
@@ -31,6 +33,10 @@ export function createGame(): Game {
                 monster: monster,
             };
         },
+        travelToArea(areaId: string){
+            this.loadArea(areaId);
+            this.addEvent("You've traveled to " + this.area.name, GameEventSource.Environment);
+        }
     };
 }
 

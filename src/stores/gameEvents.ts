@@ -1,9 +1,6 @@
 import { writable } from 'svelte/store';
 import { GameEvent, GameEventSource } from '../types/Game';
 
-// This store will hold an array of GameEvent objects.
-// Test this store by adding a few GameEvent objects to it, one for each GameEventSource.
-
 export const gameEvents = writable<GameEvent[]>([
     {
         message: "Welcome to RoguePunk!",

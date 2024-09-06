@@ -36,7 +36,7 @@
 				<CharacterInfo player={game.player} />
 			</GridItem>
 			<GridItem rowSpan={2}>
-				<AreaInfo area={game.area} />
+				<AreaInfo {game} />
 			</GridItem>
 			<GridItem>
 				<Combat />
@@ -45,7 +45,7 @@
 				<EventLog />
 			</GridItem>
 			<GridItem>
-				<Controls game={game} />
+				<Controls {game} />
 			</GridItem>
 		</Grid>
 	{/if}

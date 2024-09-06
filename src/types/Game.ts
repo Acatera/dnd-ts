@@ -9,6 +9,7 @@ export interface Game {
     combat: Combat | null;
     addEvent(message: string, source: GameEventSource): void;
     loadArea(areaId: string): void;
+    travelToArea(areaId: string): void;
     startCombat(): void;
 }
 

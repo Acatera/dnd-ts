@@ -15,3 +15,9 @@
 
     <button on:click={startCombat}>Start Combat</button>
 </main>
+
+<style>
+    main {
+        margin: 1rem;
+    }
+</style>

@@ -1,3 +1,4 @@
+import { Game } from "./Game";
 import { Monster } from "./Monster";
 
 export interface Area {
@@ -5,5 +6,6 @@ export interface Area {
     name: string;
     description: string;
     enemies: string[];
-    spawnEncounter(): Monster | null
+    adjacentAreaIds: string[];
+    spawnEncounter(): Monster | null;
 }

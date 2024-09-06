@@ -1,9 +1,34 @@
 {
-    "drone_factory":{
+    "drone_factory": {
         "name": "Drone Factory",
         "description": "A massive factory that churns out drones by the hundreds. The air is filled with the sound of machinery and the smell of oil and metal. The drones are relentless and will stop at nothing to protect their factory.",
         "enemies2": ["drone_scout", "drone_swarm", "drone_leader", "plasteel_drone", "drone_boss"],
         "enemies": ["tiered_drone_scout"],
-        "loot": ["copper", "iron", "steel", "plastic", "battery", "circuit_board"]
+        "loot": ["copper", "iron", "steel", "plastic", "battery", "circuit_board"],
+        "adjacent_areas": ["drone_factory_entrance", "power_station", "drone_repair_bay"]
+    },
+    "drone_factory_entrance": {
+        "name": "Drone Factory Entrance",
+        "description": "The entrance to the drone factory is heavily guarded by drones. The factory itself is a massive structure that looms in the distance.",
+        "enemies2": ["drone_scout", "drone_swarm", "drone_leader", "plasteel_drone", "drone_boss"],
+        "enemies": ["tiered_drone_scout"],
+        "loot": ["copper", "iron", "steel", "plastic", "battery", "circuit_board"],
+        "adjacent_areas": ["drone_factory"]
+    },
+    "power_station": {
+        "name": "Power Station",
+        "description": "A critical power station that supplies energy to the drone factory. The station is surrounded by high-voltage wires and guarded by elite drones.",
+        "enemies2": ["power_guardian", "drone_swarm", "drone_leader"],
+        "enemies": ["shock_drone"],
+        "loot": ["energy_cell", "battery", "circuit_board", "copper"],
+        "adjacent_areas": ["drone_factory"]
+    },
+    "drone_repair_bay": {
+        "name": "Drone Repair Bay",
+        "description": "A maintenance area where damaged drones are repaired. The sound of welding and automated repair systems is constant.",
+        "enemies2": ["repair_drone", "drone_leader", "plasteel_drone"],
+        "enemies": ["repair_bot"],
+        "loot": ["metal_scraps", "plastic", "plasteel"],
+        "adjacent_areas": ["drone_factory"]
     }
 }
