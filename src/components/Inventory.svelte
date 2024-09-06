@@ -19,7 +19,7 @@
 
     function handleClick(item: Item) {
         const itemType = getItemType(item.id);
-        debugger;
+        
         if (itemType === "Weapon") {
             equipWeapon(item as Weapon);
         } else if (itemType === "Armor") {

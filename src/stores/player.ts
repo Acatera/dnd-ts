@@ -3,13 +3,14 @@ import { Player } from "../types/Player";
 import { Weapon } from "../types/Weapon";
 import { Armor } from "../types/Armor";
 import { inventoryStore } from "./inventory";
+import { EquipmentSlotType } from "../types/EquipmentSlotType";
 
 // Export a writable store with the initial value of an empty object
 // Also export a function to equip an a weapon and a function to equip an armor
 
 export const playerStore = writable<Player>();
 
-export function equipWeapon(weapon: Weapon) {
+export function equipWeapon(weapon: Weapon): void {
     playerStore.update((p) => {
         if (p.wieldWeapon(weapon)) {
             inventoryStore.update((i) => i);
@@ -19,11 +20,18 @@ export function equipWeapon(weapon: Weapon) {
     });
 }
 
-export function equipArmor(armor: Armor) {
+export function equipArmor(armor: Armor): void {
     playerStore.update((p) => {
         if (p.wearArmor(armor)) {
             inventoryStore.update((i) => i);
         }
+        return p;
+    });
+}
+
+export function unequip(slot: EquipmentSlotType): void {
+    playerStore.update((p) => {
+        p.unequip(slot);
         return p;
     });
 }

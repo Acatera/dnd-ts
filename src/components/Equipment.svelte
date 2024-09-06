@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { playerStore } from "../stores/player";
+    import { playerStore, unequip } from "../stores/player";
+    import { EquipmentSlot } from "../types/EquipmentSlot";
     import { EquipmentSlotType } from "../types/EquipmentSlotType";
     import { Player } from "../types/Player";
     import Grid from "./Grid.svelte";
@@ -10,6 +11,10 @@
     playerStore.subscribe((value) => {
         player = value;
     });
+
+    function handleClick(slot: EquipmentSlotType) {
+        unequip(slot);
+    }
 </script>
 
 <main>
@@ -18,7 +23,12 @@
         <GridItem>Weapon:</GridItem>
         <GridItem>
             {#if player.weaponSlot && player.weaponSlot.item}
-                {player.weaponSlot.item.name}
+                <p
+                    on:click={() => handleClick(EquipmentSlotType.Weapon)}
+                    on:keypress={() => handleClick(EquipmentSlotType.Weapon)}
+                >
+                    {player.weaponSlot.item.name}
+                </p>
             {:else}
                 None
             {/if}
@@ -30,7 +40,12 @@
             </GridItem>
             <GridItem>
                 {#if armorSlot.item}
-                    {armorSlot.item.name}
+                    <p
+                        on:click={() => handleClick(armorSlot.slot)}
+                        on:keypress={() => handleClick(armorSlot.slot)}
+                    >
+                        {armorSlot.item.name}
+                    </p>
                 {:else}
                     None
                 {/if}
@@ -40,4 +55,7 @@
 </main>
 
 <style>
+    main p {
+        cursor: pointer;
+    }
 </style>
