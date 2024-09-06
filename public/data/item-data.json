@@ -4,7 +4,7 @@
         "name": "Fists",
         "description": "Your own two hands.",
         "minDamage": 1,
-        "maxDamage": 3,
+        "maxDamage": 6,
         "attackSpeed": 20,
         "slot": "Weapon",
         "requirements": {
