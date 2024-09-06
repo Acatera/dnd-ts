@@ -40,7 +40,16 @@ export function createMonster(id: string): Monster {
         health: monsters[id].health,
         maxHealth: monsters[id].health,
         receiveDamage(amount: number) {
+            if (amount < 0) {
+                amount = 0;
+            }
+            
             this.health -= amount;
+
+            if (this.health < 0) {
+                this.health = 0;
+            }
+
             return amount;
         },
         isAlive() {
