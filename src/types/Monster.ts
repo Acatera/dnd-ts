@@ -74,7 +74,6 @@ export function createMonster(id: string): Monster {
         attackSpeed: Math.max(monsters[id].attackSpeed || 20, 20),
         evasion: monsters[id].evasion || 1,
         generateLoot(): string[] {
-            console.log(lootTable);
             if (lootTable.length === 0) {
                 return [];
             } else {

@@ -7,9 +7,11 @@ import { Combat, createCombat } from "./Combat";
 import { GameEvent } from "./GameEvent";
 import { GameEventSource } from "./GameEventSource";
 import { createPlayer, Player } from "./Player";
-import { createItem, getItemName } from "./Item";
+import { createItem, getItemName, getItemType } from "./Item";
 import { inventoryStore } from "../stores/inventory";
 import { createItemStack } from "./ItemStack";
+import { createWeapon } from "./Weapon";
+import { createArmor } from "./Armor";
 
 export interface Game {
     area: Area | null;
@@ -49,7 +51,7 @@ export function createGame(): Game {
             }
 
             const monster = this.area.spawnEncounter();
-            
+
             if (!monster) {
                 this.addEvent("There are no enemies here.", GameEventSource.Environment);
                 return;
@@ -92,9 +94,26 @@ export function createGame(): Game {
                 const loot = monster.generateLoot();
                 if (loot.length > 0) {
                     for (const itemId of loot) {
-                        const item = createItem(itemId);
-                        this.player.inventory.add(createItemStack(item, 1));
-                        this.addEvent(`You've found a ${item.name}.`, GameEventSource.Game);
+                        const itemType = getItemType(itemId);
+
+                        switch (itemType) {
+                            case "Weapon":
+                                this.player.inventory.add(createItemStack(createWeapon(itemId), 1));
+                                break;
+                            case "Armor":
+                                this.player.inventory.add(createItemStack(createArmor(itemId), 1));
+                                break;
+                            case "Consumable":
+                                this.player.inventory.add(createItemStack(createItem(itemId), 1));
+                                break;
+                            case "Misc":
+                                this.player.inventory.add(createItemStack(createItem(itemId), 1));
+                                break;
+                            default:
+                                this.player.inventory.add(createItemStack(createItem(itemId), 1));
+                                break;
+                        }
+                        this.addEvent(`You've found a ${getItemName(itemId)}!`, GameEventSource.Game);
                     }
                 }
             };
@@ -106,13 +125,13 @@ export function createGame(): Game {
 
             this.combat.simulate();
         },
-        travelToArea(areaId: string){
+        travelToArea(areaId: string) {
             this.loadArea(areaId);
 
             if (!this.area) {
                 return;
             }
-            
+
             this.addEvent("You've traveled to " + this.area.name, GameEventSource.Environment);
         }
     };

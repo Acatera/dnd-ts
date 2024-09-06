@@ -89,9 +89,6 @@ export function createCombat(player: Player, enemy: Monster): Combat {
             this.player.addIdleTicks();
             this.enemy.addIdleTicks();
 
-            // console.log(`Player alive: ${this.player.isAlive}`);
-            // console.log(`Monster alive: ${this.enemy.isAlive}`);
-
             if (this.player.isAlive() && this.enemy.isAlive()) {
                 setTimeout(() => {
                     this.simulate();

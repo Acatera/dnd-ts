@@ -6,7 +6,7 @@
         "attackSpeed": 20,
         "evasion": 5,
         "loot_table": [
-           "circuit_board"
+           "blaster"
         ]
     },
     "tiered_drone_scout": {

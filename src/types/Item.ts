@@ -6,6 +6,8 @@ export interface Item {
 
 export let items: { [key: string]: any } = {};
 
+export type ItemType = "Unknown" | "Weapon" | "Armor" | "Consumable" | "Misc";
+
 export async function loadItemData() {
     const response = await fetch("data/item-data.json");
     const data = await response.json();
@@ -29,4 +31,18 @@ export function getItemName(id: string): string {
     }
 
     return items[id].name;
+}
+
+export function getItemType(id: string): ItemType {
+    if (!items[id]) {
+        return "Unknown";
+    }
+
+    const type = items[id].type;
+
+    if (type === "Weapon" || type === "Armor" || type === "Consumable" || type === "Misc") {
+        return type;
+    }
+
+    return "Unknown";
 }
