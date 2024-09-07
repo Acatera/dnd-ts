@@ -50,6 +50,16 @@ export function createGame(): Game {
                 return;
             }
 
+            if (this.player.health <= 0) {
+                this.addEvent("You're dead. You can't start combat.", GameEventSource.Game);
+                return;
+            }
+
+            if (this.combat) {
+                this.addEvent("You're already in combat.", GameEventSource.Game);
+                return;
+            }
+
             const monster = this.area.spawnEncounter();
 
             if (!monster) {
