@@ -12,7 +12,7 @@
 	import { loadAreaData } from "./types/Area";
 	import { createGame, Game } from "./types/Game";
 	import { loadItemData } from "./types/Item";
-	import { loadMonsterData } from "./types/Monster";
+	import { createLeveledMonster, loadMonsterData } from "./types/Monster";
 
 	let game: Game | null = null;
 	let gameScreen: GameScreen;
@@ -30,6 +30,9 @@
 		game.loadArea("drone_factory");
 		await tick();
 		gameScreenStore.update(() => GameScreen.Game);
+
+		const monster = createLeveledMonster("tiered_drone_scout", 5);
+		console.log(monster);
 	}
 
 	loadAssets();
