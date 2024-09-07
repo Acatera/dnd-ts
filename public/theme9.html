@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberpunk RPG UI</title>
+    <style>
+        /* General styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #091622;
+            /* Darkened background color */
+            color: #d0e6f2;
+            /* Darkened light cyan for text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container for the game interface */
+        .container {
+            background-color: #121e2e;
+            /* Darkened container background */
+            border: 2px solid #00e5e5;
+            /* Darkened neon cyan for borders */
+            border-radius: 4px;
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            box-shadow: 0 0 5px #00e5e5;
+        }
+
+        /* Header */
+        header h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #00e5e5;
+            /* Darkened neon cyan title */
+        }
+
+        /* Game output area */
+        .game-output {
+            background-color: #0c151f;
+            /* Darkened output background */
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #00e5e5;
+            border-radius: 3px;
+            /* Darkened neon border */
+            height: 200px;
+            overflow-y: auto;
+        }
+
+        .game-output p {
+            line-height: 1.5;
+            color: #d0e6f2;
+            /* Darkened light cyan for game text */
+        }
+
+        /* Input area */
+        .game-input {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .game-input input {
+            flex-grow: 1;
+            padding: 10px;
+            background-color: #0c151f;
+            /* Darkened input background */
+            color: #00e5e5;
+            border: 1px solid #00e5e5;
+            border-radius: 3px;
+        }
+
+        .game-input button {
+            padding: 10px 20px;
+            background-color: #00e5e5;
+            color: #121e2e;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .game-input button:hover {
+            background-color: #00bfbf;
+            /* Darkened hover color */
+        }
+
+        /* Player stats area */
+        .player-stats {
+            border: 1px solid #00e5e5;
+            border-radius: 3px;
+            padding: 15px;
+            background-color: #0c151f;
+        }
+
+        .player-stats h2 {
+            color: #00e5e5;
+            margin-bottom: 10px;
+        }
+
+        .player-stats ul {
+            list-style-type: none;
+        }
+
+        .player-stats ul li {
+            color: #d0e6f2;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #00e5e5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Cyberpunk RPG</h1>
+        </header>
+
+        <main>
+            <div class="game-output">
+                <p>You wake up in a neon-lit alley, the cold wind biting your skin. The city hums with distant sirens...
+                </p>
+            </div>
+
+            <div class="game-input">
+                <input type="text" placeholder="Type your action..." />
+                <button>Submit</button>
+            </div>
+
+            <div class="player-stats">
+                <h2>Player Stats</h2>
+                <ul>
+                    <li>Health: 100</li>
+                    <li>Energy: 75</li>
+                    <li>Credits: 50</li>
+                    <li>Weapon: Plasma Pistol</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Cyberpunk RPG</p>
+        </footer>
+    </div>
+</body>
+
+</html>

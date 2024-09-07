@@ -1,0 +1,34 @@
+import { writable } from 'svelte/store';
+import { GameEvent } from "../types/GameEvent";
+import { GameEventSource } from "../types/GameEventSource";
+
+export const gameEvents = writable<GameEvent[]>([
+    {
+        message: "Welcome to RoguePunk!",
+        source: GameEventSource.Game,
+    },
+    {
+        message: "You are a rogue in a cyberpunk world.",
+        source: GameEventSource.Game,
+    },
+    // Player
+    {
+        message: "You have been hit!",
+        source: GameEventSource.Player,
+    },
+    // Enemy
+    {
+        message: "The enemy has been hit!",
+        source: GameEventSource.Enemy,
+    },
+    // Environment
+    {
+        message: "You have fallen into a pit!",
+        source: GameEventSource.Environment,
+    },
+    // Item
+    {
+        message: "You have found a health pack!",
+        source: GameEventSource.Item,
+    }
+]);

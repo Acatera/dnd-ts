@@ -1,168 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoguePunk</title>
-    <link rel="stylesheet" href="site.css">
-    <script src="dist/index.js" type="module"></script>
-    <link rel="icon" href="cyberpunk_roguelike_favicon_48x48.png" type="image/x-icon">
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+
+	<title>Rogue Punk</title>
+
+	<link rel='icon' type='image/png' href='/favicon.png'>
+	<link rel='stylesheet' href='/global.css'>
+	<link rel='stylesheet' href='/build/bundle.css'>
+
+	<script defer src='/build/bundle.js'></script>
 </head>
 
 <body>
-    <div id="main">
-        <div id="char-info">
-            <div>
-                <div class="monospace title">Character</div>
-                <div id="char-stats">
-                    <div id="char-health" class="char-info-bar">
-                        <div id="char-health-current" style="height:100%; width: 100%;"></div>
-                    </div>
-
-                    <div id="char-experience" class="char-info-bar">
-                        <div id="char-experience-current" style="height:100%; width: 0%;"></div>
-                    </div>
-
-                    <p id="char-level" class="char-info-line">Level: 1</p>
-                </div>
-            </div>
-
-            <div>
-                <div class="monospace title">Equipment</div>
-                <div id="char-equipment">
-                    <div class="char-equipment-item">
-                        <label>Weapon</label>
-                        <span id="char-equipment-weapon">Fists</span>
-                    </div>
-                    <div class="char-equipment-item">
-                        <label>Head</label>
-                        <span id="char-equipment-head">None</span>
-                    </div>
-
-                    <div class="char-equipment-item">
-                        <label>Chest</label>
-                        <span id="char-equipment-chest">None</span>
-                    </div>
-
-                    <div class="char-equipment-item">
-                        <label>Hands</label>
-                        <span id="char-equipment-hands">None</span>
-                    </div>
-
-                    <div class="char-equipment-item">
-                        <label>Legs</label>
-                        <span id="char-equipment-legs">None</span>
-                    </div>
-
-                    <div class="char-equipment-item">
-                        <label>Feet</label>
-                        <span id="char-equipment-feet">None</span>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <div class="monospace title">Skills</div>
-                <div id="char-skills"></div>
-            </div>
-        </div>
-
-        <div id="area">
-            <div class="area-section-title" id="area-name"></div>
-            <div class="area-section" id="area-desc"></div>
-            <div class="area-section-title">Enemies</div>
-            <div class="area-section" id="area-mob-list"></div>
-        </div>
-
-        <div id="combat">
-            <div style="width: 20%;">
-                <div id="attacker-attack-speed">
-                    <div id="attacker-attack-speed-progress"></div>
-                </div>
-
-                <div id="defender-attack-speed">
-                    <div id="defender-attack-speed-progress"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="logs"></div>
-
-        <div id="controls">
-            <div class="controls-title">Controls</div>
-            <p class="control" id="attack-control">Attack</p>
-        </div>
-    </div>
-
-    <div id="inventory-container" class="hidden">
-        <div id="inventory">
-            <div class="monospace title">Inventory</div>
-            <div id="inventory-items"></div>
-            <div id="inventory-actions">
-                <button id="inventory-close">Close</button>
-            </div>
-        </div>
-        <style>
-            .hidden {
-                display: none;
-            }
-
-            #inventory-container {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.8);
-                z-index: 100;
-                padding: 20px;
-            }
-
-            #inventory {
-                background-color: #444;
-                padding: 20px;
-                border-radius: 5px;
-                width: 50%;
-                z-index: 101;
-                margin: auto auto;
-                border: 1px solid #000;
-                color: #fff;
-            }
-
-            .title {
-                font-size: 20px;
-                font-weight: bold;
-                margin-bottom: 10px;
-            }
-
-            /* Limit height of inventory items */
-            #inventory-items {
-                max-height: 80vh;
-                overflow-y: auto;
-            }
-
-            .inventory-item {
-                font-size: 14px;
-                font-family: monospace;
-            }
-
-            .inventory-item label {
-                display: inline-block;
-                width: 100px;
-            }
-
-            .inventory-item span {
-                display: inline-block;
-            }
-        </style>
-        <script>
-            // Add event listener to close inventory
-            document.getElementById('inventory-close').addEventListener('click', () => {
-                document.getElementById('inventory-container').classList.add('hidden');
-            });
-        </script>
-    </div>
 </body>
-
 </html>
