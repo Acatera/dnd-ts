@@ -48,13 +48,9 @@ export function createArea(id: string): Area {
             if (!randMonsterId) {
                 return null;
             }
-
-            console.log(`Spawning monster with id ${randMonsterId}`);
-            console.log(`Level range: ${this.combatLevel.min} - ${this.combatLevel.max}`);
             
             const randomLevel = Math.floor(Math.random() * (this.combatLevel.max - this.combatLevel.min + 1)) + this.combatLevel.min;
             
-            console.log(`Random level: ${randomLevel}`);
             return createLeveledMonster(randMonsterId, randomLevel);
         }
     };

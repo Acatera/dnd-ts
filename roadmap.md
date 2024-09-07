@@ -1,8 +1,9 @@
 # SO
 
+- Mobs should have configurable damage output
+
 - Implement themes. Ask GPT about best aproach.
 - Mobs should scale in level, up to an area's max scale level
-- Mobs should have configurable damage output
 - Damage types & resistances
 - Inventory functionality (equip item, unequip, drop, etc)
 - Implement materials
