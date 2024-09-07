@@ -1,6 +1,6 @@
 # SO
 
-- Mobs should have configurable damage output
+- [x] Mobs should have configurable damage output
 
 - Implement themes. Ask GPT about best aproach.
 - Mobs should scale in level, up to an area's max scale level

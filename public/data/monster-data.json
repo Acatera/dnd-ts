@@ -10,13 +10,17 @@
                 "health": 10,
                 "expReward": 5,
                 "attackSpeed": 20,
-                "evasion": 5
+                "evasion": 5,
+                "minDamage": 1,
+                "maxDamage": 3
             },
             "99": {
                 "health": 490,
                 "expReward": 245,
                 "attackSpeed": 20,
-                "evasion": 5
+                "evasion": 5,
+                "minDamage": 72,
+                "maxDamage": 100
             }
         }
     },
@@ -35,13 +39,17 @@
                 "health": 10,
                 "expReward": 10,
                 "attackSpeed": 25,
-                "evasion": 5
+                "evasion": 5,
+                "minDamage": 2,
+                "maxDamage": 3
             },
             "99": {
                 "health": 730,
                 "expReward": 370,
                 "attackSpeed": 25,
-                "evasion": 245
+                "evasion": 245,
+                "minDamage": 98,
+                "maxDamage": 158
             }
         }
     },
@@ -54,13 +62,17 @@
                 "health": 15,
                 "expReward": 10,
                 "attackSpeed": 20,
-                "evasion": 5
+                "evasion": 5,
+                "minDamage": 1,
+                "maxDamage": 3
             },
             "99": {
                 "health": 465,
                 "expReward": 235,
                 "attackSpeed": 20,
-                "evasion": 5
+                "evasion": 5,
+                "minDamage": 70,
+                "maxDamage": 120
             }
         }
     },
@@ -75,13 +87,17 @@
                 "health": 20,
                 "expReward": 15,
                 "attackSpeed": 20,
-                "evasion": 5
+                "evasion": 5,
+                "minDamage": 3,
+                "maxDamage": 6
             },
             "99": {
                 "health": 780,
                 "expReward": 485,
                 "attackSpeed": 20,
-                "evasion": 245
+                "evasion": 245,
+                "minDamage": 120,
+                "maxDamage": 180
             }
         }
     },
@@ -96,13 +112,17 @@
                 "health": 20,
                 "expReward": 15,
                 "attackSpeed": 10,
-                "evasion": 15
+                "evasion": 15,
+                "minDamage": 4,
+                "maxDamage": 6
             },
             "99": {
                 "health": 1220,
                 "expReward": 735,
                 "attackSpeed": 10,
-                "evasion": 260
+                "evasion": 260,
+                "minDamage": 150,
+                "maxDamage": 220
             }
         }
     }

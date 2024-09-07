@@ -23,7 +23,7 @@
         "description": "The entrance to the drone factory is heavily guarded by drones. The factory itself is a massive structure that looms in the distance.",
         "combat_level": {
             "min": 1,
-            "max": 5
+            "max": 2
         },
         "enemies": [
             "drone_scout",
