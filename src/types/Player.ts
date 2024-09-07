@@ -77,7 +77,7 @@ export function createPlayer(): Player {
         createEquipmentSlot<Armor>(EquipmentSlotType.Feet),
     ];
     const inventory = createInventory();
-    inventory.add(createItemStack(createItem("blaster"), 1));
+    inventory.add(createItemStack(createWeapon("blaster"), 1));
     const skills = createSkills();
 
     return {
@@ -153,9 +153,8 @@ export function createPlayer(): Player {
             const hitChance = (attackRating + hitCoefficient) / (attackRating + defenseRating + hitCoefficient);
 
             if (weaponSlot.item) {
-                const minDamage = weaponSlot.item.minDamage * (1 + attackRating / 400);
-                const maxDamage = weaponSlot.item.maxDamage * (1 + attackRating / 400);
-                damage = Math.floor(Math.random() * (maxDamage - minDamage + 1) + minDamage);
+                const multiplier = 1 + attackRating / 400;
+                damage = weaponSlot.item.damageRange.randomize() * multiplier;
             }
 
             if (Math.random() > hitChance) {

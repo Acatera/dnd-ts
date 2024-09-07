@@ -1,10 +1,10 @@
+import { DamageRange } from "./DamageRange";
 import { createEquippable, Equippable } from "./Equippable";
 import { items } from "./Item";
 import { SkillType } from "./SkillType";
 
 export interface Weapon extends Equippable {
-    minDamage: number;
-    maxDamage: number;
+    damageRange: DamageRange;
     attackSpeed: number;
 }
 
@@ -15,10 +15,8 @@ export function createWeapon(id: string): Weapon {
 
     return {
         ...createEquippable(id),
-        minDamage: items[id].minDamage,
-        maxDamage: items[id].maxDamage,
+        damageRange: new DamageRange(items[id].minDamage, items[id].maxDamage),
         attackSpeed: items[id].attackSpeed,
-        
     };
 }
 
