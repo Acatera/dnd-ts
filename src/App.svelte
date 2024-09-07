@@ -27,12 +27,12 @@
 		await loadMonsterData();
 
 		game = createGame();
-		game.loadArea("drone_factory");
+		game.loadArea("drone_factory_entrance");
 		await tick();
 		gameScreenStore.update(() => GameScreen.Game);
 
-		const monster = createLeveledMonster("tiered_drone_scout", 5);
-		console.log(monster);
+		// const monster = createLeveledMonster("tiered_drone_scout", 5);
+		// console.log(monster);
 	}
 
 	loadAssets();

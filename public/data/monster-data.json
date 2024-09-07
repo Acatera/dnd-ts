@@ -1,16 +1,10 @@
 {
     "drone_scout": {
         "name": "Drone Scout",
-        "health": 10,
-        "expReward": 5,
-        "attackSpeed": 20,
-        "evasion": 5,
+        "description": "A small, fast drone that is equipped with a laser weapon. It is capable of dodging attacks and can be difficult to hit.",
         "loot_table": [
-           "blaster"
-        ]
-    },
-    "tiered_drone_scout": {
-        "name": "Drone Scout",
+            "blaster"
+        ],
         "tiers": {
             "1": {
                 "health": 10,
@@ -26,57 +20,90 @@
             }
         }
     },
-    "drone_scout2": {
-        "name": "Drone Scout",
-        "description": "A small, fast drone that is equipped with a laser weapon. It is capable of dodging attacks and can be difficult to hit.",
-        "loot_table": [
-            "copper",
-            "iron",
-            "steel",
-            "plastic",
-            "battery",
-            "circuit_board"
-        ]
-    },
     "plasteel_drone": {
         "name": "Plasteel Drone",
-        "health": 10,
-        "expReward": 10,
-        "attackSpeed": 25,
-        "evasion": 5,
+        "description": "A more durable drone constructed with plasteel components. It is tougher and provides higher-tier loot.",
         "loot_table": [
             "plasteel_helmet",
             "plasteel_body_armor",
             "plasteel_gloves",
             "plasteel_pants",
             "plasteel_boots"
-        ]
+        ],
+        "tiers": {
+            "1": {
+                "health": 10,
+                "expReward": 10,
+                "attackSpeed": 25,
+                "evasion": 5
+            },
+            "5": {
+                "health": 30,
+                "expReward": 20,
+                "attackSpeed": 25,
+                "evasion": 10
+            }
+        }
     },
     "drone_swarm": {
         "name": "Drone Swarm",
-        "health": 15,
-        "expReward": 10,
-        "attackSpeed": 20,
-        "evasion": 5
+        "description": "A collective group of smaller drones acting in unison. Its strength comes from numbers rather than individual power.",
+        "loot_table": [],
+        "tiers": {
+            "1": {
+                "health": 15,
+                "expReward": 10,
+                "attackSpeed": 20,
+                "evasion": 5
+            },
+            "5": {
+                "health": 25,
+                "expReward": 15,
+                "attackSpeed": 20,
+                "evasion": 5
+            }
+        }
     },
     "drone_leader": {
         "name": "Drone Leader",
-        "health": 20,
-        "expReward": 15,
-        "attackSpeed": 20,
-        "evasion": 5,
+        "description": "The commanding unit of a drone group. It coordinates the actions of other drones and is more robust than standard models.",
         "loot_table": [
             "blaster"
-        ]
+        ],
+        "tiers": {
+            "1": {
+                "health": 20,
+                "expReward": 15,
+                "attackSpeed": 20,
+                "evasion": 5
+            },
+            "5": {
+                "health": 40,
+                "expReward": 25,
+                "attackSpeed": 20,
+                "evasion": 10
+            }
+        }
     },
     "drone_boss": {
         "name": "Drone Boss",
-        "health": 20,
-        "expReward": 15,
-        "attackSpeed": 10,
-        "evasion": 15,
+        "description": "The most powerful drone variant, equipped with advanced evasion systems and heavy firepower. It poses a significant challenge.",
         "loot_table": [
             "blaster"
-        ]
+        ],
+        "tiers": {
+            "1": {
+                "health": 20,
+                "expReward": 15,
+                "attackSpeed": 10,
+                "evasion": 15
+            },
+            "5": {
+                "health": 50,
+                "expReward": 30,
+                "attackSpeed": 10,
+                "evasion": 20
+            }
+        }
     }
 }

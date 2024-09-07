@@ -1,4 +1,4 @@
-import { createMonster, Monster } from "./Monster";
+import { createLeveledMonster, Monster } from "./Monster";
 
 export interface Area {
     id: string;
@@ -46,9 +46,7 @@ export function createArea(id: string): Area {
                 return null;
             }
     
-            // return MonsterFactory.createMonster(randMonsterId);
-
-            return createMonster(randMonsterId);
+            return createLeveledMonster(randMonsterId, 1);
         }
     };
 }
