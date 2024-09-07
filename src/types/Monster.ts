@@ -124,9 +124,6 @@ export function createLeveledMonster(id: string, level: number): Monster {
         throw new Error(`No high tier found for scale ${level}`);
     }
 
-    console.log(`lowTierKey: ${lowTierKey}`);
-    console.log(`highTierKey: ${highTierKey}`);
-
     // Calculate the percentage of the way between the low and high tiers
     const lowTier = tieredMonsterData.tiers[lowTierKey];
     const highTier = tieredMonsterData.tiers[highTierKey];
@@ -145,13 +142,6 @@ export function createLeveledMonster(id: string, level: number): Monster {
 
 
     // Interpolate the values between the low and high tiers
-    const interpolatedMonsterData = {
-        name: tieredMonsterData.name,
-        health: lowTier.health + (highTier.health - lowTier.health) * scalePercentage,
-        expReward: lowTier.expReward + (highTier.expReward - lowTier.expReward) * scalePercentage,
-        attackSpeed: lowTier.attackSpeed + (highTier.attackSpeed - lowTier.attackSpeed) * scalePercentage,
-        evasion: lowTier.evasion + (highTier.evasion - lowTier.evasion) * scalePercentage
-    };
     const monster = {
         level: level,
         name: tieredMonsterData.name || "Unknown",

@@ -57,7 +57,7 @@ export function createGame(): Game {
                 return;
             }
 
-            this.addEvent("You've encountered a " + monster.name + "!", GameEventSource.Game);
+            this.addEvent(`You've encountered a level ${monster.level} ${monster.name}!`, GameEventSource.Environment);
             this.combat = createCombat(this.player, monster);
 
             this.combat.onPlayersTurn = (player, monster, damage) => {

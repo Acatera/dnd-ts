@@ -1,9 +1,11 @@
 import { createLeveledMonster, Monster } from "./Monster";
+import { ValueRange } from "./ValueRange";
 
 export interface Area {
     id: string;
     name: string;
     description: string;
+    combatLevel: ValueRange;
     enemies: string[];
     adjacentAreaIds: string[];
     spawnEncounter(): Monster | null;
@@ -33,6 +35,7 @@ export function createArea(id: string): Area {
     return {
         id,
         ...areas[id],
+        combatLevel: areas[id].combat_level as ValueRange,
         adjacentAreaIds: areas[id].adjacent_areas,
         spawnEncounter(): Monster | null {
             if (this.enemies.length < 0) {
@@ -45,8 +48,14 @@ export function createArea(id: string): Area {
             if (!randMonsterId) {
                 return null;
             }
-    
-            return createLeveledMonster(randMonsterId, 1);
+
+            console.log(`Spawning monster with id ${randMonsterId}`);
+            console.log(`Level range: ${this.combatLevel.min} - ${this.combatLevel.max}`);
+            
+            const randomLevel = Math.floor(Math.random() * (this.combatLevel.max - this.combatLevel.min + 1)) + this.combatLevel.min;
+            
+            console.log(`Random level: ${randomLevel}`);
+            return createLeveledMonster(randMonsterId, randomLevel);
         }
     };
 }

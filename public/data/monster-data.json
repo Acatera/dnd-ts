@@ -12,9 +12,9 @@
                 "attackSpeed": 20,
                 "evasion": 5
             },
-            "5": {
-                "health": 20,
-                "expReward": 10,
+            "99": {
+                "health": 490,
+                "expReward": 245,
                 "attackSpeed": 20,
                 "evasion": 5
             }
@@ -37,11 +37,11 @@
                 "attackSpeed": 25,
                 "evasion": 5
             },
-            "5": {
-                "health": 30,
-                "expReward": 20,
+            "99": {
+                "health": 730,
+                "expReward": 370,
                 "attackSpeed": 25,
-                "evasion": 10
+                "evasion": 245
             }
         }
     },
@@ -56,9 +56,9 @@
                 "attackSpeed": 20,
                 "evasion": 5
             },
-            "5": {
-                "health": 25,
-                "expReward": 15,
+            "99": {
+                "health": 465,
+                "expReward": 235,
                 "attackSpeed": 20,
                 "evasion": 5
             }
@@ -77,11 +77,11 @@
                 "attackSpeed": 20,
                 "evasion": 5
             },
-            "5": {
-                "health": 40,
-                "expReward": 25,
+            "99": {
+                "health": 780,
+                "expReward": 485,
                 "attackSpeed": 20,
-                "evasion": 10
+                "evasion": 245
             }
         }
     },
@@ -98,11 +98,11 @@
                 "attackSpeed": 10,
                 "evasion": 15
             },
-            "5": {
-                "health": 50,
-                "expReward": 30,
+            "99": {
+                "health": 1220,
+                "expReward": 735,
                 "attackSpeed": 10,
-                "evasion": 20
+                "evasion": 260
             }
         }
     }
