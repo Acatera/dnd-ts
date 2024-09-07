@@ -12,6 +12,7 @@ import { inventoryStore } from "../stores/inventory";
 import { createItemStack } from "./ItemStack";
 import { createWeapon } from "./Weapon";
 import { createArmor } from "./Armor";
+import { combatStore } from "../stores/combatStore";
 
 export interface Game {
     area: Area | null;
@@ -21,6 +22,7 @@ export interface Game {
     loadArea(areaId: string): void;
     travelToArea(areaId: string): void;
     startCombat(): void;
+    abandonCombat(): void;
 }
 
 export function createGame(): Game {
@@ -29,8 +31,8 @@ export function createGame(): Game {
     inventoryStore.set(player.inventory);
 
     return {
-        area: null as Area | null,
-        combat: null as Combat | null,
+        area: null,
+        combat: null,
         player: player,
         addEvent(message, source) {
             gameEvents.update((events: GameEvent[]) => {
@@ -81,6 +83,7 @@ export function createGame(): Game {
 
             this.combat.onPlayerDeath = (player) => {
                 this.addEvent("You've been defeated by the " + monster.name + ".", GameEventSource.Game);
+                combatStore.set(null);
             }
 
             this.combat.onMonstersTurn = (player, monster, damage) => {
@@ -92,6 +95,11 @@ export function createGame(): Game {
                 this.addEvent("The " + monster.name + " missed you.", GameEventSource.Game);
             };
 
+            this.combat.onCombatAbandon = () => {
+                this.addEvent("You've abandoned combat.", GameEventSource.Game);
+                combatStore.set(null);
+            }
+
             this.combat.onMonsterDeath = (monster) => {
                 this.addEvent("You've defeated the " + monster.name + "!", GameEventSource.Game);
                 this.addEvent("You've gained " + monster.expReward + " experience.", GameEventSource.Game);
@@ -100,6 +108,7 @@ export function createGame(): Game {
                 this.player.gainExperience(monster.expReward);
                 playerStore.set(this.player);
                 monsterStore.set(null);
+                combatStore.set(null);
 
                 const loot = monster.generateLoot();
                 if (loot.length > 0) {
@@ -131,10 +140,25 @@ export function createGame(): Game {
             this.combat.onCombatEnd = () => {
                 this.combat = null;
                 monsterStore.set(null);
+                combatStore.set(null);
             };
+
+            combatStore.set(this.combat);
 
             this.combat.simulate();
         },
+
+        abandonCombat() {
+            if (!this.combat) {
+                this.addEvent("You're not in combat.", GameEventSource.Game);
+                return;
+            }
+
+            this.combat.abandon();
+
+            this.combat = null;
+        },
+
         travelToArea(areaId: string) {
             this.loadArea(areaId);
 

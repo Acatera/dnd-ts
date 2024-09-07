@@ -3,6 +3,7 @@ import { Player } from "./Player";
 import { monsterStore } from "../stores/monsterStore";
 
 export interface Combat {
+    active: boolean;
     player: Player;
     enemy: Monster;
     onPlayersTurn: ((player: Player, monster: Monster, damage: number) => void) | null;
@@ -13,13 +14,16 @@ export interface Combat {
     onMonsterDeath: ((monster: Monster) => void) | null;
     onTurn: ((player: Player, monster: Monster) => void) | null;
     onCombatEnd: (() => void) | null;
+    onCombatAbandon: (() => void) | null;
     simulate(): void;
+    abandon(): void;
 }
 
 export function createCombat(player: Player, enemy: Monster): Combat {
     monsterStore.set(enemy);
 
     return {
+        active: true,
         player,
         enemy,
         onPlayersTurn: null,
@@ -30,6 +34,7 @@ export function createCombat(player: Player, enemy: Monster): Combat {
         onMonsterDeath: null,
         onTurn: null,
         onCombatEnd: null,
+        onCombatAbandon: null,
         simulate() {
             if (this.player.canAttack()) {
                 const playerDamage = this.player.attack(this.enemy);
@@ -89,10 +94,19 @@ export function createCombat(player: Player, enemy: Monster): Combat {
             this.player.addIdleTicks();
             this.enemy.addIdleTicks();
 
-            if (this.player.isAlive() && this.enemy.isAlive()) {
+            if (this.active && this.player.isAlive() && this.enemy.isAlive()) {
                 setTimeout(() => {
                     this.simulate();
                 }, 1000 / 40);
+            }
+        },
+
+        abandon() {
+            this.active = false;
+            monsterStore.set(null);
+            
+            if (this.onCombatAbandon) {
+                this.onCombatAbandon();
             }
         }
     };

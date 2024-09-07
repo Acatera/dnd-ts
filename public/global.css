@@ -89,3 +89,11 @@ button:hover {
 	box-shadow: 0 0 5px rgba(212, 161, 78, 0.9);
 	/* Stronger glow when hovering */
 }
+
+button:disabled {
+	background-color: #333;
+	color: #666;
+	border: 2px solid #666;
+	cursor: not-allowed;
+	box-shadow: none;
+}
