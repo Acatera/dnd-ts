@@ -68,7 +68,7 @@ export function createPlayer(): Player {
         };
     };
 
-    const weaponSlot = createEquipmentSlot<Weapon>(EquipmentSlotType.Weapon, createWeapon("fists"));
+    const weaponSlot = createEquipmentSlot<Weapon>(EquipmentSlotType.Weapon, createWeapon("dev_overkill"));
     const armorSlots = [
         createEquipmentSlot<Armor>(EquipmentSlotType.Head),
         createEquipmentSlot<Armor>(EquipmentSlotType.Chest),

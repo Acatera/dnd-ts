@@ -2,6 +2,7 @@ import { DamageRange } from "./DamageRange";
 import { Player } from "./Player";
 import { TieredMonsterDefinition } from "./TieredMonsterDefinition";
 import { ValueRange } from "./ValueRange";
+import { LootTable, LootTableEntry } from "./LootTable";
 
 let monsters: { [key: string]: any } = {};
 
@@ -38,7 +39,15 @@ export function createLeveledMonster(id: string, level: number): Monster {
     }
 
     const monsterData = monsters[id];
-    const lootTable = monsters[id].loot_table || [];
+
+    const lootTableEntries: LootTableEntry<string>[] = [];
+    if (monsterData.hasOwnProperty('loot_table')) {
+        // loot_table is an array of [itemId, weight] pairs
+        for (const [itemId, weight] of monsterData.loot_table) {
+            lootTableEntries.push({ value: itemId, weight: weight });
+        }
+    }
+    const lootTable = new LootTable<string>(lootTableEntries);
 
     if (!monsterData.hasOwnProperty('tiers')) {
         throw new Error(`Monster with id ${id} is not a tiered monster`);
@@ -122,16 +131,7 @@ export function createLeveledMonster(id: string, level: number): Monster {
             this.idleTicks = 0;
         },
         generateLoot(): string[] {
-            if (lootTable.length === 0) {
-                return [];
-            } else {
-                const loot: string[] = [];
-                const dropCount = Math.ceil(Math.random() * lootTable.length);
-                for (let i = 0; i < dropCount; i++) {
-                    loot.push(lootTable[Math.floor(Math.random() * lootTable.length)]);
-                }
-                return loot;
-            }
+            return lootTable.getNextValues();
         }
     };
 

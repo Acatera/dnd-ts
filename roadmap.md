@@ -1,9 +1,13 @@
 # SO
 
 - [x] Mobs should have configurable damage output
+- [x] Mobs should scale in level, up to an area's max scale level
+- [x] Refactor loot table
 
+
+- Area events
+- When trying to equip and can't, show message.
 - Implement themes. Ask GPT about best aproach.
-- Mobs should scale in level, up to an area's max scale level
 - Damage types & resistances
 - Inventory functionality (equip item, unequip, drop, etc)
 - Implement materials

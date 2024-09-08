@@ -13,6 +13,7 @@
 	import { createGame, Game } from "./types/Game";
 	import { loadItemData } from "./types/Item";
 	import { createLeveledMonster, loadMonsterData } from "./types/Monster";
+	import { LootTable } from "./types/LootTable";
 
 	let game: Game | null = null;
 	let gameScreen: GameScreen;
@@ -31,8 +32,30 @@
 		await tick();
 		gameScreenStore.update(() => GameScreen.Game);
 
-		const monster = createLeveledMonster("drone_scout", 5);
-		console.log(monster);
+		// const monster = createLeveledMonster("drone_scout", 5);
+		// console.log(monster);
+
+		// const weightedRandom = new WeightedRandom<string>([
+		// 	{ value: "a", weight: 0.1 },
+		// 	{ value: "b", weight: 0.3 },
+		// 	{ value: "c", weight: 0.12 },
+		// ]);
+
+		// const output: Record<string, number> = {
+		// 	a: 0,
+		// 	b: 0,
+		// 	c: 0,
+		// };
+
+		// for (let i = 0; i < 100; i++) {
+		// 	const value = weightedRandom.getNextValues();
+
+		// 	value.forEach(element => {
+		// 		output[element]!++;
+		// 	});
+		// }
+
+		// console.log(output);
 	}
 
 	loadAssets();

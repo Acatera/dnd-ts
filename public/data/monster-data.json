@@ -3,7 +3,7 @@
         "name": "Drone Scout",
         "description": "A small, fast drone that is equipped with a laser weapon. It is capable of dodging attacks and can be difficult to hit.",
         "loot_table": [
-            "blaster"
+            [ "blaster", 0.1 ]
         ],
         "tiers": {
             "1": {
@@ -28,11 +28,11 @@
         "name": "Plasteel Drone",
         "description": "A more durable drone constructed with plasteel components. It is tougher and provides higher-tier loot.",
         "loot_table": [
-            "plasteel_helmet",
-            "plasteel_body_armor",
-            "plasteel_gloves",
-            "plasteel_pants",
-            "plasteel_boots"
+            [ "plasteel_helmet", 0.2 ],
+            [ "plasteel_body_armor", 0.2 ],
+            [ "plasteel_gloves", 0.2 ],
+            [ "plasteel_pants", 0.2 ],
+            [ "plasteel_boots", 0.2 ]
         ],
         "tiers": {
             "1": {
@@ -56,7 +56,7 @@
     "drone_swarm": {
         "name": "Drone Swarm",
         "description": "A collective group of smaller drones acting in unison. Its strength comes from numbers rather than individual power.",
-        "loot_table": [],
+        "loot_table": [ ],
         "tiers": {
             "1": {
                 "health": 15,
@@ -79,9 +79,7 @@
     "drone_leader": {
         "name": "Drone Leader",
         "description": "The commanding unit of a drone group. It coordinates the actions of other drones and is more robust than standard models.",
-        "loot_table": [
-            "blaster"
-        ],
+        "loot_table": [ [ "blaster", 0.5 ] ],
         "tiers": {
             "1": {
                 "health": 20,
@@ -104,9 +102,7 @@
     "drone_boss": {
         "name": "Drone Boss",
         "description": "The most powerful drone variant, equipped with advanced evasion systems and heavy firepower. It poses a significant challenge.",
-        "loot_table": [
-            "blaster"
-        ],
+        "loot_table": [ [ "blaster", 1 ] ],
         "tiers": {
             "1": {
                 "health": 20,

@@ -29,6 +29,21 @@
             "Pistol": 321
         }
     },
+    "dev_overkill": {
+        "type": "Weapon",
+        "name": "OVERKILL!",
+        "description": "A standard-issue blaster.",
+        "minDamage": 200,
+        "maxDamage": 400,
+        "attackSpeed": 20,
+        "slot": "Weapon",
+        "requirements": {
+            "Pistol": 1
+        },
+        "bonuses": {
+            "Pistol": 321
+        }
+    },
     "plasteel_helmet": {
         "type": "Armor",
         "name": "Plasteel Helmet",
