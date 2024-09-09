@@ -1,15 +1,16 @@
 import { Monster } from "./Monster";
 import { Player } from "./Player";
 import { monsterStore } from "../stores/monsterStore";
+import { DamageResult } from "./DamageResult";
 
 export interface Combat {
     active: boolean;
     player: Player;
     enemy: Monster;
-    onPlayersTurn: ((player: Player, monster: Monster, damage: number) => void) | null;
+    onPlayersTurn: ((player: Player, monster: Monster, damage: DamageResult) => void) | null;
     onPlayerMiss: ((player: Player) => void) | null
     onPlayerDeath: ((player: Player) => void) | null;
-    onMonstersTurn: ((player: Player, monster: Monster, damage: number) => void) | null;
+    onMonstersTurn: ((player: Player, monster: Monster, damage: DamageResult) => void) | null;
     onMonsterMiss: ((monster: Monster) => void) | null;
     onMonsterDeath: ((monster: Monster) => void) | null;
     onTurn: ((player: Player, monster: Monster) => void) | null;
@@ -39,11 +40,11 @@ export function createCombat(player: Player, enemy: Monster): Combat {
             if (this.player.canAttack()) {
                 const playerDamage = this.player.attack(this.enemy);
 
-                if (this.onPlayerMiss && playerDamage < 0) {
+                if (this.onPlayerMiss && playerDamage.isMiss) {
                     this.onPlayerMiss(this.player);
                 }
 
-                if (this.onPlayersTurn && playerDamage >= 0) {
+                if (this.onPlayersTurn && !playerDamage.isMiss) {
                     this.onPlayersTurn(this.player, this.enemy, playerDamage);
                 }
 
@@ -65,11 +66,11 @@ export function createCombat(player: Player, enemy: Monster): Combat {
             if (this.enemy.canAttack()) {
                 const enemyDamage = this.enemy.attack(this.player);
 
-                if (enemyDamage === 0 && this.onMonsterMiss) {
+                if (enemyDamage.isMiss && this.onMonsterMiss) {
                     this.onMonsterMiss(this.enemy);
                 }
 
-                if (enemyDamage > 0 && this.onMonstersTurn) {
+                if (!enemyDamage.isMiss && this.onMonstersTurn) {
                     this.onMonstersTurn(this.player, this.enemy, enemyDamage);
                 }
 

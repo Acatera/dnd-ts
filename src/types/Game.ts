@@ -73,7 +73,12 @@ export function createGame(): Game {
             this.combat = createCombat(this.player, monster);
 
             this.combat.onPlayersTurn = (player, monster, damage) => {
-                this.addEvent("You attacked the " + monster.name + " for " + damage + " damage.", GameEventSource.Player);
+                if (damage.isCritical) {
+                    this.addEvent("You hit the " + monster.name + " for " + damage.amount + " damage. Critical hit!", GameEventSource.Player);
+                }
+                else {
+                    this.addEvent("You attacked the " + monster.name + " for " + damage.amount + " damage.", GameEventSource.Player);
+                }
                 monsterStore.set(monster);
             };
 
@@ -87,7 +92,12 @@ export function createGame(): Game {
             }
 
             this.combat.onMonstersTurn = (player, monster, damage) => {
-                this.addEvent("The " + monster.name + " attacked you for " + damage + " damage.", GameEventSource.Enemy);
+                if (damage.isCritical) {
+                    this.addEvent("The " + monster.name + " hit you for " + damage.amount + " damage. Critical hit!", GameEventSource.Enemy);
+                }
+                else {
+                    this.addEvent("The " + monster.name + " hit you for " + damage.amount + " damage.", GameEventSource.Enemy);
+                }
                 playerStore.set(this.player);
             };
 

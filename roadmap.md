@@ -17,7 +17,7 @@
 - [x] Add player attack method to Combat class
 - [x] Add player and enemy combat log with attacker and defender names
 - [x] Implement combat outcome
-- [ ] Crit chance and damage scaling
+- [x] Crit chance and damage scaling
 - [ ] Implement damage types and resistances
 - [ ] Mobs should have armor class
 - [ ] Magic system (with scripting or UI-based casting)
@@ -83,6 +83,9 @@
 - [x] Add area name and monster list in the map panel
 - [x] Add main UI components for game interaction
 - [ ] Show message when unable to equip items
+- [ ] Refine inventory screen
+- [ ] Add item display card
+- [ ] Refine area screen (area image, other info)
 - [ ] Implement themes (dark mode, etc.)
 - [ ] Implement different UI for buffs and scripts
 - [ ] In-game tutorial or onboarding guide for new players

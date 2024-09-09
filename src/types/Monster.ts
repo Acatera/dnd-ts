@@ -3,6 +3,8 @@ import { Player } from "./Player";
 import { TieredMonsterDefinition } from "./TieredMonsterDefinition";
 import { ValueRange } from "./ValueRange";
 import { LootTable, LootTableEntry } from "./LootTable";
+import { createCriticalDamage, CriticalDamage } from "./components/CriticalDamage";
+import { calculateDamage, DamageResult, noDamage } from "./DamageResult";
 
 let monsters: { [key: string]: any } = {};
 
@@ -20,12 +22,13 @@ export interface Monster {
 
     damageRange: DamageRange;
     canAttack(): boolean;
-    attack(enemy: Player): number;
-    receiveDamage(amount: number): number;
+    attack(enemy: Player): DamageResult;
+    receiveDamage(damage: DamageResult): DamageResult;
     idleTicks: number;
     addIdleTicks(): void;
     resetIdleTicks(): void;
 
+    criticalDamage: CriticalDamage
     attackSpeed: number;
     evasion: number;
     expReward: number;
@@ -85,32 +88,31 @@ export function createLeveledMonster(id: string, level: number): Monster {
 
     // Interpolate the values between the low and high tiers
     const damageRange = new DamageRange(
-        lowTier.minDamage + (highTier.minDamage - lowTier.minDamage) * scalePercentage || 1,
-        lowTier.maxDamage + (highTier.maxDamage - lowTier.maxDamage) * scalePercentage || 1
+        Math.round(lowTier.minDamage + (highTier.minDamage - lowTier.minDamage) * scalePercentage) || 1,
+        Math.round(lowTier.maxDamage + (highTier.maxDamage - lowTier.maxDamage) * scalePercentage) || 1
     );
+
+    const criticalDamage = createCriticalDamage(1.5, 0.1);
 
     const monster = {
         level: level,
         name: tieredMonsterData.name || "Unknown",
-        health: lowTier.health + (highTier.health - lowTier.health) * scalePercentage,
-        expReward: lowTier.expReward + (highTier.expReward - lowTier.expReward) * scalePercentage || 0,
-        attackSpeed: Math.max((lowTier.attackSpeed + (highTier.attackSpeed - lowTier.attackSpeed) * scalePercentage) || 20, 20),
-        maxHealth: lowTier.health + (highTier.health - lowTier.health) * scalePercentage,
-        evasion: lowTier.evasion + (highTier.evasion - lowTier.evasion) * scalePercentage || 1,
+        health: Math.round(lowTier.health + (highTier.health - lowTier.health) * scalePercentage),
+        expReward: Math.round(lowTier.expReward + (highTier.expReward - lowTier.expReward) * scalePercentage) || 0,
+        attackSpeed: Math.max(Math.round((lowTier.attackSpeed + (highTier.attackSpeed - lowTier.attackSpeed) * scalePercentage)) || 20, 20),
+        maxHealth: Math.round(lowTier.health + (highTier.health - lowTier.health) * scalePercentage),
+        evasion: Math.round(lowTier.evasion + (highTier.evasion - lowTier.evasion) * scalePercentage) || 1,
         damageRange: damageRange,
+        criticalDamage: criticalDamage,
         idleTicks: 0,
-        receiveDamage(amount: number) {
-            if (amount < 0) {
-                amount = 0;
+        receiveDamage(damage: DamageResult) {
+            if (damage.amount > this.health) {
+                damage.amount = this.health;
             }
 
-            this.health -= amount;
+            this.health -= damage.amount;
 
-            if (this.health < 0) {
-                this.health = 0;
-            }
-
-            return amount;
+            return damage;
         },
         isAlive() {
             return this.health > 0;
@@ -122,10 +124,20 @@ export function createLeveledMonster(id: string, level: number): Monster {
             return this.idleTicks >= this.attackSpeed;
         },
         attack(enemy: Player) {
-            const damage = this.damageRange.randomize();
             this.idleTicks -= this.attackSpeed;
-            enemy.receiveDamage(damage);
-            return damage;
+
+            const attackRating = 1;//this.attackRating;
+            const defenseRating = enemy.evasion <= 0 ? 1 : enemy.evasion;
+            const hitCoefficient = 25;
+            const hitChance = (attackRating + hitCoefficient) / (attackRating + defenseRating + hitCoefficient);
+
+            const damage = calculateDamage(this.damageRange, this.criticalDamage);
+
+            if (Math.random() < hitChance) {
+                enemy.receiveDamage(damage);
+            }
+
+            return noDamage;
         },
         resetIdleTicks() {
             this.idleTicks = 0;

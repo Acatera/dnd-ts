@@ -1,4 +1,7 @@
 import { Armor } from "./Armor";
+import { createCriticalDamage, CriticalDamage } from "./components/CriticalDamage";
+import { DamageRange } from "./DamageRange";
+import { calculateDamage, DamageResult, noDamage, noDamageMiss } from "./DamageResult";
 import { createEquipmentSlot, EquipmentSlot } from "./EquipmentSlot";
 import { EquipmentSlotType } from "./EquipmentSlotType";
 import { ItemRequirements } from "./Equippable";
@@ -15,11 +18,13 @@ export interface Player {
     isAlive(): boolean;
 
     canAttack(): boolean;
-    attack(enemy: Monster): number;
-    receiveDamage(amount: number): number;
+    attack(enemy: Monster): DamageResult;
+    receiveDamage(damage: DamageResult): DamageResult;
     idleTicks: number;
     addIdleTicks(): void;
     resetIdleTicks(): void;
+
+    criticalDamage: CriticalDamage;
 
     attackSpeed: number;
     evasion: number;
@@ -45,7 +50,7 @@ export interface Player {
 
 const experienceLevels: number[] = [10, 15, 23, 34, 51, 76, 114, 171, 256, 384, 577, 865, 1297, 1946, 2919, 4379, 6568, 9853, 14779, 22168, 33253, 49879, 74818, 112227, 168341, 252512, 378768, 568151, 852227, 1278340, 1917511, 2876266, 4314399, 6471598, 9707397, 14561096, 21841644, 32762466, 49143699, 73715549, 110573323, 165859985, 248789977, 373184966, 559777449, 839666173, 1259499260, 1889248890, 2833873334, 4250810001, 6376215002, 9564322503, 14346483755, 21519725632, 32279588448, 48419382673, 72629074009, 108943611013, 163415416520, 245123124780, 367684687169, 551527030754, 827290546131, 1240935819196, 1861403728795, 2792105593192, 4188158389788, 6282237584682, 9423356377023, 14135034565535, 21202551848303, 31803827772454, 47705741658681, 71558612488021, 107337918732031, 161006878098047, 241510317147071, 362265475720606, 543398213580909, 815097320371364, 1222645980557050, 1833968970835570, 2750953456253350, 4126430184380030, 6189645276570040, 9284467914855070, 13926701872282600, 20890052808423900, 31335079212635800, 47002618818953800, 70503928228430700, 105755892342646000, 158633838513969000, 237950757770953000, 356926136656430000, 535389204984645000, 803083807476968000, 1204625711215450000, 1806938566823180000];
 
-export function createPlayer(): Player {
+export function createPlayer(this: any): Player {
     const createSkills = () => {
         return {
             Strength: 1,
@@ -79,6 +84,7 @@ export function createPlayer(): Player {
     const inventory = createInventory();
     inventory.add(createItemStack(createWeapon("blaster"), 1));
     const skills = createSkills();
+    const criticalDamage = createCriticalDamage(1.5, 0.1);
 
     return {
         health: 10,
@@ -140,49 +146,45 @@ export function createPlayer(): Player {
             return this.getTotalSkill(SkillType.MaxHealth);
         },
 
-        attack(enemy: Monster): number {
+        attack(enemy: Monster): DamageResult {
             if (!enemy.isAlive) {
                 this.idleTicks = 0;
-                return 0;
+                return noDamage;
             }
 
-            let damage = 1;
             const attackRating = this.attackRating;
             const defenseRating = enemy.evasion <= 0 ? 1 : enemy.evasion;
             const hitCoefficient = 25;
             const hitChance = (attackRating + hitCoefficient) / (attackRating + defenseRating + hitCoefficient);
-
-            if (weaponSlot.item) {
-                const multiplier = 1 + attackRating / 400;
-                damage = weaponSlot.item.damageRange.randomize() * multiplier;
-            }
+            const damage = calculateDamage(weaponSlot.item ? weaponSlot.item.damageRange : new DamageRange(1, 1), this.criticalDamage);
+            
+            this.idleTicks -= this.attackSpeed;
 
             if (Math.random() > hitChance) {
-                this.idleTicks -= this.attackSpeed;
-                return -1;
+                return noDamageMiss;
             }
 
-            this.idleTicks -= this.attackSpeed;
             return enemy.receiveDamage(damage);
         },
 
-        receiveDamage(amount: number) {
+        receiveDamage(damage: DamageResult): DamageResult {
             // Every 10 points of armor rating reduces damage by 1
-            const damage = amount - this.armorRating / 10;
+            damage.amount -= this.armorRating / 10;
 
-            if (damage < 0) {
-                return 0;
+            if (damage.amount < 0) {
+                damage.amount = 0;
             }
 
-            if (damage > this.health) {
-                this.health = 0;
-                return this.health;
+            if (damage.amount > this.health) {
+                damage.amount = this.health;
             }
 
-            this.health -= damage;
+            this.health -= damage.amount;
 
             return damage;
         },
+
+        criticalDamage,
 
         get armorRating(): number {
             let armorRating = 0;
