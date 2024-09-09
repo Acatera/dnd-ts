@@ -1,7 +1,13 @@
+import { Armor } from "./Armor";
+import { Weapon } from "./Weapon";
+
 export interface Item {
     id: string;
+    type: ItemType;
     name: string;
     description: string;
+    asWeapon(): Weapon | null;
+    asArmor(): Armor | null;
 }
 
 export let items: { [key: string]: any } = {};
@@ -22,6 +28,20 @@ export function createItem(id: string): Item {
     return {
         id,
         ...items[id],
+        asWeapon() {
+            if (this.type === "Weapon") {
+                return this as Weapon;
+            }
+
+            return null;
+        },
+        asArmor() {
+            if (this.type === "Armor") {
+                return this as Armor;
+            }
+
+            return null;
+        },
     };
 }
 

@@ -1,5 +1,5 @@
 import { createEquippable, Equippable } from "./Equippable";
-import { items } from "./Item";
+import { Item, items, ItemType } from "./Item";
 
 export interface Armor extends Equippable {
     defense: number;
@@ -8,6 +8,10 @@ export interface Armor extends Equippable {
 export function createArmor(id: string): Armor {
     if (!items[id]) {
         throw new Error(`Item with id ${id} not found`);
+    }
+
+    if (items[id].type !== "Armor") {
+        throw new Error(`Item with id ${id} is not an armor`);
     }
 
     return {

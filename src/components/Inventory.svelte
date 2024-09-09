@@ -6,8 +6,14 @@
     import { equipArmor, equipWeapon } from "../stores/player";
     import { Armor } from "../types/Armor";
     import { Weapon } from "../types/Weapon";
+    import { ItemBonuses, ItemRequirements } from "../types/Equippable";
+    import { slide } from "svelte/transition";
 
     let inventory: Inventory;
+    let selectedItem: Item | null = null;
+    let isEquippable: boolean;
+    let requirements: ItemRequirements | null = null;
+    let bonuses: ItemBonuses | null = null;
 
     inventoryStore.subscribe((value) => {
         inventory = value;
@@ -17,69 +23,160 @@
         gameScreenStore.update(() => GameScreen.Game);
     }
 
-    function handleClick(item: Item) {
+    function selectItem(item: Item) {
+        selectedItem = item;
+
+        isEquippable =
+            getItemType(item.id) === "Weapon" ||
+            getItemType(item.id) === "Armor";
+
+        if (isEquippable) {
+            requirements = (item as Armor | Weapon).requirements;
+            bonuses = (item as Armor | Weapon).bonuses;
+        } else {
+            requirements = null;
+            bonuses = null;
+        }
+    }
+
+    function handleEquip(item: Item | null) {
+        if (!item) {
+            return;
+        }
+
         const itemType = getItemType(item.id);
-        
+
         if (itemType === "Weapon") {
             equipWeapon(item as Weapon);
         } else if (itemType === "Armor") {
             equipArmor(item as Armor);
         }
+
+        selectedItem = null;
     }
 </script>
 
 <main>
-    <h1>Inventory</h1>
+    <div class="inventory">
+        <h1>Inventory</h1>
 
-    <ul>
-        {#each inventory.items as itemStack}
-            {#if itemStack.quantity > 1}
-                <li>{itemStack.item.name} x{itemStack.quantity}</li>
-            {:else}
-                <li
-                    on:click={() => handleClick(itemStack.item)}
-                    on:keypress={() => handleClick(itemStack.item)}
+        <ul>
+            {#each inventory.items as itemStack}
+                {#if itemStack.quantity > 1}
+                    <li>{itemStack.item.name} x{itemStack.quantity}</li>
+                {:else}
+                    <li
+                        on:click={() => selectItem(itemStack.item)}
+                        on:keypress={() => selectItem(itemStack.item)}
+                    >
+                        {itemStack.item.name}
+                    </li>
+                {/if}
+            {/each}
+        </ul>
+
+        <button on:click={goBack}>Back</button>
+    </div>
+
+    {#if selectedItem}
+        <div
+            class="item-details"
+            transition:slide={{ axis: "x", duration: 100 }}
+        >
+            <h1>{selectedItem.name}</h1>
+            <p>{selectedItem.description}</p>
+
+            <!-- If equippable -->
+            {#if isEquippable && requirements && bonuses}
+                {#if selectedItem.type === "Weapon"}
+                    <h2>Damage</h2>
+                    <p>{selectedItem.asWeapon()?.damageRange.min} - {selectedItem.asWeapon()?.damageRange.max}</p>
+                {:else if selectedItem.type === "Armor"}
+                    <h2>Defense</h2>
+                    <p>{selectedItem.asArmor()?.defense}</p>
+                {/if}
+
+                <h2>Requirements</h2>
+                <ul>
+                    {#each Object.entries(requirements) as [key, value]}
+                        <li>{key}: {value}</li>
+                    {/each}
+                </ul>
+
+                <h2>Bonuses</h2>
+
+                <ul>
+                    {#each Object.entries(bonuses) as [key, value]}
+                        <li>{key}: {value}</li>
+                    {/each}
+                </ul>
+                <button on:click={() => handleEquip(selectedItem)}>Equip</button
                 >
-                    {itemStack.item.name}
-                </li>
             {/if}
-        {/each}
-    </ul>
-
-    <button on:click={goBack}>Back</button>
+        </div>
+    {/if}
 </main>
 
 <style>
-    /* Show center of screen  */
     main {
-        position: fixed;
-        top: 50%;
-        left: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* Show center of screen  */
+    .inventory {
         width: 50vh;
         height: 50vh;
-        transform: translate(-50%, -50%);
+        /* transform: translate(-50%, -50%); */
         padding: 0.5rem;
         border-radius: 0.5rem;
         border: 2px solid #d4a14e;
         box-shadow: 0 0 5px rgba(212, 161, 78, 0.9);
+        transition: all 0.5s;
+        position: relative;
     }
 
-    main ul {
+    .inventory h1 {
+        text-align: center;
+    }
+
+    .inventory ul {
         list-style-type: none;
+        padding: 0;
     }
 
-    main ul li {
+    .inventory ul li {
         margin: 0.25rem;
     }
 
     /* On hover, add shadow to text */
-    main ul li:hover {
+    .inventory ul li:hover {
         text-shadow: 0 0 5px #d4a14e;
         cursor: pointer;
     }
 
     /* Align button bottom right */
-    main button {
+    .inventory button {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .item-details {
+        width: 50vh;
+        height: 50vh;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 2px solid #d4a14e;
+        box-shadow: 0 0 5px rgba(212, 161, 78, 0.9);
+        transition: all 0.5s;
+        position: relative;
+    }
+
+    /* Align this button at bottom of parent */
+    .item-details button {
         position: absolute;
         bottom: 1rem;
         right: 1rem;

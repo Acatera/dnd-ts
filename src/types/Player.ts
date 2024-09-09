@@ -1,4 +1,4 @@
-import { Armor } from "./Armor";
+import { Armor, createArmor } from "./Armor";
 import { createCriticalDamage, CriticalDamage } from "./components/CriticalDamage";
 import { DamageRange } from "./DamageRange";
 import { calculateDamage, DamageResult, noDamage, noDamageMiss } from "./DamageResult";
@@ -83,6 +83,7 @@ export function createPlayer(this: any): Player {
     ];
     const inventory = createInventory();
     inventory.add(createItemStack(createWeapon("blaster"), 1));
+    inventory.add(createItemStack(createArmor("plasteel_boots"), 1));
     const skills = createSkills();
     const criticalDamage = createCriticalDamage(1.5, 0.1);
 

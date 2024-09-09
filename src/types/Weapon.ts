@@ -13,6 +13,10 @@ export function createWeapon(id: string): Weapon {
         throw new Error(`Item with id ${id} not found`);
     }
 
+    if (items[id].type !== "Weapon") {
+        throw new Error(`Item with id ${id} is not a weapon`);
+    }
+
     return {
         ...createEquippable(id),
         damageRange: new DamageRange(items[id].minDamage, items[id].maxDamage),
