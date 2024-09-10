@@ -57,7 +57,7 @@
 - [x] Implement weapon and armor creation logic
 - [x] Add equipable weapons and armor
 - [x] Refactor item creation into a factory using JSON files
-- [ ] Expand inventory functionality (drop items, unequip, etc.)
+- [x] Expand inventory functionality (drop items, unequip, etc.)
 - [ ] Implement item materials
 - [ ] Implement additional item types (materials, consumables, etc.)
 - [ ] Implement consumables (healing items, batteries, etc.)

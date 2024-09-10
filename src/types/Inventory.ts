@@ -3,7 +3,7 @@ import { ItemStack } from "./ItemStack";
 export interface Inventory {
     items: ItemStack[];
     add(item: ItemStack): void;
-    remove(itemId: string): void;
+    remove(itemId: string): boolean;
 }
 
 export function createInventory(): Inventory {
@@ -16,6 +16,7 @@ export function createInventory(): Inventory {
         },
         remove(itemId: string) {
             const index = items.findIndex((itemStack) => itemStack.item.id === itemId);
+            console.log(index);
             if (index !== -1) {
                 items.splice(index, 1);
 

@@ -3,7 +3,7 @@
     import { GameScreen, gameScreenStore } from "../stores/gameScreen";
     import { Inventory } from "../types/Inventory";
     import { getItemType, Item } from "../types/Item";
-    import { equipArmor, equipWeapon } from "../stores/player";
+    import { deleteItem, equipArmor, equipWeapon } from "../stores/player";
     import { Armor } from "../types/Armor";
     import { Weapon } from "../types/Weapon";
     import { ItemBonuses, ItemRequirements } from "../types/Equippable";
@@ -54,6 +54,16 @@
 
         selectedItem = null;
     }
+
+    function handleDelete(item: Item | null) {
+        if (!item) {
+            return;
+        }
+
+        deleteItem(item);
+
+        selectedItem = null;
+    }
 </script>
 
 <main>
@@ -83,36 +93,41 @@
             class="item-details"
             transition:slide={{ axis: "x", duration: 100 }}
         >
-            <h1>{selectedItem.name}</h1>
-            <p>{selectedItem.description}</p>
+            <div class="item-details-main">
+                <h1>{selectedItem.name}</h1>
+                <p>{selectedItem.description}</p>
 
-            <!-- If equippable -->
-            {#if isEquippable && requirements && bonuses}
-                {#if selectedItem.type === "Weapon"}
-                    <h2>Damage</h2>
-                    <p>{selectedItem.asWeapon()?.damageRange.min} - {selectedItem.asWeapon()?.damageRange.max}</p>
-                {:else if selectedItem.type === "Armor"}
-                    <h2>Defense</h2>
-                    <p>{selectedItem.asArmor()?.defense}</p>
+                {#if isEquippable && requirements && bonuses}
+                    {#if selectedItem.type === "Weapon"}
+                        <h2>Damage</h2>
+                        <p>
+                            {selectedItem.asWeapon()?.damageRange.min} - {selectedItem.asWeapon()
+                                ?.damageRange.max}
+                        </p>
+                    {:else if selectedItem.type === "Armor"}
+                        <h2>Defense</h2>
+                        <p>{selectedItem.asArmor()?.defense}</p>
+                    {/if}
+
+                    <h2>Requirements</h2>
+                    <ul>
+                        {#each Object.entries(requirements) as [key, value]}
+                            <li>{key}: {value}</li>
+                        {/each}
+                    </ul>
+
+                    <h2>Bonuses</h2>
+                    <ul>
+                        {#each Object.entries(bonuses) as [key, value]}
+                            <li>{key}: {value}</li>
+                        {/each}
+                    </ul>
                 {/if}
-
-                <h2>Requirements</h2>
-                <ul>
-                    {#each Object.entries(requirements) as [key, value]}
-                        <li>{key}: {value}</li>
-                    {/each}
-                </ul>
-
-                <h2>Bonuses</h2>
-
-                <ul>
-                    {#each Object.entries(bonuses) as [key, value]}
-                        <li>{key}: {value}</li>
-                    {/each}
-                </ul>
-                <button on:click={() => handleEquip(selectedItem)}>Equip</button
-                >
-            {/if}
+            </div>
+            <div class="item-details-buttons">
+                <button on:click={() => handleEquip(selectedItem)}>Equip</button>
+                <button on:click={() => handleDelete(selectedItem)}>Delete</button>
+            </div>
         </div>
     {/if}
 </main>
@@ -125,16 +140,13 @@
         height: 100vh;
     }
 
-    /* Show center of screen  */
     .inventory {
         width: 50vh;
         height: 50vh;
-        /* transform: translate(-50%, -50%); */
         padding: 0.5rem;
         border-radius: 0.5rem;
         border: 2px solid #d4a14e;
         box-shadow: 0 0 5px rgba(212, 161, 78, 0.9);
-        transition: all 0.5s;
         position: relative;
     }
 
@@ -151,13 +163,11 @@
         margin: 0.25rem;
     }
 
-    /* On hover, add shadow to text */
     .inventory ul li:hover {
         text-shadow: 0 0 5px #d4a14e;
         cursor: pointer;
     }
 
-    /* Align button bottom right */
     .inventory button {
         position: absolute;
         bottom: 1rem;
@@ -165,20 +175,25 @@
     }
 
     .item-details {
+        display: flex;
+        flex-direction: column;
         width: 50vh;
         height: 50vh;
         padding: 0.5rem;
         border-radius: 0.5rem;
         border: 2px solid #d4a14e;
         box-shadow: 0 0 5px rgba(212, 161, 78, 0.9);
-        transition: all 0.5s;
         position: relative;
     }
 
-    /* Align this button at bottom of parent */
-    .item-details button {
-        position: absolute;
-        bottom: 1rem;
-        right: 1rem;
+    .item-details-main {
+        flex-grow: 1; /* Make this div stretch to fill available space */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .item-details-buttons {
+        display: flex;
+        justify-content: space-between;
     }
 </style>

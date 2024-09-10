@@ -4,6 +4,7 @@ import { Weapon } from "../types/Weapon";
 import { Armor } from "../types/Armor";
 import { inventoryStore } from "./inventory";
 import { EquipmentSlotType } from "../types/EquipmentSlotType";
+import { Item } from "../types/Item";
 
 // Export a writable store with the initial value of an empty object
 // Also export a function to equip an a weapon and a function to equip an armor
@@ -32,6 +33,16 @@ export function equipArmor(armor: Armor): void {
 export function unequip(slot: EquipmentSlotType): void {
     playerStore.update((p) => {
         p.unequip(slot);
+        return p;
+    });
+}
+
+export function deleteItem(item: Item): void {
+    playerStore.update((p) => {
+        if (p.inventory.remove(item.id))
+        {
+            inventoryStore.update((i) => i);
+        }
         return p;
     });
 }
