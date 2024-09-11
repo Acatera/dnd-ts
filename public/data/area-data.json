@@ -14,7 +14,7 @@
         "loot": [],
         "adjacent_areas": [
             "drone_factory_entrance",
-            "power_station",
+            "drone_power_station",
             "drone_repair_bay"
         ]
     },
@@ -34,7 +34,7 @@
             "drone_factory"
         ]
     },
-    "power_station": {
+    "drone_power_station": {
         "name": "Power Station",
         "description": "A critical power station that supplies energy to the drone factory. The station is surrounded by high-voltage wires and guarded by elite drones.",
         "combat_level": {

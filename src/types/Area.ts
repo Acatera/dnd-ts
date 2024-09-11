@@ -6,6 +6,7 @@ export interface Area {
     name: string;
     description: string;
     combatLevel: ValueRange;
+    imageSrc: string;
     enemies: string[];
     adjacentAreaIds: string[];
     spawnEncounter(): Monster | null;
@@ -35,6 +36,7 @@ export function createArea(id: string): Area {
     return {
         id,
         ...areas[id],
+        imageSrc: `assets/areas/${id}.png`,
         combatLevel: areas[id].combat_level as ValueRange,
         adjacentAreaIds: areas[id].adjacent_areas,
         spawnEncounter(): Monster | null {

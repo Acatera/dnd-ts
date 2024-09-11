@@ -21,6 +21,7 @@
 
 <main bind:this={mainElement}>
     <h1>{area.name}</h1>
+    <img src={area.imageSrc} alt={area.name} />
     <p>{area.description}</p>
 
     <h2>Enemies</h2>
@@ -30,7 +31,7 @@
         {/each}
     </ul>
 
-    <h1>Travel</h1>
+    <h2>Travel</h2>
     <ul>
         {#each area.adjacentAreaIds as adjacentAreaId}
             <div
@@ -47,6 +48,15 @@
 <style>
     main {
         margin: 0 0.5rem;
+    }
+
+    img {
+        max-width: 200px;
+        max-height: 200px;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        margin: 0.5rem 0;
+        
     }
 
     /*  */

@@ -62,12 +62,14 @@ h1 {
 	padding: 5px 0 10px 0;
 	font-size: 20px;
 	font-weight: bold;
+	color: var(--secondary-color);
 }
 
 h2 {
 	padding: 5px 0 10px 0;
 	font-size: 18px;
 	font-weight: unset;
+	color: var(--secondary-color);
 }
 
 /* Scrollbar track (the background) */
@@ -122,9 +124,11 @@ button:hover {
 }
 
 button:disabled {
-	/* background-color: #333; */
-	color: #666;
-	border: 2px solid #666;
+	/* Darker and extremely desaturated version of #00CC9F */
+	color: #00504D;
+	border: 2px solid #00504D;
+	/* Even darker color */
+	background-color: #00141b;
 	cursor: not-allowed;
 	box-shadow: none;
 }
