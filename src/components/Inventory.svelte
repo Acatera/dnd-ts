@@ -144,12 +144,12 @@
     }
 
     .inventory {
+        background-color: var(--card-bg-color);
         width: 50vh;
         height: 50vh;
         padding: 0.5rem;
         border-radius: 0.5rem;
-        border: 2px solid #d4a14e;
-        box-shadow: 0 0 5px rgba(212, 161, 78, 0.9);
+        border: 1px solid var(--border-color);
         position: relative;
         display: flex;
         flex-direction: column;
@@ -169,7 +169,7 @@
     }
 
     .inventory ul li:hover {
-        text-shadow: 0 0 5px #d4a14e;
+        text-shadow: 0 0 10px var(--tertiary-color);
         cursor: pointer;
     }
 
@@ -186,14 +186,14 @@
     }
 
     .item-details {
+        background-color: var(--card-bg-color);
         display: flex;
         flex-direction: column;
         width: 50vh;
         height: 50vh;
         padding: 0.5rem;
         border-radius: 0.5rem;
-        border: 2px solid #d4a14e;
-        box-shadow: 0 0 5px rgba(212, 161, 78, 0.9);
+        border: 1px solid var(--border-color);
         position: relative;
     }
 

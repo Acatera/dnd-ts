@@ -2,8 +2,38 @@
 	/* --background: #222;
 	--color: rgb(221, 221, 221); */
 
+	/* Amber */
+	/* --background: #0C0C0C;
+	--color: #D4A14E;
+	--border-color: #D4A14E; */
+
+	/* Anarchy Online */
+	/* --background: #090F14;
+	--color: #94D7C6;
+	--border-color: #00CC9F; */
+
+	--primary-color: #94D7C6; /* Light teal for paragraphs and stats */
+	--secondary-color: #00D1D1; /* Bright cyan used in titles and button hover */
+	--tertiary-color: #00CC9F; /* Main cyan color used in text, borders, buttons */
+	--background-color: #090F14; /* Overall dark background */
+	--card-bg-color: #00242B; /* Card background */
+	--stats-bg-color: #00333B; /* Stats section background */
+	--inventory-bg-color: #002C34; /* Inventory item background */
+	--button-bg-color: #00303D; /* Dark button background */
+	--dark-text-color: #00303D; /* Dark text color used in button hover */
+	--link-color: #CCCC00; /* Neon yellow for links */
+	--link-hover-color: #A4CC50; /* Yellow-green for link hover */
+	--border-color: #00CC9F; /* Cyan border color used throughout */
+	--border-hover-color: #00D1D1; /* Hover effect for button borders */
+}
+
+:original-root {
+	/* --background: #222;
+	--color: rgb(221, 221, 221); */
+
 	--background: #0C0C0C;
 	--color: #D4A14E;
+	--border-color: #D4A14E;
 }
 
 html,
@@ -16,8 +46,8 @@ body {
 body {
 	margin: 0;
 	padding: 0;
-	background-color: var(--background);
-	color: var(--color);
+	background-color: var(--background-color);
+	color: var(--primary-color);
 	font-family: monospace;
 	font-size: 14px;
 }
@@ -42,7 +72,8 @@ h2 {
 
 /* Scrollbar track (the background) */
 ::-webkit-scrollbar {
-	width: 8px;
+	width: 4px;
+	height: 4px;
 	/* Width of the scrollbar */
 	background-color: #333
 }
@@ -51,7 +82,7 @@ h2 {
 ::-webkit-scrollbar-thumb {
 	background-color: darkgray;
 	/* Color of the scrollbar handle */
-	border-radius: 10px;
+	border-radius: 3px;
 	/* Rounded edges for the handle */
 	border: 3px solid transparent;
 	/* Optional padding around the handle */
@@ -69,29 +100,29 @@ h2 {
 }
 
 button {
-	background-color: #0C0C0C;
-	color: #D4A14E;
-	border: 2px solid #D4A14E;
+	background-color: var(--button-bg-color);
+	color: var(--primary-color);
+	border: 1px solid var(--border-color);
 	padding: 0.5rem;
 	margin: 0.25rem 0;
-	font-size: 1.1em;
+	/* font-size: 1.1em; */
 	cursor: pointer;
-	border-radius: 0.5em;
+	/* border-radius: 0.5em; */
 	font-family: 'Courier New', Courier, monospace;
-	box-shadow: 0 0 2px rgba(212, 161, 78, 0.6);
+	/* box-shadow: 0 0 2px rgba(212, 161, 78, 0.6); */
 	/* Soft glow around buttons */
 	transition: 0.1s ease-in-out;
 }
 
 button:hover {
-	background-color: #D4A14E;
-	color: #0C0C0C;
-	box-shadow: 0 0 5px rgba(212, 161, 78, 0.9);
+	background-color: var(--primary-color);
+	color: var(--button-bg-color);
+	/* box-shadow: 0 0 5px rgba(212, 161, 78, 0.9); */
 	/* Stronger glow when hovering */
 }
 
 button:disabled {
-	background-color: #333;
+	/* background-color: #333; */
 	color: #666;
 	border: 2px solid #666;
 	cursor: not-allowed;

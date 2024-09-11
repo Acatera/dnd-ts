@@ -56,7 +56,7 @@
 
 <style>
     .clickable:hover {
-        text-shadow: 0 0 5px #d4a14e;
+        text-shadow: 0 0 10px var(--tertiary-color);
         cursor: pointer;
     }
 </style>
