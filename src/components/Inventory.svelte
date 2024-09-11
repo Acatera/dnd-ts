@@ -68,24 +68,27 @@
 
 <main>
     <div class="inventory">
-        <h1>Inventory</h1>
+        <div class="inventory-main">
+            <h1>Inventory</h1>
 
-        <ul>
-            {#each inventory.items as itemStack}
-                {#if itemStack.quantity > 1}
-                    <li>{itemStack.item.name} x{itemStack.quantity}</li>
-                {:else}
-                    <li
-                        on:click={() => selectItem(itemStack.item)}
-                        on:keypress={() => selectItem(itemStack.item)}
-                    >
-                        {itemStack.item.name}
-                    </li>
-                {/if}
-            {/each}
-        </ul>
-
-        <button on:click={goBack}>Back</button>
+            <ul>
+                {#each inventory.items as itemStack}
+                    {#if itemStack.quantity > 1}
+                        <li>{itemStack.item.name} x{itemStack.quantity}</li>
+                    {:else}
+                        <li
+                            on:click={() => selectItem(itemStack.item)}
+                            on:keypress={() => selectItem(itemStack.item)}
+                        >
+                            {itemStack.item.name}
+                        </li>
+                    {/if}
+                {/each}
+            </ul>
+        </div>
+        <div class="inventory-buttons">
+            <button on:click={goBack}>Back</button>
+        </div>
     </div>
 
     {#if selectedItem}
@@ -110,23 +113,22 @@
                     {/if}
 
                     <h2>Requirements</h2>
-                    <ul>
-                        {#each Object.entries(requirements) as [key, value]}
-                            <li>{key}: {value}</li>
-                        {/each}
-                    </ul>
+                    {#each Object.entries(requirements) as [key, value]}
+                        <p>{key}: {value}</p>
+                    {/each}
 
                     <h2>Bonuses</h2>
-                    <ul>
-                        {#each Object.entries(bonuses) as [key, value]}
-                            <li>{key}: {value}</li>
-                        {/each}
-                    </ul>
+                    {#each Object.entries(bonuses) as [key, value]}
+                        <p>{key}: {value}</p>
+                    {/each}
                 {/if}
             </div>
             <div class="item-details-buttons">
-                <button on:click={() => handleEquip(selectedItem)}>Equip</button>
-                <button on:click={() => handleDelete(selectedItem)}>Delete</button>
+                <button on:click={() => handleEquip(selectedItem)}>Equip</button
+                >
+                <button on:click={() => handleDelete(selectedItem)}
+                    >Delete</button
+                >
             </div>
         </div>
     {/if}
@@ -138,6 +140,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
+        gap: 0.5rem;
     }
 
     .inventory {
@@ -148,6 +151,8 @@
         border: 2px solid #d4a14e;
         box-shadow: 0 0 5px rgba(212, 161, 78, 0.9);
         position: relative;
+        display: flex;
+        flex-direction: column;
     }
 
     .inventory h1 {
@@ -168,10 +173,16 @@
         cursor: pointer;
     }
 
-    .inventory button {
-        position: absolute;
-        bottom: 1rem;
-        right: 1rem;
+    .inventory-main {
+        flex-grow: 1; /* Make this div stretch to fill available space */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .inventory-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
     }
 
     .item-details {
@@ -186,6 +197,10 @@
         position: relative;
     }
 
+    .item-details p {
+        margin-left: 0.5rem;
+    }
+
     .item-details-main {
         flex-grow: 1; /* Make this div stretch to fill available space */
         display: flex;
@@ -194,6 +209,7 @@
 
     .item-details-buttons {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
+        gap: 0.5rem;
     }
 </style>
