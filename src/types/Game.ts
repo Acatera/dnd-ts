@@ -15,6 +15,10 @@ import { createArmor } from "./Armor";
 import { combatStore } from "../stores/combatStore";
 import { SkillType } from "./SkillType";
 
+// If true, the player will gain experience in the skill they're using
+// otherwise, the player will level up traditional RPG style
+const dynamicSkilling = false;
+
 export interface Game {
     area: Area | null;
     player: Player;
@@ -114,13 +118,15 @@ export function createGame(): Game {
             this.combat.onMonsterDeath = (monster) => {
                 this.addEvent("You've defeated the " + monster.name + "!", GameEventSource.Game);
 
-
-                const primarySkill = player.weaponSlot.item ? getPrimarySkill(player.weaponSlot.item!) : SkillType.Unarmed;
-
                 // Update player experience and player store
-                this.player.gainSkillExperience(monster.expReward, primarySkill);
-
-                this.addEvent(`You've gained ${monster.expReward}xp in ${SkillType[primarySkill]}!`, GameEventSource.Game);
+                if (dynamicSkilling) {
+                    const primarySkill = player.weaponSlot.item ? getPrimarySkill(player.weaponSlot.item!) : SkillType.Unarmed;
+                    this.player.gainSkillExperience(monster.expReward, primarySkill);
+                    this.addEvent(`You've gained ${monster.expReward}xp in ${SkillType[primarySkill]}!`, GameEventSource.Game);
+                } else {
+                    this.player.gainExperience(monster.expReward);
+                    this.addEvent(`You've gained ${monster.expReward}xp.`, GameEventSource.Game);
+                }
 
                 playerStore.set(this.player);
                 monsterStore.set(null);
