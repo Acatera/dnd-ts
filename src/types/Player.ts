@@ -9,6 +9,7 @@ import { createInventory, Inventory } from "./Inventory";
 import { createItem } from "./Item";
 import { createItemStack } from "./ItemStack";
 import { Monster } from "./Monster";
+import { PlayerSkills } from "./PlayerSkills";
 import { SkillType } from "./SkillType";
 import { createWeapon, getPrimarySkill, Weapon } from "./Weapon";
 
@@ -38,6 +39,7 @@ export interface Player {
     attackRating: number,
     armorRating: number,
     gainExperience(amount: number): void,
+    gainSkillExperience(amount: number, skill: SkillType): void,
     levelUp(): void,
     weaponSlot: EquipmentSlot<Weapon>;
     armorSlots: EquipmentSlot<Armor>[];
@@ -53,23 +55,23 @@ const experienceLevels: number[] = [10, 15, 23, 34, 51, 76, 114, 171, 256, 384, 
 export function createPlayer(this: any): Player {
     const createSkills = () => {
         return {
-            Strength: 1,
-            Stamina: 1,
-            Agility: 1,
-            Intelligence: 1,
-            MaxHealth: 10,
-            Evades: 1,
-            Initiative: 1,
-            Bow: 1,
-            Pistol: 1,
-            SMG: 1,
-            Rifle: 1,
-            Shotgun: 1,
-            Heavy: 1,
-            Energy: 1,
-            Explosive: 1,
-            Thrown: 1,
-            Unarmed: 1,
+            Strength: { level: 1, currentXp: 0 },
+            Stamina: { level: 1, currentXp: 0 },
+            Agility: { level: 1, currentXp: 0 },
+            Intelligence: { level: 1, currentXp: 0 },
+            MaxHealth: { level: 10, currentXp: 0 },
+            Evades: { level: 1, currentXp: 0 },
+            Initiative: { level: 1, currentXp: 0 },
+            Bow: { level: 1, currentXp: 0 },
+            Pistol: { level: 1, currentXp: 0 },
+            SMG: { level: 1, currentXp: 0 },
+            Rifle: { level: 1, currentXp: 0 },
+            Shotgun: { level: 1, currentXp: 0 },
+            Heavy: { level: 1, currentXp: 0 },
+            Energy: { level: 1, currentXp: 0 },
+            Explosive: { level: 1, currentXp: 0 },
+            Thrown: { level: 1, currentXp: 0 },
+            Unarmed: { level: 1, currentXp: 0 },
         };
     };
 
@@ -84,7 +86,7 @@ export function createPlayer(this: any): Player {
     const inventory = createInventory();
     inventory.add(createItemStack(createWeapon("blaster"), 1));
     inventory.add(createItemStack(createArmor("plasteel_boots"), 1));
-    const skills = createSkills();
+    const skills: PlayerSkills = createSkills();
     const criticalDamage = createCriticalDamage(1.5, 0.1);
 
     return {
@@ -121,7 +123,7 @@ export function createPlayer(this: any): Player {
             return this.getBaseSkill(skill) + this.getSkillBonus(skill);
         },
         getBaseSkill(skill: SkillType): number {
-            return skills[skill];
+            return skills[skill].level;
         },
         getSkillBonus(skill: SkillType): number {
             let bonus = 0;
@@ -158,7 +160,7 @@ export function createPlayer(this: any): Player {
             const hitCoefficient = 25;
             const hitChance = (attackRating + hitCoefficient) / (attackRating + defenseRating + hitCoefficient);
             const damage = calculateDamage(weaponSlot.item ? weaponSlot.item.damageRange : new DamageRange(1, 1), this.criticalDamage);
-            
+
             this.idleTicks -= this.attackSpeed;
 
             if (Math.random() > hitChance) {
@@ -218,17 +220,27 @@ export function createPlayer(this: any): Player {
             }
         },
 
+        gainSkillExperience(amount: number, skill: SkillType) {
+            const skillObject = skills[skill];
+            skillObject.currentXp += amount;
+
+            while (skillObject.currentXp >= (experienceLevels[skillObject.level - 1] as number)) {
+                skillObject.currentXp -= (experienceLevels[skillObject.level - 1] as number);
+                skillObject.level++;
+            }
+        },
+
         levelUp() {
             this.experience -= this.experienceToLevelUp;
             this.experienceToLevelUp = experienceLevels[this.level - 1] as number;
             this.level++;
 
             // Increase the player's health
-            skills.MaxHealth += 1;
+            skills.MaxHealth.level += 1;
 
             // Increase the player's skills
             for (const skill in skills) {
-                skills[skill as SkillType]++;
+                skills[skill as SkillType].level++;
             }
 
             // Heal the player to full health

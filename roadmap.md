@@ -33,6 +33,7 @@
 - [x] Refactor player level up logic
 - [x] Introduce max health for characters
 - [x] Add player store for items
+- [ ] Dynamic skill progression based on use (skills level up with usage)
 - [ ] Implement crafting system
 - [ ] Item scaling and rarity
 - [ ] Item quality levels
@@ -42,7 +43,6 @@
 - [ ] Regeneration system
 - [ ] Exo-skeleton system (refine drawbacks)
 - [ ] Talent trees or specialization paths
-- [ ] Dynamic skill progression based on use (skills level up with usage)
 - [ ] Faction reputation system (relationships with different in-game groups)
 - [ ] Character customization (appearance, name, etc.)
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armor set generator</title>
+</head>
+
+<body>
+    <input type="text" id="armor-set-name" placeholder="Armor set name">
+    <button id="generate-armor-set">Generate armor set</button>
+
+    <code id="armor-set"></code>
+
+    <script>
+        document.onload = (function () {
+            const armorSet = document.getElementById('armor-set');
+            const armorSetNameElement = document.getElementById('armor-set-name');
+            const generateArmorSet = document.getElementById('generate-armor-set');
+
+            generateArmorSet.addEventListener('click', function () {
+                const equipmentPieces = [
+                    { slot: 'Head', id: 'helmet', name: "Helmet" },
+                    { slot: 'Chest', id: 'body_armor', name: "Body Armor" },
+                    { slot: 'Arms', id: 'gloves', name: "Gloves" },
+                    { slot: 'Legs', id: 'pants', name: "Pants" },
+                    { slot: 'Feet', id: 'boots', name: "Boots" },
+                ];
+
+                const armorSetName = armorSetNameElement.value;
+                const capitalizedArmorSetName = armorSetName.charAt(0).toUpperCase() + armorSetName.slice(1);
+                const html = equipmentPieces.map(piece => {
+
+                    return `"${armorSetName}_${piece.id}": {</br>` +
+                        `&nbsp;&nbsp;"type": "Armor",</br>` +
+                        `&nbsp;&nbsp;"name": "${capitalizedArmorSetName} ${piece.name}",</br>` +
+                        `&nbsp;&nbsp;"description": "<fill in by hand or use AI>",</br>` +
+                        `&nbsp;&nbsp;"slot": "${piece.slot}",</br>` +
+                        `&nbsp;&nbsp;"defense": 2,</br>` +
+                        `&nbsp;&nbsp;"requirements": {</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;"Stamina": 5,</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;"Agility": 5</br>` +
+                        `&nbsp;&nbsp;},</br>` +
+                        `&nbsp;&nbsp;"bonuses": {</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;"Pistol": 25</br>` +
+                        `&nbsp;&nbsp;}</br>` +
+                        `},</br>`
+                }).join('');
+
+                armorSet.innerHTML = html;
+            });
+        })();
+    </script>
+
+    <style>
+        /* Should  */
+        code {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
+</body>
+
+</html>

@@ -10,9 +10,10 @@ import { createPlayer, Player } from "./Player";
 import { createItem, getItemName, getItemType } from "./Item";
 import { inventoryStore } from "../stores/inventory";
 import { createItemStack } from "./ItemStack";
-import { createWeapon } from "./Weapon";
+import { createWeapon, getPrimarySkill } from "./Weapon";
 import { createArmor } from "./Armor";
 import { combatStore } from "../stores/combatStore";
+import { SkillType } from "./SkillType";
 
 export interface Game {
     area: Area | null;
@@ -112,10 +113,15 @@ export function createGame(): Game {
 
             this.combat.onMonsterDeath = (monster) => {
                 this.addEvent("You've defeated the " + monster.name + "!", GameEventSource.Game);
-                this.addEvent("You've gained " + monster.expReward + " experience.", GameEventSource.Game);
+
+
+                const primarySkill = player.weaponSlot.item ? getPrimarySkill(player.weaponSlot.item!) : SkillType.Unarmed;
 
                 // Update player experience and player store
-                this.player.gainExperience(monster.expReward);
+                this.player.gainSkillExperience(monster.expReward, primarySkill);
+
+                this.addEvent(`You've gained ${monster.expReward}xp in ${SkillType[primarySkill]}!`, GameEventSource.Game);
+
                 playerStore.set(this.player);
                 monsterStore.set(null);
                 combatStore.set(null);

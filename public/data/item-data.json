@@ -113,5 +113,63 @@
         "bonuses": {
             "Pistol": 25
         }
+    },
+    "kevlar_helmet": {
+        "type": "Armor",
+        "name": "Kevlar Helmet",
+        "description": "A helmet made of kevlar.",
+        "slot": "Head",
+        "defense": 2,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        },
+        "bonuses": {
+            "Pistol": 25
+        }
+    },
+    "kevlar_body_armor": {
+        "type": "Armor",
+        "name": "Kevlar Body Armor",
+        "description": "Body armor made of kevlar.",
+        "slot": "Chest",
+        "defense": 2,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        }
+    },
+    "kevlar_gloves": {
+        "type": "Armor",
+        "name": "Kevlar Gloves",
+        "description": "Gloves made of kevlar.",
+        "slot": "Arms",
+        "defense": 2,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        }
+    },
+    "kevlar_pants": {
+        "type": "Armor",
+        "name": "Kevlar Pants",
+        "description": "Pants made of kevlar.",
+        "slot": "Legs",
+        "defense": 2,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        }
+    },
+    "kevlar_boots": {
+        "type": "Armor",
+        "name": "Kevlar Boots",
+        "description": "Boots made of kevlar.",
+        "slot": "Feet",
+        "defense": 2,
+        "requirements": {
+            "Stamina": 5,
+            "Agility": 5
+        }
     }
 }
