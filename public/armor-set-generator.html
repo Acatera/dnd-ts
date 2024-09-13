@@ -8,10 +8,15 @@
 </head>
 
 <body>
-    <input type="text" id="armor-set-name" placeholder="Armor set name">
-    <button id="generate-armor-set">Generate armor set</button>
+    <div class="main">
 
-    <code id="armor-set"></code>
+        <h1>Armor set generator</h1>
+        <p>Fill in the armor set name and click the button to generate the armor set.</p>
+        <input type="text" id="armor-set-name" placeholder="Armor set name">
+        <button id="generate-armor-set">Generate armor set</button>
+
+        <code id="armor-set"></code>
+    </div>
 
     <script>
         document.onload = (function () {
@@ -54,13 +59,59 @@
     </script>
 
     <style>
-        /* Should  */
+        /* Should be full height, with vert scrollbar */
         code {
             display: block;
             margin-top: 20px;
             padding: 10px;
             background-color: #f0f0f0;
             border-radius: 5px;
+            overflow-y: auto;
+            height: 300px;
+            color: #0d1f2d;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d1f2d;
+            color: #f0f0f0;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        input {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 5px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            max-width: 600px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 20px;
         }
     </style>
 </body>
