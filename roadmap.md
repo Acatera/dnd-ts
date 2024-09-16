@@ -1,5 +1,13 @@
 # Rogue-punk RPG Feature List
 
+## Future music
+
+- [ ] Save/load game functionality – Critical for player retention and basic gameplay flow.
+- [ ] Add NPCs (interactions and quests) – Necessary for basic story progression and interaction in the game world.
+- [ ] Implement consumables (healing items, batteries, etc.) – Essential for survival and basic item functionality during combat.
+- [ ] Implement damage types and resistances – Adds needed depth to combat, making it more dynamic and interesting.
+- [ ] Add quests (with objectives and rewards) – Provides direction and motivation for players to engage with the game.
+
 ## Combat System
 
 - [x] Configurable damage for mobs
