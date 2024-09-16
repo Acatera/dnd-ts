@@ -82,15 +82,14 @@
 - [x] Add area name and monster list in the map panel
 - [x] Add main UI components for game interaction
 - [x] Show message when unable to equip items
-- [ ] Refine inventory screen
-- [ ] Add item display card
-- [ ] Refine area screen (area image, other info)
+- [x] Refine inventory screen
+- [x] Add item display card
+- [x] Refine area screen (area image, other info)
 - [ ] Implement themes (dark mode, etc.)
 - [ ] Implement different UI for buffs and scripts
 - [ ] In-game tutorial or onboarding guide for new players
 - [ ] UI accessibility options (font size, color-blind mode, etc.)
 - [ ] Hotkeys or shortcuts for inventory and skills
-- [ ] Map exploration and fog of war (hidden parts of the map until explored)
 
 ## World & Area System
 
