@@ -39,9 +39,8 @@
 - [ ] Item quality levels
 - [ ] Implement mining system
 - [ ] Implement trickle-down for skills
-- [ ] Add implants and body parts
+- [ ] Add implants
 - [ ] Regeneration system
-- [ ] Exo-skeleton system (refine drawbacks)
 - [ ] Talent trees or specialization paths
 - [ ] Faction reputation system (relationships with different in-game groups)
 - [ ] Character customization (appearance, name, etc.)
