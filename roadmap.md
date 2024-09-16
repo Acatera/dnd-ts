@@ -81,7 +81,7 @@
 - [x] Update combat log messages with attacker and defender names
 - [x] Add area name and monster list in the map panel
 - [x] Add main UI components for game interaction
-- [ ] Show message when unable to equip items
+- [x] Show message when unable to equip items
 - [ ] Refine inventory screen
 - [ ] Add item display card
 - [ ] Refine area screen (area image, other info)

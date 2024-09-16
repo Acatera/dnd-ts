@@ -8,6 +8,7 @@
     import { Weapon } from "../types/Weapon";
     import { ItemBonuses, ItemRequirements } from "../types/Equippable";
     import { slide } from "svelte/transition";
+    import Modal from "./Modal.svelte";
 
     let inventory: Inventory;
     let selectedItem: Item | null = null;
@@ -47,9 +48,15 @@
         const itemType = getItemType(item.id);
 
         if (itemType === "Weapon") {
-            equipWeapon(item as Weapon);
+            if (!equipWeapon(item as Weapon)) {
+                openModal();
+                return;
+            }
         } else if (itemType === "Armor") {
-            equipArmor(item as Armor);
+            if (!equipArmor(item as Armor)) {
+                openModal();
+                return;
+            }
         }
 
         selectedItem = null;
@@ -64,9 +71,23 @@
 
         selectedItem = null;
     }
+
+    let showModal = false;
+    function openModal() {
+        showModal = true;
+    }
+
+    function handleClose() {
+        showModal = false;
+    }
 </script>
 
 <main>
+    <Modal bind:isOpen={showModal} on:close={handleClose}>
+        <h2>Requirements not met</h2>
+        <p>You do not meet the requirements to equip this.</p>
+    </Modal>
+
     <div class="inventory">
         <div class="inventory-main">
             <h1>Inventory</h1>

@@ -11,23 +11,33 @@ import { Item } from "../types/Item";
 
 export const playerStore = writable<Player>();
 
-export function equipWeapon(weapon: Weapon): void {
+export function equipWeapon(weapon: Weapon): boolean {
+
+    let couldEquip = false;
     playerStore.update((p) => {
         if (p.wieldWeapon(weapon)) {
             inventoryStore.update((i) => i);
+            couldEquip = true;
         }
 
         return p;
     });
+
+    return couldEquip;
 }
 
-export function equipArmor(armor: Armor): void {
+export function equipArmor(armor: Armor): boolean {
+    let couldEquip = false;
     playerStore.update((p) => {
         if (p.wearArmor(armor)) {
             inventoryStore.update((i) => i);
+            couldEquip = true;
         }
+
         return p;
     });
+
+    return couldEquip;
 }
 
 export function unequip(slot: EquipmentSlotType): void {
@@ -39,8 +49,7 @@ export function unequip(slot: EquipmentSlotType): void {
 
 export function deleteItem(item: Item): void {
     playerStore.update((p) => {
-        if (p.inventory.remove(item.id))
-        {
+        if (p.inventory.remove(item.id)) {
             inventoryStore.update((i) => i);
         }
         return p;
