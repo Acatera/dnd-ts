@@ -52,6 +52,7 @@
 
     .progress {
         transition: width 0.2s;
+        max-width: 100%;
         height: 10px;
         z-index: 1; /* Ensure the progress bar is beneath the text */
     }

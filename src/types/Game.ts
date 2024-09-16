@@ -6,7 +6,7 @@ import { Area, createArea } from "./Area";
 import { Combat, createCombat } from "./Combat";
 import { GameEvent } from "./GameEvent";
 import { GameEventSource } from "./GameEventSource";
-import { createPlayer, Player } from "./Player";
+import { createPlayer, loadPlayer, Player } from "./Player";
 import { createItem, getItemName, getItemType } from "./Item";
 import { inventoryStore } from "../stores/inventory";
 import { createItemStack } from "./ItemStack";
@@ -14,6 +14,7 @@ import { createWeapon, getPrimarySkill } from "./Weapon";
 import { createArmor } from "./Armor";
 import { combatStore } from "../stores/combatStore";
 import { SkillType } from "./SkillType";
+import { loadPlayerSkills, PlayerSkills } from "./PlayerSkills";
 
 // If true, the player will gain experience in the skill they're using
 // otherwise, the player will level up traditional RPG style
@@ -28,6 +29,8 @@ export interface Game {
     travelToArea(areaId: string): void;
     startCombat(): void;
     abandonCombat(): void;
+    load(): void;
+    save(): void;
 }
 
 export function createGame(): Game {
@@ -189,6 +192,51 @@ export function createGame(): Game {
             }
 
             this.addEvent("You've traveled to " + this.area.name, GameEventSource.Environment);
+        },
+
+        load() {
+            // Load the game state from local storage
+            const state = localStorage.getItem("game");
+            if (!state) {
+                return;
+            }
+
+            const data = JSON.parse(state);
+            
+            const playerSkills = loadPlayerSkills(data.playerSkills);
+            // Load the player
+            this.player = loadPlayer(data.player, playerSkills);
+            playerStore.set(this.player);
+
+            // Load the area
+            this.loadArea(data.area.id);
+        },
+
+        save() {
+            // Seralize the game state
+
+            const playerSkills: Record<SkillType, { level: number; currentXp: number; }> = 
+            {} as Record<SkillType, {
+                level: number;
+                currentXp: number;
+            }>;
+
+            for (const skill in SkillType) {
+                const playerSkill = this.player.getBaseSkill(SkillType[skill as keyof typeof SkillType]);
+                playerSkills[SkillType[skill as keyof typeof SkillType]] = {
+                    level: playerSkill,
+                    currentXp: 0
+                };
+            }
+
+            const state = {
+                player: this.player,
+                area: this.area,
+                playerSkills: playerSkills
+            };
+
+            // Save to local storage
+            localStorage.setItem("game", JSON.stringify(state));
         }
     };
 }

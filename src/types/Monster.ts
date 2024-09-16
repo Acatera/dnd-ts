@@ -3,7 +3,7 @@ import { Player } from "./Player";
 import { TieredMonsterDefinition } from "./TieredMonsterDefinition";
 import { ValueRange } from "./ValueRange";
 import { LootTable, LootTableEntry } from "./LootTable";
-import { createCriticalDamage, CriticalDamage } from "./components/CriticalDamage";
+import { createCriticalDamage, CriticalDamage } from "./CriticalDamage";
 import { calculateDamage, DamageResult, noDamage } from "./DamageResult";
 
 let monsters: { [key: string]: any } = {};

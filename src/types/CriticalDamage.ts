@@ -1,5 +1,5 @@
-import { Monster } from "../Monster";
-import { Player } from "../Player";
+import { Monster } from "./Monster";
+import { Player } from "./Player";
 
 export interface CriticalDamage {
     bonus: number;
@@ -15,4 +15,8 @@ export function createCriticalDamage(bonus: number, chance: number): CriticalDam
             return Math.random() < this.chance;
         }
     };
+}
+
+export function loadCriticalDamage(state: any): CriticalDamage {
+    return createCriticalDamage(state.bonus, state.chance);
 }

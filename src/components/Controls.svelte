@@ -5,6 +5,7 @@
     import { writable } from "svelte/store";
     import { Combat } from "../types/Combat";
     import { combatStore } from "../stores/combatStore";
+    import { inventoryStore } from "../stores/inventory";
 
     let game: Game;
     let combat: Combat | null = null;
@@ -18,14 +19,10 @@
 
     function startCombat() {
         game.startCombat();
-
-        // combatStore.update(() => game.combat);
     }
 
     function abandonCombat() {
         game.abandonCombat();
-debugger;
-        // combatStore.update(() => null);
     }
 
     function gainExperience() {
@@ -35,6 +32,19 @@ debugger;
 
     function openInventory() {
         gameScreenStore.update(() => GameScreen.Inventory);
+    }
+
+    function saveGame() {
+        game.save();
+    }
+
+    function loadGame() {
+        game.load();
+
+        game = game;
+
+        playerStore.update(() => game.player);
+        inventoryStore.update(() => game.player.inventory);
     }
 </script>
 
@@ -55,6 +65,8 @@ debugger;
 
     <div>
         <button on:click={gainExperience}>Gain 100 XP</button>
+        <button on:click={saveGame}>Save</button>
+        <button on:click={loadGame}>Load</button>
     </div>
 </main>
 

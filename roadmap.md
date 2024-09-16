@@ -2,11 +2,11 @@
 
 ## Future music
 
-- [ ] Save/load game functionality – Critical for player retention and basic gameplay flow.
-- [ ] Add NPCs (interactions and quests) – Necessary for basic story progression and interaction in the game world.
-- [ ] Implement consumables (healing items, batteries, etc.) – Essential for survival and basic item functionality during combat.
-- [ ] Implement damage types and resistances – Adds needed depth to combat, making it more dynamic and interesting.
-- [ ] Add quests (with objectives and rewards) – Provides direction and motivation for players to engage with the game.
+- [x] Save/load game functionality
+- [ ] Add NPCs (interactions and quests)
+- [ ] Implement consumables (healing items, batteries, etc.)
+- [ ] Implement damage types and resistances
+- [ ] Add quests (with objectives and rewards)
 
 ## Combat System
 
@@ -117,9 +117,9 @@
 
 - [x] Enable strict compilation flags
 - [x] Refactor loot table
+- [x] Save/load game functionality
 - [ ] Implement trickle-down effects for skills
 - [ ] Refine exo-skeleton system
-- [ ] Save/load game functionality
 - [ ] Modding support or script editor for players
 - [ ] Achievements or challenges
 - [ ] Multiple game difficulty levels

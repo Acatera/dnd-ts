@@ -1,4 +1,4 @@
-import { CriticalDamage } from "./components/CriticalDamage";
+import { CriticalDamage } from "./CriticalDamage";
 import { DamageRange } from "./DamageRange";
 
 export interface DamageResult {
