@@ -178,6 +178,10 @@ export function createPlayer(this: any): Player {
                 damage.amount = 0;
             }
 
+            if (damage.amount < 0) {
+                damage.amount = 0;
+            }
+
             if (damage.amount > this.health) {
                 damage.amount = this.health;
             }

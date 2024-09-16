@@ -26,8 +26,8 @@
 - [x] Add player and enemy combat log with attacker and defender names
 - [x] Implement combat outcome
 - [x] Crit chance and damage scaling
+- [x] Mobs should have armor class
 - [ ] Implement damage types and resistances
-- [ ] Mobs should have armor class
 - [ ] Magic system (with scripting or UI-based casting)
 - [ ] Stealth mechanics (sneaking, ambushes, etc.)
 - [ ] Environmental interactions during combat (traps, destructible objects, etc.)

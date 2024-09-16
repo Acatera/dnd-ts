@@ -33,6 +33,8 @@ export interface Monster {
     evasion: number;
     expReward: number;
     name: string;
+    attackRating: number;
+    armorRating: number,
     generateLoot(): string[];
 }
 
@@ -102,10 +104,19 @@ export function createLeveledMonster(id: string, level: number): Monster {
         attackSpeed: Math.max(Math.round((lowTier.attackSpeed + (highTier.attackSpeed - lowTier.attackSpeed) * scalePercentage)) || 20, 20),
         maxHealth: Math.round(lowTier.health + (highTier.health - lowTier.health) * scalePercentage),
         evasion: Math.round(lowTier.evasion + (highTier.evasion - lowTier.evasion) * scalePercentage) || 1,
+        attackRating: Math.round(lowTier.attackRating + (highTier.attackRating - lowTier.attackRating) * scalePercentage) || 1,
+        armorRating: Math.round(lowTier.armorRating + (highTier.armorRating - lowTier.armorRating) * scalePercentage) || 1,
         damageRange: damageRange,
         criticalDamage: criticalDamage,
         idleTicks: 0,
         receiveDamage(damage: DamageResult) {
+            // Reduce damage by armor rating
+            damage.amount -= this.armorRating / 10;
+            
+            if (damage.amount < 0) {
+                damage.amount = 0;
+            }
+
             if (damage.amount > this.health) {
                 damage.amount = this.health;
             }
@@ -126,15 +137,14 @@ export function createLeveledMonster(id: string, level: number): Monster {
         attack(enemy: Player) {
             this.idleTicks -= this.attackSpeed;
 
-            const attackRating = 1;//this.attackRating;
             const defenseRating = enemy.evasion <= 0 ? 1 : enemy.evasion;
             const hitCoefficient = 25;
-            const hitChance = (attackRating + hitCoefficient) / (attackRating + defenseRating + hitCoefficient);
+            const hitChance = (this.attackRating + hitCoefficient) / (this.attackRating + defenseRating + hitCoefficient);
 
             const damage = calculateDamage(this.damageRange, this.criticalDamage);
 
             if (Math.random() < hitChance) {
-                enemy.receiveDamage(damage);
+                return enemy.receiveDamage(damage);
             }
 
             return noDamage;

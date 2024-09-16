@@ -30,7 +30,7 @@
 		game = createGame();
 		game.loadArea("drone_factory_entrance");
 		await tick();
-		gameScreenStore.update(() => GameScreen.Inventory);
+		gameScreenStore.update(() => GameScreen.Game);
 
 		// const monster = createLeveledMonster("drone_scout", 5);
 		// console.log(monster);

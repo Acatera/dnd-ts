@@ -7,6 +7,8 @@ export interface MonsterTier {
     health: number;
     expReward: number;
     attackSpeed: number;
+    attackRating: number;
+    armorRating: number;
     evasion: number;
     minDamage: number;
     maxDamage: number;

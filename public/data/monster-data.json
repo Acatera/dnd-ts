@@ -1,25 +1,29 @@
 {
     "drone_scout": {
         "name": "Drone Scout",
-        "description": "A small, fast drone that is equipped with a laser weapon. It is capable of dodging attacks and can be difficult to hit.",
+        "description": "A small, fast drone equipped with a laser weapon. It is capable of dodging attacks and can be difficult to hit.",
         "loot_table": [
-            [ "blaster", 0.1 ]
+            ["blaster", 0.1]
         ],
         "tiers": {
             "1": {
-                "health": 10,
-                "expReward": 5,
+                "health": 15,
+                "expReward": 10,
                 "attackSpeed": 20,
-                "evasion": 5,
-                "minDamage": 1,
-                "maxDamage": 3
+                "attackRating": 20,
+                "armorRating": 10,
+                "evasion": 15,
+                "minDamage": 2,
+                "maxDamage": 4
             },
             "99": {
-                "health": 490,
-                "expReward": 245,
+                "health": 500,
+                "expReward": 300,
                 "attackSpeed": 20,
-                "evasion": 5,
-                "minDamage": 72,
+                "attackRating": 600,
+                "armorRating": 300,
+                "evasion": 75,
+                "minDamage": 80,
                 "maxDamage": 100
             }
         }
@@ -28,96 +32,116 @@
         "name": "Plasteel Drone",
         "description": "A more durable drone constructed with plasteel components. It is tougher and provides higher-tier loot.",
         "loot_table": [
-            [ "plasteel_helmet", 0.2 ],
-            [ "plasteel_body_armor", 0.2 ],
-            [ "plasteel_gloves", 0.2 ],
-            [ "plasteel_pants", 0.2 ],
-            [ "plasteel_boots", 0.2 ]
+            ["plasteel_helmet", 0.2],
+            ["plasteel_body_armor", 0.2],
+            ["plasteel_gloves", 0.2],
+            ["plasteel_pants", 0.2],
+            ["plasteel_boots", 0.2]
         ],
         "tiers": {
             "1": {
-                "health": 10,
-                "expReward": 10,
-                "attackSpeed": 25,
-                "evasion": 5,
-                "minDamage": 2,
-                "maxDamage": 3
+                "health": 25,
+                "expReward": 15,
+                "attackSpeed": 30,
+                "attackRating": 25,
+                "armorRating": 20,
+                "evasion": 10,
+                "minDamage": 3,
+                "maxDamage": 5
             },
             "99": {
-                "health": 730,
-                "expReward": 370,
-                "attackSpeed": 25,
-                "evasion": 245,
-                "minDamage": 98,
-                "maxDamage": 158
+                "health": 750,
+                "expReward": 375,
+                "attackSpeed": 30,
+                "attackRating": 650,
+                "armorRating": 500,
+                "evasion": 60,
+                "minDamage": 90,
+                "maxDamage": 120
             }
         }
     },
     "drone_swarm": {
         "name": "Drone Swarm",
         "description": "A collective group of smaller drones acting in unison. Its strength comes from numbers rather than individual power.",
-        "loot_table": [ ],
+        "loot_table": [],
         "tiers": {
             "1": {
-                "health": 15,
-                "expReward": 10,
+                "health": 20,
+                "expReward": 8,
                 "attackSpeed": 20,
-                "evasion": 5,
+                "attackRating": 15,
+                "armorRating": 5,
+                "evasion": 20,
                 "minDamage": 1,
-                "maxDamage": 3
+                "maxDamage": 2
             },
             "99": {
-                "health": 465,
-                "expReward": 235,
+                "health": 480,
+                "expReward": 240,
                 "attackSpeed": 20,
-                "evasion": 5,
-                "minDamage": 70,
-                "maxDamage": 120
+                "attackRating": 550,
+                "armorRating": 200,
+                "evasion": 80,
+                "minDamage": 60,
+                "maxDamage": 80
             }
         }
     },
     "drone_leader": {
         "name": "Drone Leader",
         "description": "The commanding unit of a drone group. It coordinates the actions of other drones and is more robust than standard models.",
-        "loot_table": [ [ "blaster", 0.5 ] ],
+        "loot_table": [
+            ["blaster", 0.5]
+        ],
         "tiers": {
             "1": {
-                "health": 20,
-                "expReward": 15,
-                "attackSpeed": 20,
-                "evasion": 5,
-                "minDamage": 3,
-                "maxDamage": 6
+                "health": 35,
+                "expReward": 20,
+                "attackSpeed": 40,
+                "attackRating": 30,
+                "armorRating": 25,
+                "evasion": 12,
+                "minDamage": 5,
+                "maxDamage": 7
             },
             "99": {
-                "health": 780,
-                "expReward": 485,
-                "attackSpeed": 20,
-                "evasion": 245,
-                "minDamage": 120,
-                "maxDamage": 180
+                "health": 900,
+                "expReward": 500,
+                "attackSpeed": 40,
+                "attackRating": 700,
+                "armorRating": 550,
+                "evasion": 70,
+                "minDamage": 130,
+                "maxDamage": 170
             }
         }
     },
     "drone_boss": {
         "name": "Drone Boss",
         "description": "The most powerful drone variant, equipped with advanced evasion systems and heavy firepower. It poses a significant challenge.",
-        "loot_table": [ [ "blaster", 1 ] ],
+        "loot_table": [
+            ["blaster", 1]
+        ],
         "tiers": {
             "1": {
-                "health": 20,
-                "expReward": 15,
-                "attackSpeed": 10,
-                "evasion": 15,
-                "minDamage": 4,
-                "maxDamage": 6
+                "health": 50,
+                "expReward": 30,
+                "attackSpeed": 50,
+                "attackRating": 40,
+                "armorRating": 35,
+                "evasion": 20,
+                "minDamage": 6,
+                "maxDamage": 9
             },
             "99": {
-                "health": 1220,
-                "expReward": 735,
-                "attackSpeed": 10,
-                "evasion": 260,
-                "minDamage": 150,
+                "health": 1200,
+                "expReward": 750,
+                "attackSpeed": 50,
+                "attackRating": 800,
+                "armorRating": 700,
+                "evasion": 90,
+                "minDamage": 160,
                 "maxDamage": 220
             }
         }
