@@ -1,4 +1,8 @@
 import { Armor, createArmor } from "./Armor";
+import { BonusesComponent } from "./components/BonusesComponent";
+import { DamageComponent } from "./components/DamageComponent";
+import { DefenseComponent } from "./components/DefenseComponent";
+import { EquippableComponent } from "./components/EquippableComponent";
 import { createCriticalDamage, CriticalDamage, loadCriticalDamage } from "./CriticalDamage";
 import { DamageRange } from "./DamageRange";
 import { calculateDamage, DamageResult, noDamage, noDamageMiss } from "./DamageResult";
@@ -6,7 +10,9 @@ import { createEquipmentSlot, EquipmentSlot } from "./EquipmentSlot";
 import { EquipmentSlotType } from "./EquipmentSlotType";
 import { ItemRequirements } from "./Equippable";
 import { createInventory, Inventory, loadInventory } from "./Inventory";
-import { createItem } from "./Item";
+import { Item } from "./Item";
+import { createItem } from "./ItemBase";
+import { ItemManager } from "./ItemManager";
 import { createItemStack } from "./ItemStack";
 import { Monster } from "./Monster";
 import { PlayerSkills } from "./PlayerSkills";
@@ -41,10 +47,11 @@ export interface Player {
     gainExperience(amount: number): void,
     gainSkillExperience(amount: number, skill: SkillType): void,
     levelUp(): void,
-    weaponSlot: EquipmentSlot<Weapon>;
-    armorSlots: EquipmentSlot<Armor>[];
+    weaponSlot: EquipmentSlot;
+    armorSlots: EquipmentSlot[];
     inventory: Inventory;
     meetsRequirements(requirements: ItemRequirements): boolean;
+    equip(item: Item): boolean;
     wieldWeapon(weapon: Weapon): boolean;
     wearArmor(armor: Armor): boolean;
     unequip(slot: EquipmentSlotType): void;
@@ -75,19 +82,49 @@ export function createPlayer(playerSkills: PlayerSkills | null = null): Player {
         };
     };
 
-    const weaponSlot = createEquipmentSlot<Weapon>(EquipmentSlotType.Weapon, createWeapon("dev_overkill"));
+    const weaponSlot = createEquipmentSlot(EquipmentSlotType.Weapon, "dev_overkill");
+    // const weaponSlot = createEquipmentSlot(EquipmentSlotType.Weapon, "fists");
     const armorSlots = [
-        createEquipmentSlot<Armor>(EquipmentSlotType.Head),
-        createEquipmentSlot<Armor>(EquipmentSlotType.Chest),
-        createEquipmentSlot<Armor>(EquipmentSlotType.Hands),
-        createEquipmentSlot<Armor>(EquipmentSlotType.Legs),
-        createEquipmentSlot<Armor>(EquipmentSlotType.Feet),
+        createEquipmentSlot(EquipmentSlotType.Head),
+        createEquipmentSlot(EquipmentSlotType.Chest),
+        createEquipmentSlot(EquipmentSlotType.Hands),
+        createEquipmentSlot(EquipmentSlotType.Legs),
+        createEquipmentSlot(EquipmentSlotType.Feet),
     ];
     const inventory = createInventory();
-    inventory.add(createItemStack(createWeapon("blaster"), 1));
-    inventory.add(createItemStack(createArmor("plasteel_boots"), 1));
+    inventory.add(createItemStack("blaster", 1));
+    inventory.add(createItemStack("plasteel_boots", 1));
     const skills: PlayerSkills = playerSkills || createSkills();
     const criticalDamage = createCriticalDamage(1.5, 0.1);
+
+    const getSkillBonus = (skillType: SkillType, itemId: string): number => {
+        const item = ItemManager.getItem(itemId);
+
+        if (!item) {
+            return 0;
+        }
+
+        const bonusesComponent = item.getComponent<BonusesComponent>("BonusesComponent");
+        if (!bonusesComponent) {
+            return 0;
+        }
+
+        return bonusesComponent.bonuses[skillType] || 0;
+    }
+    const getArmorRating = (itemId: string): number => {
+        const item = ItemManager.getItem(itemId);
+
+        if (!item) {
+            return 0;
+        }
+
+        const defenceComponent = item.getComponent<DefenseComponent>("DefenseComponent");
+        if (!defenceComponent) {
+            return 0;
+        }
+
+        return defenceComponent.defense;
+    }
 
     return {
         health: 10,
@@ -128,13 +165,13 @@ export function createPlayer(playerSkills: PlayerSkills | null = null): Player {
         getSkillBonus(skill: SkillType): number {
             let bonus = 0;
 
-            if (weaponSlot.item) {
-                bonus += weaponSlot.item.bonuses[skill] || 0;
+            if (weaponSlot.itemId) {
+                bonus += getSkillBonus(skill, weaponSlot.itemId);
             }
 
             for (const slot of this.armorSlots) {
-                if (slot.item) {
-                    bonus += slot.item.bonuses[skill] || 0;
+                if (slot.itemId) {
+                    bonus += getSkillBonus(skill, slot.itemId);
                 }
             }
 
@@ -155,11 +192,19 @@ export function createPlayer(playerSkills: PlayerSkills | null = null): Player {
                 return noDamage;
             }
 
+            let damageRange = new DamageRange(1, 1);
+            if (this.weaponSlot.itemId) {
+                const damageComponent = ItemManager.getItem(this.weaponSlot.itemId)?.getComponent<DamageComponent>("DamageComponent");
+                if (damageComponent) {
+                    damageRange = damageComponent.damage;
+                }
+            }
+
             const attackRating = this.attackRating;
             const defenseRating = enemy.evasion <= 0 ? 1 : enemy.evasion;
             const hitCoefficient = 25;
             const hitChance = (attackRating + hitCoefficient) / (attackRating + defenseRating + hitCoefficient);
-            const damage = calculateDamage(weaponSlot.item ? weaponSlot.item.damageRange : new DamageRange(1, 1), this.criticalDamage);
+            const damage = calculateDamage(damageRange, this.criticalDamage);
 
             this.idleTicks -= this.attackSpeed;
 
@@ -197,8 +242,8 @@ export function createPlayer(playerSkills: PlayerSkills | null = null): Player {
             let armorRating = 0;
 
             for (const slot of this.armorSlots) {
-                if (slot.item) {
-                    armorRating += slot.item.defense;
+                if (slot.itemId) {
+                    armorRating += getArmorRating(slot.itemId);
                 }
             }
 
@@ -208,8 +253,9 @@ export function createPlayer(playerSkills: PlayerSkills | null = null): Player {
         get attackRating(): number {
             let attackRating = this.getTotalSkill(SkillType.Unarmed);
 
-            if (weaponSlot.item) {
-                const primarySkill = getPrimarySkill(weaponSlot.item);
+            if (weaponSlot.itemId) {
+                const equippable = ItemManager.getItem(weaponSlot.itemId)?.getComponent<EquippableComponent>("EquippableComponent")!;
+                const primarySkill = getPrimarySkill(equippable);
                 attackRating = this.getTotalSkill(primarySkill);
             }
 
@@ -262,16 +308,52 @@ export function createPlayer(playerSkills: PlayerSkills | null = null): Player {
             });
         },
 
+        equip(item: Item): boolean {
+            const equippable = item.getComponent<EquippableComponent>("EquippableComponent");
+            if (!equippable) {
+                return false;
+            }
+
+            if (this.meetsRequirements(equippable.requirements)) {
+                if (equippable.slot === EquipmentSlotType.Weapon) {
+                    if (this.weaponSlot.itemId) {
+                        this.inventory.add(createItemStack(this.weaponSlot.itemId, 1));
+                        this.weaponSlot.itemId = null;
+                    }
+
+                    this.weaponSlot.itemId = item.id;
+                    this.inventory.removeAll(item.id);
+
+                    return true;
+                } else {
+                    const slot = this.armorSlots.find(slot => slot.slot === equippable.slot);
+                    if (slot) {
+                        if (slot.itemId) {
+                            this.inventory.add(createItemStack(slot.itemId, 1));
+                            slot.itemId = null;
+                        }
+
+                        slot.itemId = item.id;
+                        this.inventory.removeAll(item.id);
+
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        },
+
         wieldWeapon(weapon: Weapon): boolean {
             // Weapon can be wielded if the player meets the requirements and the slot is correct
             if (this.meetsRequirements(weapon.requirements) && this.weaponSlot.slot === weapon.slot) {
-                if (this.weaponSlot.item) {
-                    this.inventory.add(createItemStack(this.weaponSlot.item, 1));
+                if (this.weaponSlot.itemId) {
+                    this.inventory.add(createItemStack(this.weaponSlot.itemId, 1));
                 }
 
-                this.weaponSlot.item = weapon;
+                this.weaponSlot.itemId = weapon.id;
 
-                this.inventory.remove(weapon.id);
+                this.inventory.removeAll(weapon.id);
 
                 return true;
             }
@@ -284,13 +366,13 @@ export function createPlayer(playerSkills: PlayerSkills | null = null): Player {
             const armorSlot = this.armorSlots.find(slot => slot.slot === armor.slot);
             if (armorSlot && this.meetsRequirements(armor.requirements)) {
 
-                if (armorSlot.item) {
-                    this.inventory.add(createItemStack(armorSlot.item, 1));
+                if (armorSlot.itemId) {
+                    this.inventory.add(createItemStack(armorSlot.itemId, 1));
                 }
 
-                armorSlot.item = armor;
+                armorSlot.itemId = armor.id;
 
-                this.inventory.remove(armor.id);
+                this.inventory.removeAll(armor.id);
 
                 return true;
             }
@@ -300,13 +382,13 @@ export function createPlayer(playerSkills: PlayerSkills | null = null): Player {
 
         unequip(slot: EquipmentSlotType) {
             const armorSlot = this.armorSlots.find(s => s.slot === slot);
-            if (armorSlot && armorSlot.item) {
-                this.inventory.add(createItemStack(armorSlot.item, 1));
-                armorSlot.item = null;
+            if (armorSlot && armorSlot.itemId) {
+                this.inventory.add(createItemStack(armorSlot.itemId, 1));
+                armorSlot.itemId = null;
             } else if (this.weaponSlot.slot === slot) {
-                if (this.weaponSlot.item) {
-                    this.inventory.add(createItemStack(this.weaponSlot.item, 1));
-                    this.weaponSlot.item = null;
+                if (this.weaponSlot.itemId) {
+                    this.inventory.add(createItemStack(this.weaponSlot.itemId, 1));
+                    this.weaponSlot.itemId = null;
                 }
             }
         }

@@ -1,11 +1,10 @@
-import { createItem } from "./Item";
-import { createItemStack, ItemStack } from "./ItemStack";
-import { createWeapon } from "./Weapon";
+import { ItemStack } from "./ItemStack";
 
 export interface Inventory {
     items: ItemStack[];
     add(item: ItemStack): void;
-    remove(itemId: string): boolean;
+    remove(itemId: string, quantity: number): boolean;
+    removeAll(itemId: string): boolean;
 }
 
 export function createInventory(): Inventory {
@@ -16,8 +15,21 @@ export function createInventory(): Inventory {
         add(item: ItemStack) {
             items.push(item);
         },
-        remove(itemId: string) {
-            const index = items.findIndex((itemStack) => itemStack.item.id === itemId);
+        remove(itemId: string, quantity: number) {
+            const index = items.findIndex((itemStack) => itemStack.itemId === itemId);
+            if (index !== -1) {
+                items[index]!.quantity -= quantity;
+                if (items[index]!.quantity <= 0) {
+                    items.splice(index, 1);
+                }
+
+                return true;
+            }
+
+            return false;
+        },
+        removeAll(itemId: string) {
+            const index = items.findIndex((itemStack) => itemStack.itemId === itemId);
             console.log(index);
             if (index !== -1) {
                 items.splice(index, 1);
@@ -30,22 +42,10 @@ export function createInventory(): Inventory {
     };
 }
 
-export function loadInventory(state: any): Inventory {
+export function loadInventory(state: Inventory): Inventory {
     const inventory = createInventory();
 
     for (const itemStack of state.items) {
-        if (itemStack.item.type === "Weapon")
-        {
-            const weapon = createWeapon(itemStack.item.id);
-            itemStack.item = weapon;
-        } else if (itemStack.item.type === "Armor") {
-            const armor = createItem(itemStack.item.id);
-            itemStack.item = armor;
-        } else {
-            const item = createItem(itemStack.item.id);
-            itemStack.item = item;
-        }
-
         inventory.add(itemStack);
     }
 

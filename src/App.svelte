@@ -11,9 +11,9 @@
 	import { GameScreen, gameScreenStore } from "./stores/gameScreen";
 	import { loadAreaData } from "./types/Area";
 	import { createGame, Game } from "./types/Game";
-	import { loadItemData } from "./types/Item";
 	import { createLeveledMonster, loadMonsterData } from "./types/Monster";
 	import { LootTable } from "./types/LootTable";
+    import { ItemManager } from "./types/ItemManager";
 
 	let game: Game | null = null;
 	let gameScreen: GameScreen;
@@ -23,7 +23,7 @@
 	});
 
 	async function loadAssets() {
-		await loadItemData();
+		await ItemManager.loadItemData();
 		await loadAreaData();
 		await loadMonsterData();
 

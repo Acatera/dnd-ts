@@ -1,13 +1,11 @@
-import { Item } from "./Item";
-
 export interface ItemStack {
-    item: Item;
+    itemId: string;
     quantity: number;
 }
 
-export function createItemStack(item: Item, quantity: number): ItemStack {
+export function createItemStack(itemId: string, quantity: number): ItemStack {
     return {
-        item,
+        itemId: itemId,
         quantity,
     };
 }   

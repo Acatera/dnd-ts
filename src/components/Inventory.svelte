@@ -2,19 +2,30 @@
     import { inventoryStore } from "../stores/inventory";
     import { GameScreen, gameScreenStore } from "../stores/gameScreen";
     import { Inventory } from "../types/Inventory";
-    import { getItemType, Item } from "../types/Item";
-    import { deleteItem, equipArmor, equipWeapon } from "../stores/player";
-    import { Armor } from "../types/Armor";
-    import { Weapon } from "../types/Weapon";
-    import { ItemBonuses, ItemRequirements } from "../types/Equippable";
+    import {
+        deleteItem,
+        equipItem,
+    } from "../stores/player";
+    import { ItemBonuses } from "../types/Equippable";
     import { slide } from "svelte/transition";
+    import { ItemManager } from "../types/ItemManager";
     import Modal from "./Modal.svelte";
+    import { Item } from "../types/Item";
+    import { EquippableComponent } from "../types/components/EquippableComponent";
+    import ItemRequirementsComp from "./Equippable.svelte";
+    import { SkillType } from "../types/SkillType";
+    import { BonusesComponent } from "../types/components/BonusesComponent";
+    import Bonuses from "./Bonuses.svelte";
+    import { DamageComponent } from "../types/components/DamageComponent";
+    import { DefenseComponent } from "../types/components/DefenseComponent";
+    import Damage from "./Damage.svelte";
 
     let inventory: Inventory;
     let selectedItem: Item | null = null;
-    let isEquippable: boolean;
-    let requirements: ItemRequirements | null = null;
-    let bonuses: ItemBonuses | null = null;
+    let equippableComponent: EquippableComponent | null = null;
+    let bonusesComponent: BonusesComponent | null = null;
+    let damageComponent: DamageComponent | null = null;
+    let defenseComponent: DefenseComponent | null = null;
 
     inventoryStore.subscribe((value) => {
         inventory = value;
@@ -24,20 +35,16 @@
         gameScreenStore.update(() => GameScreen.Game);
     }
 
-    function selectItem(item: Item) {
-        selectedItem = item;
-
-        isEquippable =
-            getItemType(item.id) === "Weapon" ||
-            getItemType(item.id) === "Armor";
-
-        if (isEquippable) {
-            requirements = (item as Armor | Weapon).requirements;
-            bonuses = (item as Armor | Weapon).bonuses;
-        } else {
-            requirements = null;
-            bonuses = null;
+    function selectItem(item: Item | null) {
+        if (!item) {
+            return;
         }
+
+        selectedItem = item;
+        equippableComponent = item.getComponent<EquippableComponent>("EquippableComponent");
+        bonusesComponent = item.getComponent<BonusesComponent>("BonusesComponent");
+        damageComponent = item.getComponent<DamageComponent>("DamageComponent");
+        defenseComponent = item.getComponent<DefenseComponent>("DefenseComponent");
     }
 
     function handleEquip(item: Item | null) {
@@ -45,19 +52,7 @@
             return;
         }
 
-        const itemType = getItemType(item.id);
-
-        if (itemType === "Weapon") {
-            if (!equipWeapon(item as Weapon)) {
-                openModal();
-                return;
-            }
-        } else if (itemType === "Armor") {
-            if (!equipArmor(item as Armor)) {
-                openModal();
-                return;
-            }
-        }
+        equipItem(item);
 
         selectedItem = null;
     }
@@ -95,13 +90,21 @@
             <ul>
                 {#each inventory.items as itemStack}
                     {#if itemStack.quantity > 1}
-                        <li>{itemStack.item.name} x{itemStack.quantity}</li>
+                        <li>
+                            {ItemManager.getItem(itemStack.itemId)?.name} x{itemStack.quantity}
+                        </li>
                     {:else}
                         <li
-                            on:click={() => selectItem(itemStack.item)}
-                            on:keypress={() => selectItem(itemStack.item)}
+                            on:click={() =>
+                                selectItem(
+                                    ItemManager.getItem(itemStack.itemId),
+                                )}
+                            on:keypress={() =>
+                                selectItem(
+                                    ItemManager.getItem(itemStack.itemId),
+                                )}
                         >
-                            {itemStack.item.name}
+                            {ItemManager.getItem(itemStack.itemId)?.name}
                         </li>
                     {/if}
                 {/each}
@@ -121,29 +124,24 @@
                 <h1>{selectedItem.name}</h1>
                 <p>{selectedItem.description}</p>
 
-                {#if isEquippable && requirements && bonuses}
-                    {#if selectedItem.type === "Weapon"}
-                        <h2>Damage</h2>
-                        <p>
-                            {selectedItem.asWeapon()?.damageRange.min} - {selectedItem.asWeapon()
-                                ?.damageRange.max}
-                        </p>
-                    {:else if selectedItem.type === "Armor"}
-                        <h2>Defense</h2>
-                        <p>{selectedItem.asArmor()?.defense}</p>
-                    {/if}
+                {#if damageComponent}
+                    <Damage damageComponent={damageComponent} />
+                {/if}
 
-                    <h2>Requirements</h2>
-                    {#each Object.entries(requirements) as [key, value]}
-                        <p>{key}: {value}</p>
-                    {/each}
+                {#if defenseComponent}
+                    <h2>Defense</h2>
+                    <p>{defenseComponent.defense}</p>
+                {/if}
 
-                    <h2>Bonuses</h2>
-                    {#each Object.entries(bonuses) as [key, value]}
-                        <p>{key}: {value}</p>
-                    {/each}
+                {#if equippableComponent}
+                    <ItemRequirementsComp equippableComponent={equippableComponent} />  
+                {/if}
+
+                {#if bonusesComponent}
+                    <Bonuses bonusesComponent={bonusesComponent} />
                 {/if}
             </div>
+            
             <div class="item-details-buttons">
                 <button on:click={() => handleEquip(selectedItem)}>Equip</button
                 >

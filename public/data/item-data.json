@@ -1,175 +1,278 @@
 {
     "fists": {
-        "type": "Weapon",
         "name": "Fists",
         "description": "Your own two hands.",
-        "minDamage": 1,
-        "maxDamage": 6,
-        "attackSpeed": 20,
-        "slot": "Weapon",
-        "requirements": {
-            "Unarmed": 1
-        },
-        "bonuses": {
-            "Unarmed": 123
+        "components": {
+            "DamageComponent": {
+                "minDamage": 1,
+                "maxDamage": 6,
+                "attackSpeed": 20
+            },
+            "EquippableComponent": {
+                "slot": "Weapon",
+                "requirements": {
+                    "Unarmed": 1
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Unarmed": 123
+                }
+            }
         }
     },
     "blaster": {
-        "type": "Weapon",
         "name": "Blaster",
         "description": "A standard-issue blaster.",
-        "minDamage": 2,
-        "maxDamage": 4,
-        "attackSpeed": 20,
-        "slot": "Weapon",
-        "requirements": {
-            "Pistol": 1
-        },
-        "bonuses": {
-            "Pistol": 321
+        "components": {
+            "DamageComponent": {
+                "minDamage": 2,
+                "maxDamage": 4,
+                "attackSpeed": 20
+            },
+            "EquippableComponent": {
+                "slot": "Weapon",
+                "requirements": {
+                    "Pistol": 1
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 321
+                }
+            }
         }
     },
     "dev_overkill": {
-        "type": "Weapon",
         "name": "OVERKILL!",
         "description": "A standard-issue blaster.",
-        "minDamage": 200,
-        "maxDamage": 400,
-        "attackSpeed": 20,
-        "slot": "Weapon",
-        "requirements": {
-            "Pistol": 1
-        },
-        "bonuses": {
-            "Pistol": 321
+        "components": {
+            "DamageComponent": {
+                "minDamage": 200,
+                "maxDamage": 400,
+                "attackSpeed": 20
+            },
+            "EquippableComponent": {
+                "slot": "Weapon",
+                "requirements": {
+                    "Pistol": 1
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 321
+                }
+            }
         }
     },
     "plasteel_helmet": {
-        "type": "Armor",
         "name": "Plasteel Helmet",
-        "description": "A helmet made of plasteel.",
-        "slot": "Head",
-        "defense": 1,
-        "requirements": {
-            "Stamina": 5,
-            "Agility": 5
-        },
-        "bonuses": {
-            "Pistol": 25
+        "description": "",
+        "components": {
+            "DefenseComponent": {
+                "defense": 2
+            },
+            "EquippableComponent": {
+                "slot": "Head",
+                "requirements": {
+                    "Stamina": 5,
+                    "Agility": 5
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 25
+                }
+            }
         }
     },
     "plasteel_body_armor": {
-        "type": "Armor",
         "name": "Plasteel Body Armor",
-        "description": "Body armor made of plasteel.",
-        "slot": "Chest",
-        "defense": 2,
-        "requirements": {
-            "Stamina": 5,
-            "Agility": 5
-        },
-        "bonuses": {
-            "Pistol": 25
+        "description": "",
+        "components": {
+            "DefenseComponent": {
+                "defense": 2
+            },
+            "EquippableComponent": {
+                "slot": "Chest",
+                "requirements": {
+                    "Stamina": 5,
+                    "Agility": 5
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 25
+                }
+            }
         }
     },
     "plasteel_gloves": {
-        "type": "Armor",
         "name": "Plasteel Gloves",
-        "description": "Gloves made of plasteel.",
-        "slot": "Hands",
-        "defense": 1,
-        "requirements": {
-            "Stamina": 5,
-            "Agility": 5
-        },
-        "bonuses": {
-            "Pistol": 25
+        "description": "",
+        "components": {
+            "DefenseComponent": {
+                "defense": 1
+            },
+            "EquippableComponent": {
+                "slot": "Hands",
+                "requirements": {
+                    "Stamina": 5,
+                    "Agility": 5
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 25
+                }
+            }
         }
     },
     "plasteel_pants": {
-        "type": "Armor",
         "name": "Plasteel Pants",
-        "description": "Pants made of plasteel.",
-        "slot": "Legs",
-        "defense": 1,
-        "requirements": {
-            "Stamina": 5,
-            "Agility": 5
-        },
-        "bonuses": {
-            "Pistol": 25
+        "description": "",
+        "components": {
+            "DefenseComponent": {
+                "defense": 1
+            },
+            "EquippableComponent": {
+                "slot": "Legs",
+                "requirements": {
+                    "Stamina": 5,
+                    "Agility": 5
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 25
+                }
+            }
         }
     },
     "plasteel_boots": {
-        "type": "Armor",
         "name": "Plasteel Boots",
-        "description": "Boots made of plasteel.",
-        "slot": "Feet",
-        "defense": 1,
-        "requirements": {
-            "Stamina": 5,
-            "Agility": 5
-        },
-        "bonuses": {
-            "Pistol": 25
+        "description": "",
+        "components": {
+            "DefenseComponent": {
+                "defense": 1
+            },
+            "EquippableComponent": {
+                "slot": "Feet",
+                "requirements": {
+                    "Stamina": 5,
+                    "Agility": 5
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 25
+                }
+            }
         }
     },
     "kevlar_helmet": {
-        "type": "Armor",
         "name": "Kevlar Helmet",
-        "description": "A helmet made of kevlar.",
-        "slot": "Head",
-        "defense": 2,
-        "requirements": {
-            "Stamina": 5,
-            "Agility": 5
-        },
-        "bonuses": {
-            "Pistol": 25
+        "description": "",
+        "components": {
+            "DefenseComponent": {
+                "defense": 2
+            },
+            "EquippableComponent": {
+                "slot": "Head",
+                "requirements": {
+                    "Stamina": 5,
+                    "Agility": 5
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 25
+                }
+            }
         }
     },
     "kevlar_body_armor": {
-        "type": "Armor",
         "name": "Kevlar Body Armor",
-        "description": "Body armor made of kevlar.",
-        "slot": "Chest",
-        "defense": 2,
-        "requirements": {
-            "Stamina": 5,
-            "Agility": 5
+        "description": "",
+        "components": {
+            "DefenseComponent": {
+                "defense": 2
+            },
+            "EquippableComponent": {
+                "slot": "Chest",
+                "requirements": {
+                    "Stamina": 5,
+                    "Agility": 5
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 25
+                }
+            }
         }
     },
     "kevlar_gloves": {
-        "type": "Armor",
         "name": "Kevlar Gloves",
-        "description": "Gloves made of kevlar.",
-        "slot": "Arms",
-        "defense": 2,
-        "requirements": {
-            "Stamina": 5,
-            "Agility": 5
+        "description": "",
+        "components": {
+            "DefenseComponent": {
+                "defense": 1
+            },
+            "EquippableComponent": {
+                "slot": "Hands",
+                "requirements": {
+                    "Stamina": 5,
+                    "Agility": 5
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 25
+                }
+            }
         }
     },
     "kevlar_pants": {
-        "type": "Armor",
         "name": "Kevlar Pants",
-        "description": "Pants made of kevlar.",
-        "slot": "Legs",
-        "defense": 2,
-        "requirements": {
-            "Stamina": 5,
-            "Agility": 5
+        "description": "",
+        "components": {
+            "DefenseComponent": {
+                "defense": 1
+            },
+            "EquippableComponent": {
+                "slot": "Legs",
+                "requirements": {
+                    "Stamina": 5,
+                    "Agility": 5
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 25
+                }
+            }
         }
     },
     "kevlar_boots": {
-        "type": "Armor",
         "name": "Kevlar Boots",
-        "description": "Boots made of kevlar.",
-        "slot": "Feet",
-        "defense": 2,
-        "requirements": {
-            "Stamina": 5,
-            "Agility": 5
+        "description": "",
+        "components": {
+            "DefenseComponent": {
+                "defense": 1
+            },
+            "EquippableComponent": {
+                "slot": "Feet",
+                "requirements": {
+                    "Stamina": 5,
+                    "Agility": 5
+                }
+            },
+            "BonusesComponent": {
+                "bonuses": {
+                    "Pistol": 25
+                }
+            }
         }
     }
 }

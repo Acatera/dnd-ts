@@ -2,6 +2,7 @@
     import { playerStore, unequip } from "../stores/player";
     import { EquipmentSlot } from "../types/EquipmentSlot";
     import { EquipmentSlotType } from "../types/EquipmentSlotType";
+    import { ItemManager } from "../types/ItemManager";
     import { Player } from "../types/Player";
     import Grid from "./Grid.svelte";
     import GridItem from "./GridItem.svelte";
@@ -22,12 +23,12 @@
     <Grid columns="1fr 4fr" gap="0">
         <GridItem>Weapon:</GridItem>
         <GridItem>
-            {#if player.weaponSlot && player.weaponSlot.item}
+            {#if player.weaponSlot && player.weaponSlot.itemId}
                 <p class="clickable"
                     on:click={() => handleClick(EquipmentSlotType.Weapon)}
                     on:keypress={() => handleClick(EquipmentSlotType.Weapon)}
                 >
-                    {player.weaponSlot.item.name}
+                    {ItemManager.getItem(player.weaponSlot.itemId)?.name}
                 </p>
             {:else}
                 None
@@ -39,12 +40,12 @@
                 {armorSlot.slot}:
             </GridItem>
             <GridItem>
-                {#if armorSlot.item}
+                {#if armorSlot.itemId}
                     <p class="clickable"
                         on:click={() => handleClick(armorSlot.slot)}
                         on:keypress={() => handleClick(armorSlot.slot)}
                     >
-                        {armorSlot.item.name}
+                        {ItemManager.getItem(armorSlot.itemId)?.name}
                     </p>
                 {:else}
                     None

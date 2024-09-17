@@ -7,14 +7,14 @@ import { Combat, createCombat } from "./Combat";
 import { GameEvent } from "./GameEvent";
 import { GameEventSource } from "./GameEventSource";
 import { createPlayer, loadPlayer, Player } from "./Player";
-import { createItem, getItemName, getItemType } from "./Item";
 import { inventoryStore } from "../stores/inventory";
 import { createItemStack } from "./ItemStack";
-import { createWeapon, getPrimarySkill } from "./Weapon";
-import { createArmor } from "./Armor";
+import { getPrimarySkill } from "./Weapon";
 import { combatStore } from "../stores/combatStore";
 import { SkillType } from "./SkillType";
-import { loadPlayerSkills, PlayerSkills } from "./PlayerSkills";
+import { loadPlayerSkills } from "./PlayerSkills";
+import { ItemManager } from "./ItemManager";
+import { EquippableComponent } from "./components/EquippableComponent";
 
 // If true, the player will gain experience in the skill they're using
 // otherwise, the player will level up traditional RPG style
@@ -123,7 +123,11 @@ export function createGame(): Game {
 
                 // Update player experience and player store
                 if (dynamicSkilling) {
-                    const primarySkill = player.weaponSlot.item ? getPrimarySkill(player.weaponSlot.item!) : SkillType.Unarmed;
+                    let primarySkill = SkillType.Unarmed;
+                    if (this.player.weaponSlot.itemId) {
+                        const equippable = ItemManager.getItem(this.player.weaponSlot.itemId)?.getComponent<EquippableComponent>("EquippableComponent")!;
+                        primarySkill = getPrimarySkill(equippable);
+                    }
                     this.player.gainSkillExperience(monster.expReward, primarySkill);
                     this.addEvent(`You've gained ${monster.expReward}xp in ${SkillType[primarySkill]}!`, GameEventSource.Game);
                 } else {
@@ -138,26 +142,9 @@ export function createGame(): Game {
                 const loot = monster.generateLoot();
                 if (loot.length > 0) {
                     for (const itemId of loot) {
-                        const itemType = getItemType(itemId);
-
-                        switch (itemType) {
-                            case "Weapon":
-                                this.player.inventory.add(createItemStack(createWeapon(itemId), 1));
-                                break;
-                            case "Armor":
-                                this.player.inventory.add(createItemStack(createArmor(itemId), 1));
-                                break;
-                            case "Consumable":
-                                this.player.inventory.add(createItemStack(createItem(itemId), 1));
-                                break;
-                            case "Misc":
-                                this.player.inventory.add(createItemStack(createItem(itemId), 1));
-                                break;
-                            default:
-                                this.player.inventory.add(createItemStack(createItem(itemId), 1));
-                                break;
-                        }
-                        this.addEvent(`You've found a ${getItemName(itemId)}!`, GameEventSource.Game);
+                        this.player.inventory.add(createItemStack(itemId, 1));
+                        
+                        this.addEvent(`You've found a ${ItemManager.getItem(itemId)?.name}!`, GameEventSource.Game);
                     }
                 }
             };
@@ -202,7 +189,7 @@ export function createGame(): Game {
             }
 
             const data = JSON.parse(state);
-            
+
             const playerSkills = loadPlayerSkills(data.playerSkills);
             // Load the player
             this.player = loadPlayer(data.player, playerSkills);
@@ -210,16 +197,18 @@ export function createGame(): Game {
 
             // Load the area
             this.loadArea(data.area.id);
+
+            this.addEvent("Game loaded.", GameEventSource.Game);
         },
 
         save() {
             // Seralize the game state
 
-            const playerSkills: Record<SkillType, { level: number; currentXp: number; }> = 
-            {} as Record<SkillType, {
-                level: number;
-                currentXp: number;
-            }>;
+            const playerSkills: Record<SkillType, { level: number; currentXp: number; }> =
+                {} as Record<SkillType, {
+                    level: number;
+                    currentXp: number;
+                }>;
 
             for (const skill in SkillType) {
                 const playerSkill = this.player.getBaseSkill(SkillType[skill as keyof typeof SkillType]);
@@ -237,6 +226,8 @@ export function createGame(): Game {
 
             // Save to local storage
             localStorage.setItem("game", JSON.stringify(state));
+
+            this.addEvent("Game saved.", GameEventSource.Game);
         }
     };
 }

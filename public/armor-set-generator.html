@@ -25,12 +25,14 @@
             const generateArmorSet = document.getElementById('generate-armor-set');
 
             generateArmorSet.addEventListener('click', function () {
+                const armorPoints = 1;
+
                 const equipmentPieces = [
-                    { slot: 'Head', id: 'helmet', name: "Helmet" },
-                    { slot: 'Chest', id: 'body_armor', name: "Body Armor" },
-                    { slot: 'Arms', id: 'gloves', name: "Gloves" },
-                    { slot: 'Legs', id: 'pants', name: "Pants" },
-                    { slot: 'Feet', id: 'boots', name: "Boots" },
+                    { slot: 'Head', id: 'helmet', name: "Helmet", armorMultiplier: 1.5 },
+                    { slot: 'Chest', id: 'body_armor', name: "Body Armor", armorMultiplier: 2 },
+                    { slot: 'Hands', id: 'gloves', name: "Gloves", armorMultiplier: 1 },
+                    { slot: 'Legs', id: 'pants', name: "Pants", armorMultiplier: 1 },
+                    { slot: 'Feet', id: 'boots', name: "Boots", armorMultiplier: 0.5 },
                 ];
 
                 const armorSetName = armorSetNameElement.value;
@@ -38,18 +40,25 @@
                 const html = equipmentPieces.map(piece => {
 
                     return `"${armorSetName}_${piece.id}": {</br>` +
-                        `&nbsp;&nbsp;"type": "Armor",</br>` +
                         `&nbsp;&nbsp;"name": "${capitalizedArmorSetName} ${piece.name}",</br>` +
                         `&nbsp;&nbsp;"description": "<fill in by hand or use AI>",</br>` +
-                        `&nbsp;&nbsp;"slot": "${piece.slot}",</br>` +
-                        `&nbsp;&nbsp;"defense": 2,</br>` +
-                        `&nbsp;&nbsp;"requirements": {</br>` +
-                        `&nbsp;&nbsp;&nbsp;&nbsp;"Stamina": 5,</br>` +
-                        `&nbsp;&nbsp;&nbsp;&nbsp;"Agility": 5</br>` +
-                        `&nbsp;&nbsp;},</br>` +
-                        `&nbsp;&nbsp;"bonuses": {</br>` +
-                        `&nbsp;&nbsp;&nbsp;&nbsp;"Pistol": 25</br>` +
-                        `&nbsp;&nbsp;}</br>` +
+                        `&nbsp;&nbsp;"components": {</br>` +
+                        `&nbsp;&nbsp;&nbsp;"DefenseComponent": {</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"defense": ${Math.round(armorPoints * piece.armorMultiplier)}</br>` +
+                        `&nbsp;&nbsp;&nbsp;},<br>` +
+                        `&nbsp;&nbsp;&nbsp;"EquippableComponent": {</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"slot": "${piece.slot}",</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"requirements": {</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Stamina": 5,</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Agility": 5</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</br>` +
+                        `&nbsp;&nbsp;&nbsp;},<br>` +
+                        `&nbsp;&nbsp;&nbsp;"BonusesComponent": {</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"bonuses": {</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Pistol": 25</br>` +
+                        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</br>` +
+                        `&nbsp;&nbsp;&nbsp;}<br>` +
+                        `&nbsp;}<br>` +
                         `},</br>`
                 }).join('');
 
